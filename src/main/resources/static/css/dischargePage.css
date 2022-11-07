@@ -1,0 +1,22 @@
+
+#container-discharge-table {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: rgb(230, 230 , 232);
+}
+
+
+#dischargeTable th {
+    border: 1px solid black;
+
+}
+
+#dischargeTable td {
+    border: 1px solid black;
+}
+
+#dischargeTable {
+    text-align: center;
+    background-color: #fdfdfe;
+}
