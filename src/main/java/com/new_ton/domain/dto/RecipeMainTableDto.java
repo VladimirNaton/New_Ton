@@ -1,4 +1,4 @@
-package com.new_ton.domain.entities;
+package com.new_ton.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

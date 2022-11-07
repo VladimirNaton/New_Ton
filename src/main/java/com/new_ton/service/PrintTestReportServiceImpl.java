@@ -6,40 +6,36 @@ import com.new_ton.dao.MainTableDao;
 import com.new_ton.domain.dto.*;
 import com.new_ton.domain.entities.LabprotEntity;
 import com.new_ton.domain.entities.MainEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
+@Log4j2
 @Service
 public class PrintTestReportServiceImpl implements PrintTestReportService {
-    private static final Logger log = LoggerFactory.getLogger(PrintTestReportServiceImpl.class);
+
+
     private final LabProtDao labProtDao;
     private final MainTableDao mainTableDao;
     private final TestReportPdfService testReportPdfService;
     private final ProductIntroductionCardPdfService productIntroductionCardPdfService;
 
-    public PrintTestReportServiceImpl(LabProtDao labProtDao, MainTableDao mainTableDao, TestReportPdfService testReportPdfService, ProductIntroductionCardPdfService productIntroductionCardPdfService) {
-        this.labProtDao = labProtDao;
-        this.mainTableDao = mainTableDao;
-        this.testReportPdfService = testReportPdfService;
-        this.productIntroductionCardPdfService = productIntroductionCardPdfService;
-    }
 
     public boolean printTestReport(int id) {
         try {
-            List<LabprotEntity> labprotEntityList = this.labProtDao.findAllByIdpr(id);
-            Optional<MainEntity> mainEntityOptional = this.mainTableDao.findByIdpr(id);
+            List<LabprotEntity> labprotEntityList = labProtDao.findAllByIdpr(id);
+            Optional<MainEntity> mainEntityOptional = mainTableDao.findByIdpr(id);
             if (labprotEntityList.size() > 0 && mainEntityOptional.isPresent()) {
                 PrintTestReportDto dto = new PrintTestReportDto();
                 dto.setIdProd(id);
-                MainEntity mainEntity = (MainEntity) mainEntityOptional.get();
+                MainEntity mainEntity =  mainEntityOptional.get();
                 dto.setNameprod(mainEntity.getNameprod());
                 DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
                 String strDateprot = dateFormat.format(mainEntity.getDateprot());
@@ -53,10 +49,8 @@ public class PrintTestReportServiceImpl implements PrintTestReportService {
                 dto.setExpdate(strExpdate);
                 dto.setLabfio(mainEntity.getLabfio());
                 dto.setFiltr(mainEntity.getFiltr());
-                Iterator var10 = labprotEntityList.iterator();
 
-                while (var10.hasNext()) {
-                    LabprotEntity lb = (LabprotEntity) var10.next();
+                for (LabprotEntity lb : labprotEntityList) {
                     int indexDilution = lb.getIndicator().indexOf("Разв");
                     int indexDensity = lb.getIndicator().indexOf("Плот");
                     int indexViscosity = lb.getIndicator().indexOf("Вязк");
@@ -112,11 +106,11 @@ public class PrintTestReportServiceImpl implements PrintTestReportService {
                     }
                 }
 
-                this.productIntroductionCardPdfService.productIntroductionCard(dto);
-                return this.testReportPdfService.createTestReportPdf(dto);
+                productIntroductionCardPdfService.productIntroductionCard(dto);
+                return testReportPdfService.createTestReportPdf(dto);
             }
-        } catch (Exception var22) {
-            log.error("Error printTestReport : {}, {}", ExceptionUtils.getMessage(var22), ExceptionUtils.getMessage(var22.getCause()));
+        } catch (Exception e) {
+            log.error("Error printTestReport : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
         return false;

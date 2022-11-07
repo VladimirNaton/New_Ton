@@ -1,14 +1,13 @@
 package com.new_ton.service;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class ColumnNameServiceImpl implements ColumnNameService {
-    private static final Logger log = LoggerFactory.getLogger(ColumnNameServiceImpl.class);
 
     public ColumnNameServiceImpl() {
     }
@@ -42,8 +41,8 @@ public class ColumnNameServiceImpl implements ColumnNameService {
             }
 
             return columnName;
-        } catch (Exception var3) {
-            log.error("Error getColumnNameCalibrationTable : {}, {}", ExceptionUtils.getMessage(var3), ExceptionUtils.getMessage(var3.getCause()));
+        } catch (Exception e) {
+            log.error("Error getColumnNameCalibrationTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }
@@ -88,8 +87,8 @@ public class ColumnNameServiceImpl implements ColumnNameService {
             }
 
             return columnName;
-        } catch (Exception var3) {
-            log.error("Error getColumnNameProductTable : {}, {}", ExceptionUtils.getMessage(var3), ExceptionUtils.getMessage(var3.getCause()));
+        } catch (Exception e) {
+            log.error("Error getColumnNameProductTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }

@@ -36,7 +36,7 @@ public class MainController {
 
     @GetMapping({"/dischargePage"})
     public String addDischargePage(@RequestParam Integer id, Model model) {
-        List<DischargePageDto> dischargePageDtoList = this.dischargePageService.getDischangeList(id);
+        List<DischargePageDto> dischargePageDtoList = dischargePageService.getDischangeList(id);
         model.addAttribute("dispachPageDtos", dischargePageDtoList);
         return "DischargePage";
     }

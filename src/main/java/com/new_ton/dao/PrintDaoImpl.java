@@ -19,9 +19,9 @@ public class PrintDaoImpl implements PrintDao {
 
     public List<Integer> getIdPrintTask() {
         try {
-            return this.printRepository.selectTaskPrintId();
-        } catch (Exception var2) {
-            log.error("Error getIdPrintTask : {}, {}", ExceptionUtils.getMessage(var2), ExceptionUtils.getMessage(var2.getCause()));
+            return printRepository.selectTaskPrintId();
+        } catch (Exception e) {
+            log.error("Error getIdPrintTask : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return Collections.emptyList();
         }
     }
@@ -29,9 +29,9 @@ public class PrintDaoImpl implements PrintDao {
     @Transactional
     public void changeCode(int id) {
         try {
-            this.printRepository.changeCode(id);
-        } catch (Exception var3) {
-            log.error("Error changeCode : {}, {}", ExceptionUtils.getMessage(var3), ExceptionUtils.getMessage(var3.getCause()));
+            printRepository.changeCode(id);
+        } catch (Exception e) {
+            log.error("Error changeCode : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
     }

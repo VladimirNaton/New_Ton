@@ -1,15 +1,13 @@
 package com.new_ton.service.tasks;
 
-import com.itextpdf.text.DocumentException;
 import com.new_ton.dao.PrintDao;
 import com.new_ton.service.PrintDischargePageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,18 +20,19 @@ public class PrintDocumentTaskService {
 
 
     @Scheduled(fixedDelay = 5000L)
-    void printDocument() throws DocumentException, IOException {
-        List<Integer> idList = this.printDao.getIdPrintTask();
-        Iterator var2 = idList.iterator();
-
-        while (var2.hasNext()) {
-            Integer id = (Integer) var2.next();
-            log.info("Start print task id_pr -" + id);
-            boolean result = this.printDischargePageService.printDischargePage(id);
-            if (result) {
-                this.printDao.changeCode(id);
+    void printDocument() {
+        try {
+            List<Integer> idList = printDao.getIdPrintTask();
+            for (Integer id : idList) {
+                log.info("Start print task id_pr -" + id);
+                boolean result = printDischargePageService.printDischargePage(id);
+                if (result) {
+                    printDao.changeCode(id);
+                }
                 log.info("End print task id_pr -" + id);
             }
+        } catch (Exception e) {
+            log.error("Error PrintDocumentTaskService printDocument : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
     }
 }

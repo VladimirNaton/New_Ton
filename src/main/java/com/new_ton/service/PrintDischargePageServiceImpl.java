@@ -9,9 +9,9 @@ import com.new_ton.domain.dto.CreateResponsibleSemiFinishedProductDto;
 import com.new_ton.domain.entities.LabprotEntity;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.UnloadEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -19,21 +19,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-
+@RequiredArgsConstructor
+@Log4j2
 @Service
 public class PrintDischargePageServiceImpl implements PrintDischargePageService {
-    private static final Logger log = LoggerFactory.getLogger(PrintDischargePageServiceImpl.class);
+
     private final UploadTableDao uploadTableDao;
     private final MainTableDao mainTableDao;
     private final LabProtDao labProtDao;
     private final ResponsibleSemiFinishedProductPdfService responsibleSemiFinishedProductPdfService;
 
-    public PrintDischargePageServiceImpl(UploadTableDao uploadTableDao, MainTableDao mainTableDao, LabProtDao labProtDao, ResponsibleSemiFinishedProductPdfService responsibleSemiFinishedProductPdfService) {
-        this.uploadTableDao = uploadTableDao;
-        this.mainTableDao = mainTableDao;
-        this.labProtDao = labProtDao;
-        this.responsibleSemiFinishedProductPdfService = responsibleSemiFinishedProductPdfService;
-    }
 
     public boolean printDischargePage(int id) {
         try {
@@ -119,12 +114,12 @@ public class PrintDischargePageServiceImpl implements PrintDischargePageService 
                 dto.setNumber(String.valueOf(unloadEntity.getMass()));
                 dto.setPath(unloadEntity.getNumb());
                 dto.setIdProd(id);
-                result = this.responsibleSemiFinishedProductPdfService.responsibleSemiFinishedProduct(dto);
+                result = responsibleSemiFinishedProductPdfService.responsibleSemiFinishedProduct(dto);
             } while(result);
 
             throw new NullPointerException("Error responsibleSemiFinishedProduct");
-        } catch (Exception var16) {
-            log.error("Error printDischargePage : {}, {}", ExceptionUtils.getMessage(var16), ExceptionUtils.getMessage(var16.getCause()));
+        } catch (Exception e) {
+            log.error("Error printDischargePage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return false;
         }
     }

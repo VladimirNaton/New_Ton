@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -19,8 +18,8 @@ import java.util.HashMap;
 
 @Slf4j
 @Configuration
-@EnableJpaRepositories(basePackages = "com.new_ton.repository", entityManagerFactoryRef = "lider_entity_manager",
-        transactionManagerRef = "liderTransactionManager")
+@EnableJpaRepositories(basePackages = "com.new_ton.repository", entityManagerFactoryRef = "new_ton_entity_manager",
+        transactionManagerRef = "newTonTransactionManager")
 public class DataBaseConfig {
 
     @Value("${lider.db.jdbc-url}")
@@ -43,10 +42,9 @@ public class DataBaseConfig {
     private Environment env;
 
 
-    @Primary
     @Bean()
-    public DataSource getDriverManagerDatasource() {
-        log.info("-------- Lider Hikari started connection pool : " + connectionPool);
+    public DataSource getHikariDatasource() {
+        log.info("-------- New_Ton Hikari started connection pool : " + connectionPool);
         HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setMaximumPoolSize(connectionPool);
         hikariDataSource.setJdbcUrl(dbURL);
@@ -56,12 +54,11 @@ public class DataBaseConfig {
         return hikariDataSource;
     }
 
-    @Primary
-    @Bean( name = "lider_entity_manager")
-    public LocalContainerEntityManagerFactoryBean productEntityManager() {
+    @Bean( name = "new_ton_entity_manager")
+    public LocalContainerEntityManagerFactoryBean newTonEntityManager() {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(getDriverManagerDatasource());
+        em.setDataSource(getHikariDatasource());
         em.setPackagesToScan(
                 new String[]{"com.new_ton.domain.entities"});
 
@@ -76,13 +73,13 @@ public class DataBaseConfig {
         return em;
     }
 
-    @Primary
+
     @Bean
-    public PlatformTransactionManager liderTransactionManager() {
+    public PlatformTransactionManager newTonTransactionManager() {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                productEntityManager().getObject());
+                newTonEntityManager().getObject());
         return transactionManager;
     }
 }

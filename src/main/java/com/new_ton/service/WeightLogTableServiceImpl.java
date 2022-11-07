@@ -7,6 +7,7 @@ import com.new_ton.domain.dto.WeighingLogRequestDto;
 import com.new_ton.domain.dto.WeightLogTableResponseDto;
 import com.new_ton.domain.entities.CalibrationEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class WeightLogTableServiceImpl implements WeightLogTableService {
-    private static final Logger log = LoggerFactory.getLogger(WeightLogTableServiceImpl.class);
+
     private final CalibrationTableDao calibrationTableDao;
     private final ColumnNameService columnNameService;
 

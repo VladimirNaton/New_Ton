@@ -7,40 +7,35 @@ import com.new_ton.domain.dto.ProductTableRequestDto;
 import com.new_ton.domain.dto.ProductTableResponseDto;
 import com.new_ton.domain.dto.ProductTableResponseEntityDto;
 import com.new_ton.domain.entities.MainEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
+@Log4j2
+@RequiredArgsConstructor
 @Service
 public class ProductTableServiceImpl implements ProductTableService {
-    private static final Logger log = LoggerFactory.getLogger(ProductTableServiceImpl.class);
+
     private final MainTableDao mainTableDao;
     private final ColumnNameService columnNameService;
 
-    public ProductTableServiceImpl(MainTableDao mainTableDao, ColumnNameService columnNameService) {
-        this.mainTableDao = mainTableDao;
-        this.columnNameService = columnNameService;
-    }
 
     public ProductTableResponseDto getProductTableDate(ProductTableRequestDto productTableRequestDto) {
         try {
             ProductTableResponseDto productTableResponseDto = new ProductTableResponseDto();
-            String column = this.columnNameService.getColumnNameProductTable(productTableRequestDto.getOrderColumn());
+            String column = columnNameService.getColumnNameProductTable(productTableRequestDto.getOrderColumn());
             productTableRequestDto.setOrderColumn(column);
-            ProductTableResponseEntityDto productTableResponseEntityDto = this.mainTableDao.getProductTableData(productTableRequestDto);
+            ProductTableResponseEntityDto productTableResponseEntityDto = mainTableDao.getProductTableData(productTableRequestDto);
             List<MainEntity> mainEntityList = productTableResponseEntityDto.getMainEntityList();
-            List<ProductTableDto> data = new ArrayList();
-            Iterator var7 = mainEntityList.iterator();
+            List<ProductTableDto> data = new ArrayList<>();
 
-            while(var7.hasNext()) {
-                MainEntity me = (MainEntity)var7.next();
+            for (MainEntity me : mainEntityList) {
                 ProductTableDto productTableDto = new ProductTableDto();
                 productTableDto.setIdpr(me.getIdpr());
                 String pattern;
@@ -87,8 +82,8 @@ public class ProductTableServiceImpl implements ProductTableService {
             }
 
             return productTableResponseDto;
-        } catch (Exception var14) {
-            log.error("Error getProductTableDate : {}, {}", ExceptionUtils.getMessage(var14), ExceptionUtils.getMessage(var14.getCause()));
+        } catch (Exception e) {
+            log.error("Error getProductTableDate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }

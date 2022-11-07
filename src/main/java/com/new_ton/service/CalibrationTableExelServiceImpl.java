@@ -1,6 +1,8 @@
 package com.new_ton.service;
 
 import com.new_ton.domain.dto.CalibrationTableDto;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,7 +17,6 @@ import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -30,31 +31,31 @@ public class CalibrationTableExelServiceImpl implements CalibrationTableExelServ
     }
 
     public void writeHeaderLine() {
-        this.sheet = this.workbook.createSheet("Журнал взвешиваний");
-        Row row = this.sheet.createRow(0);
-        CellStyle style = this.workbook.createCellStyle();
-        XSSFFont font = this.workbook.createFont();
+        sheet = workbook.createSheet("Журнал взвешиваний");
+        Row row = sheet.createRow(0);
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
         font.setBold(true);
         font.setFontHeight(16.0D);
         style.setFont(font);
-        this.createCell(row, 0, "Дата/время", style);
-        this.createCell(row, 1, "№ весов", style);
-        this.createCell(row, 2, "Вес план.", style);
-        this.createCell(row, 3, "Вес факт.", style);
-        this.createCell(row, 4, "Пользователь", style);
+        createCell(row, 0, "Дата/время", style);
+        createCell(row, 1, "№ весов", style);
+        createCell(row, 2, "Вес план.", style);
+        createCell(row, 3, "Вес факт.", style);
+        createCell(row, 4, "Пользователь", style);
     }
 
     public void createCell(Row row, int columnCount, Object value, CellStyle style) {
-        this.sheet.autoSizeColumn(columnCount);
+        sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);
         if (value instanceof Integer) {
-            cell.setCellValue((double)(Integer)value);
+            cell.setCellValue((double) (Integer) value);
         } else if (value instanceof Date) {
             Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String stringValue = formatter.format(value);
             cell.setCellValue(stringValue);
         } else {
-            cell.setCellValue((String)value);
+            cell.setCellValue((String) value);
         }
 
         cell.setCellStyle(style);
@@ -62,22 +63,20 @@ public class CalibrationTableExelServiceImpl implements CalibrationTableExelServ
 
     public void writeDataLines() {
         int rowCount = 1;
-        CellStyle style = this.workbook.createCellStyle();
-        XSSFFont font = this.workbook.createFont();
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
         font.setFontHeight(14.0D);
         style.setFont(font);
-        Iterator var4 = this.calibrationTableDtoList.iterator();
 
-        while(var4.hasNext()) {
-            CalibrationTableDto ctd = (CalibrationTableDto)var4.next();
-            Row row = this.sheet.createRow(rowCount++);
+        for (CalibrationTableDto ctd: calibrationTableDtoList) {
+            Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
             int var8 = columnCount + 1;
-            this.createCell(row, columnCount, ctd.getDate(), style);
-            this.createCell(row, var8++, ctd.getNw(), style);
-            this.createCell(row, var8++, ctd.getPlmass(), style);
-            this.createCell(row, var8++, ctd.getFactmass(), style);
-            this.createCell(row, var8++, ctd.getOperfio(), style);
+            createCell(row, columnCount, ctd.getDate(), style);
+            createCell(row, var8++, ctd.getNw(), style);
+            createCell(row, var8++, ctd.getPlmass(), style);
+            createCell(row, var8++, ctd.getFactmass(), style);
+            createCell(row, var8++, ctd.getOperfio(), style);
         }
 
     }

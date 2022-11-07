@@ -9,12 +9,11 @@ import com.new_ton.domain.dto.RecipePageDataDto;
 import com.new_ton.domain.dto.SumWeightDto;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.RawEntity;
-import com.new_ton.domain.entities.RecipeMainTableDto;
+import com.new_ton.domain.dto.RecipeMainTableDto;
 import com.new_ton.domain.entities.UnloadEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -22,10 +21,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageService {
-    private static final Logger log = LoggerFactory.getLogger(GetDataForRecipePageServiceImpl.class);
     private final MainTableDao mainTableDao;
     private final RawTableDao rawTableDao;
     private final UploadTableDao uploadTableDao;
@@ -34,10 +33,10 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
     public RecipePageDataDto getDataForRecipePage(int idProd) {
         try {
             RecipePageDataDto recipePageDataDto = new RecipePageDataDto();
-            Optional<MainEntity> mainEntityOptional = this.mainTableDao.findByIdpr(idProd);
+            Optional<MainEntity> mainEntityOptional = mainTableDao.findByIdpr(idProd);
             DateFormat dateMade = new SimpleDateFormat("yyyy-MM-dd");
             if (mainEntityOptional.isPresent()) {
-                MainEntity mainEntity = (MainEntity)mainEntityOptional.get();
+                MainEntity mainEntity = mainEntityOptional.get();
                 recipePageDataDto.setAllTimeMade(mainEntity.getTimemade());
                 recipePageDataDto.setNameProd(mainEntity.getNameprod());
                 recipePageDataDto.setMainMass(mainEntity.getMass());
@@ -48,14 +47,12 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
             }
 
             recipePageDataDto.setCurrentDate(dateMade.format(new Date()));
-            List<RawEntity> rawEntityList = this.rawTableDao.findAllByIdProd(idProd);
+            List<RawEntity> rawEntityList = rawTableDao.findAllByIdProd(idProd);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            List<RecipeMainTableDto> recipeMainTableDtoList = new ArrayList();
+            List<RecipeMainTableDto> recipeMainTableDtoList = new ArrayList<>();
 
-            RecipeMainTableDto dto;
-            for(Iterator var8 = rawEntityList.iterator(); var8.hasNext(); recipeMainTableDtoList.add(dto)) {
-                RawEntity re = (RawEntity)var8.next();
-                dto = new RecipeMainTableDto();
+            for (RawEntity re : rawEntityList) {
+                RecipeMainTableDto dto = new RecipeMainTableDto();
                 dto.setStage(re.getStage());
                 dto.setCode(re.getCode());
                 dto.setNameraw(re.getNameraw());
@@ -87,7 +84,9 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
                 if (re.getPastdate() != null) {
                     dto.setPastdate(dateFormat.format(re.getPastdate()));
                 }
+                recipeMainTableDtoList.add(dto);
             }
+
 
             List<RecipeMainTableDto> recipeMainTableDtoListNew = recipeMainTableDtoList.stream().sorted(Comparator.comparing(RecipeMainTableDto::getStage)).collect(Collectors.toList());
             recipePageDataDto.setCollSpanStage1(recipeMainTableDtoListNew.stream().filter((rm) -> {
@@ -101,12 +100,10 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
             }).count());
             recipePageDataDto.setRecipeMainTableDtoList(recipeMainTableDtoListNew);
             SumWeightDto sumWeightDto = new SumWeightDto();
-            List<UnloadEntity> unloadEntityList = this.uploadTableDao.getUnloadEntityById(idProd);
+            List<UnloadEntity> unloadEntityList = uploadTableDao.getUnloadEntityById(idProd);
             double sum = 0.0D;
-            Iterator var12 = unloadEntityList.iterator();
 
-            while(var12.hasNext()) {
-                UnloadEntity entity = (UnloadEntity)var12.next();
+            for (UnloadEntity entity : unloadEntityList) {
                 if (entity.getNumb() == 1) {
                     sumWeightDto.setBarrel1(String.valueOf(entity.getMass()));
                     sum += entity.getMass();
@@ -132,33 +129,33 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
             recipePageDataDto.setSumWeightDto(sumWeightDto);
 
             RecipeMainTableDto recipeMainTableDto;
-            Optional rawEntityOptionalStage2;
+            Optional<RawEntity> rawEntityOptionalStage2;
             RawEntity rawEntity;
             try {
-                rawEntityOptionalStage2 = this.rawTableDao.findCode8Stage1(idProd);
+                rawEntityOptionalStage2 = rawTableDao.findCode8Stage1(idProd);
                 if (rawEntityOptionalStage2.isPresent()) {
-                    rawEntity = (RawEntity)rawEntityOptionalStage2.get();
-                    recipeMainTableDto = (RecipeMainTableDto)(new ObjectMapper()).convertValue(rawEntity, RecipeMainTableDto.class);
+                    rawEntity = rawEntityOptionalStage2.get();
+                    recipeMainTableDto = (new ObjectMapper()).convertValue(rawEntity, RecipeMainTableDto.class);
                     recipePageDataDto.setCode8Stage1(recipeMainTableDto);
                 }
-            } catch (Exception var16) {
-                log.error("Error rawEntityOptionalStage1 : {}, {}", ExceptionUtils.getMessage(var16), ExceptionUtils.getMessage(var16.getCause()));
+            } catch (Exception e) {
+                log.error("Error rawEntityOptionalStage1 : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             }
 
             try {
-                rawEntityOptionalStage2 = this.rawTableDao.findCode8Stage2(idProd);
+                rawEntityOptionalStage2 = rawTableDao.findCode8Stage2(idProd);
                 if (rawEntityOptionalStage2.isPresent()) {
-                    rawEntity = (RawEntity)rawEntityOptionalStage2.get();
-                    recipeMainTableDto = (RecipeMainTableDto)(new ObjectMapper()).convertValue(rawEntity, RecipeMainTableDto.class);
+                    rawEntity = rawEntityOptionalStage2.get();
+                    recipeMainTableDto = (new ObjectMapper()).convertValue(rawEntity, RecipeMainTableDto.class);
                     recipePageDataDto.setCode8Stage2(recipeMainTableDto);
                 }
-            } catch (Exception var15) {
-                log.error("Error rawEntityOptionalStage2 : {}, {}", ExceptionUtils.getMessage(var15), ExceptionUtils.getMessage(var15.getCause()));
+            } catch (Exception e) {
+                log.error("Error rawEntityOptionalStage2 : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             }
 
             return recipePageDataDto;
-        } catch (Exception var17) {
-            log.error("Error getDataForRecipePage : {}, {}", ExceptionUtils.getMessage(var17), ExceptionUtils.getMessage(var17.getCause()));
+        } catch (Exception e) {
+            log.error("Error getDataForRecipePage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return new RecipePageDataDto();
         }
     }

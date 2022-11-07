@@ -2,28 +2,25 @@ package com.new_ton.service;
 
 
 import com.new_ton.dao.CalibrationTableDao;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.exception.ExceptionUtils;;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@RequiredArgsConstructor
+@Log4j2
 @Service
 public class GetFioOperServiceImpl implements GetFioOperService {
-    private static final Logger log = LoggerFactory.getLogger(GetFioOperServiceImpl.class);
     private final CalibrationTableDao calibrationTableDao;
-
-    public GetFioOperServiceImpl(CalibrationTableDao calibrationTableDao) {
-        this.calibrationTableDao = calibrationTableDao;
-    }
 
     public List<String> getFioOper() {
         try {
-            return this.calibrationTableDao.fioOperList();
-        } catch (Exception var2) {
-            log.error("Error getFioOper : {}, {}", ExceptionUtils.getMessage(var2), ExceptionUtils.getMessage(var2.getCause()));
+            return calibrationTableDao.fioOperList();
+        } catch (Exception e) {
+            log.error("Error getFioOper : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return Collections.emptyList();
         }
     }

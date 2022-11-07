@@ -118,8 +118,8 @@ public class CalibrationTableDaoImpl implements CalibrationTableDao {
             calibrationTableEntityDto.setCalibrationEntityList(calibrationEntityList);
             calibrationTableEntityDto.setTotalElements(pageCount);
             return calibrationTableEntityDto;
-        } catch (Exception var11) {
-            log.error("Error getDataCalibrationTable : {}, {}", ExceptionUtils.getMessage(var11), ExceptionUtils.getMessage(var11.getCause()));
+        } catch (Exception e) {
+            log.error("Error getDataCalibrationTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }

@@ -1,6 +1,7 @@
 package com.new_ton.service;
 
 import com.new_ton.domain.dto.ProductTableDto;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -20,9 +21,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+@Log4j2
 @Service
 public class ProductTableExelServiceImpl implements ProductTableExelService {
-    private static final Logger log = LoggerFactory.getLogger(ProductTableExelServiceImpl.class);
+
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private List<ProductTableDto> productTableDtoList;
@@ -34,34 +36,34 @@ public class ProductTableExelServiceImpl implements ProductTableExelService {
 
     public void writeHeaderLine() {
         try {
-            this.sheet = this.workbook.createSheet("Таблица продукта");
-            Row row = this.sheet.createRow(0);
-            CellStyle style = this.workbook.createCellStyle();
-            XSSFFont font = this.workbook.createFont();
+            sheet = workbook.createSheet("Таблица продукта");
+            Row row = sheet.createRow(0);
+            CellStyle style = workbook.createCellStyle();
+            XSSFFont font = workbook.createFont();
             font.setBold(true);
             font.setFontHeight(16.0D);
             style.setFont(font);
-            this.createCell(row, 0, "Id продукта", style);
-            this.createCell(row, 1, "Дата создания", style);
-            this.createCell(row, 2, "Дата план", style);
-            this.createCell(row, 3, "Дата производства", style);
-            this.createCell(row, 4, "Бренд", style);
-            this.createCell(row, 5, "Название продукта", style);
-            this.createCell(row, 6, "Спецификация", style);
-            this.createCell(row, 7, "Процент", style);
-            this.createCell(row, 8, "Вес", style);
-        } catch (Exception var4) {
-            log.error("Error writeHeaderLine : {}, {}", ExceptionUtils.getMessage(var4), ExceptionUtils.getMessage(var4.getCause()));
+            createCell(row, 0, "Id продукта", style);
+            createCell(row, 1, "Дата создания", style);
+            createCell(row, 2, "Дата план", style);
+            createCell(row, 3, "Дата производства", style);
+            createCell(row, 4, "Бренд", style);
+            createCell(row, 5, "Название продукта", style);
+            createCell(row, 6, "Спецификация", style);
+            createCell(row, 7, "Процент", style);
+            createCell(row, 8, "Вес", style);
+        } catch (Exception e) {
+            log.error("Error writeHeaderLine : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
     }
 
     public void createCell(Row row, int columnCount, Object value, CellStyle style) {
         try {
-            this.sheet.autoSizeColumn(columnCount);
+            sheet.autoSizeColumn(columnCount);
             Cell cell = row.createCell(columnCount);
             if (value instanceof Integer) {
-                cell.setCellValue((double)(Integer)value);
+                cell.setCellValue((double) (Integer) value);
             } else if (value instanceof Date) {
                 Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String stringValue = formatter.format(value);
@@ -69,12 +71,12 @@ public class ProductTableExelServiceImpl implements ProductTableExelService {
             } else if (value instanceof Double) {
                 cell.setCellValue(String.valueOf(value));
             } else {
-                cell.setCellValue((String)value);
+                cell.setCellValue((String) value);
             }
 
             cell.setCellStyle(style);
-        } catch (Exception var8) {
-            log.error("Error createCell : {}, {}", ExceptionUtils.getMessage(var8), ExceptionUtils.getMessage(var8.getCause()));
+        } catch (Exception e) {
+            log.error("Error createCell : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
     }
@@ -82,15 +84,13 @@ public class ProductTableExelServiceImpl implements ProductTableExelService {
     public void writeDataLines() {
         try {
             int rowCount = 1;
-            CellStyle style = this.workbook.createCellStyle();
-            XSSFFont font = this.workbook.createFont();
+            CellStyle style = workbook.createCellStyle();
+            XSSFFont font = workbook.createFont();
             font.setFontHeight(14.0D);
             style.setFont(font);
-            Iterator var4 = this.productTableDtoList.iterator();
 
-            while(var4.hasNext()) {
-                ProductTableDto ptd = (ProductTableDto)var4.next();
-                Row row = this.sheet.createRow(rowCount++);
+            for (ProductTableDto ptd : productTableDtoList) {
+                Row row = sheet.createRow(rowCount++);
                 int columnCount = 0;
                 int var9 = columnCount + 1;
                 this.createCell(row, columnCount, ptd.getIdpr(), style);
@@ -103,21 +103,21 @@ public class ProductTableExelServiceImpl implements ProductTableExelService {
                 this.createCell(row, var9++, ptd.getPercent(), style);
                 this.createCell(row, var9++, ptd.getMass(), style);
             }
-        } catch (Exception var8) {
-            log.error("Error createCell : {}, {}", ExceptionUtils.getMessage(var8), ExceptionUtils.getMessage(var8.getCause()));
+        } catch (Exception e) {
+            log.error("Error createCell : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
     }
 
     public void export(HttpServletResponse response) {
         try {
-            this.writeHeaderLine();
-            this.writeDataLines();
+            writeHeaderLine();
+            writeDataLines();
             ServletOutputStream outputStream = response.getOutputStream();
 
             try {
-                this.workbook.write(outputStream);
-                this.workbook.close();
+                workbook.write(outputStream);
+                workbook.close();
             } catch (Throwable var6) {
                 if (outputStream != null) {
                     try {
@@ -133,9 +133,8 @@ public class ProductTableExelServiceImpl implements ProductTableExelService {
             if (outputStream != null) {
                 outputStream.close();
             }
-        } catch (Exception var7) {
-            log.error("Error export : {}, {}", ExceptionUtils.getMessage(var7), ExceptionUtils.getMessage(var7.getCause()));
+        } catch (Exception e) {
+            log.error("Error export : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
-
     }
 }

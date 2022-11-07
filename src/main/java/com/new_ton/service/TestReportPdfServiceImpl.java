@@ -6,6 +6,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.new_ton.domain.dto.PrintTestReportDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,26 +25,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@Log4j2
 @Service
+@RequiredArgsConstructor
 public class TestReportPdfServiceImpl implements TestReportPdfService {
-    private static final Logger log = LoggerFactory.getLogger(TestReportPdfServiceImpl.class);
-    private final PrintDocumentService printDocumentService;
 
-    public TestReportPdfServiceImpl(PrintDocumentService printDocumentService) {
-        this.printDocumentService = printDocumentService;
-    }
+    private final PrintDocumentService printDocumentService;
 
     public boolean createTestReportPdf(PrintTestReportDto dto) {
         try {
             StringBuilder mainDirectory = new StringBuilder();
             mainDirectory.append("C:/NewTon");
-            if (!Files.exists(Paths.get(mainDirectory.toString()), new LinkOption[0])) {
+            if (!Files.exists(Paths.get(mainDirectory.toString()))) {
                 log.info("Create directory " + mainDirectory);
                 Files.createDirectory(Paths.get(mainDirectory.toString()));
             }
 
             mainDirectory.append("/TestReportLabels");
-            if (!Files.exists(Paths.get(mainDirectory.toString()), new LinkOption[0])) {
+            if (!Files.exists(Paths.get(mainDirectory.toString()))) {
                 Files.createDirectory(Paths.get(mainDirectory.toString()));
                 log.info("Create directory " + mainDirectory);
             }
@@ -51,7 +51,7 @@ public class TestReportPdfServiceImpl implements TestReportPdfService {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = dateFormat.format(date);
             mainDirectory.append("/").append(currentDate);
-            if (!Files.exists(Paths.get(mainDirectory.toString()), new LinkOption[0])) {
+            if (!Files.exists(Paths.get(mainDirectory.toString()))) {
                 Files.createDirectory(Paths.get(mainDirectory.toString()));
                 log.info("Create directory " + mainDirectory);
             }
@@ -538,7 +538,7 @@ public class TestReportPdfServiceImpl implements TestReportPdfService {
                 boolean var26;
                 try {
                     fileOutputStream.write(byteArrayOutputStream.toByteArray());
-                    var26 = this.printDocumentService.printDocument(mainDirectory.toString());
+                    var26 = printDocumentService.printDocument(mainDirectory.toString());
                 } catch (Throwable var29) {
                     try {
                         fileOutputStream.close();
@@ -551,11 +551,11 @@ public class TestReportPdfServiceImpl implements TestReportPdfService {
 
                 fileOutputStream.close();
                 return var26;
-            } catch (Exception var30) {
-                log.error("Error save document : {}, {}", ExceptionUtils.getMessage(var30), ExceptionUtils.getMessage(var30.getCause()));
+            } catch (Exception e) {
+                log.error("Error save document : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             }
-        } catch (Exception var31) {
-            log.error("Error create test report pdf : {}, {}", ExceptionUtils.getMessage(var31), ExceptionUtils.getMessage(var31.getCause()));
+        } catch (Exception e) {
+            log.error("Error create test report pdf : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
 
         return false;

@@ -1,18 +1,15 @@
 package com.new_ton.service;
 
 
+import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-
+@NoArgsConstructor
+@Log4j2
 @Service
 public class GetTypeDateServiceImpl implements GetTypeDateService {
-    private static final Logger log = LoggerFactory.getLogger(GetTypeDateServiceImpl.class);
-
-    public GetTypeDateServiceImpl() {
-    }
 
     public String getTypeDate(String typeDate) {
         try {
@@ -30,8 +27,8 @@ public class GetTypeDateServiceImpl implements GetTypeDateService {
             }
 
             return getTypeDate;
-        } catch (Exception var3) {
-            log.error("Error getTypeDate : {}, {}", ExceptionUtils.getMessage(var3), ExceptionUtils.getMessage(var3.getCause()));
+        } catch (Exception e) {
+            log.error("Error getTypeDate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }

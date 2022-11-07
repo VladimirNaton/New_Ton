@@ -26,34 +26,34 @@ public class RestWeightTableController {
 
     @PostMapping({"/getTableData"})
     public WeightLogTableResponseDto insertWeighingLog(WeighingLogRequestDto weighingLogRequestDto) {
-        return this.weightLogTableService.getWeightLogTableData(weighingLogRequestDto);
+        return weightLogTableService.getWeightLogTableData(weighingLogRequestDto);
     }
 
     @GetMapping({"/getFioOper"})
     public List<String> getFioOper() {
-        return this.getFioOperService.getFioOper();
+        return getFioOperService.getFioOper();
     }
 
     @PostMapping({"/getProductTableData"})
     public ProductTableResponseDto getProductTableData(ProductTableRequestDto productTableRequestDto) {
-        return this.productTableService.getProductTableDate(productTableRequestDto);
+        return productTableService.getProductTableDate(productTableRequestDto);
     }
 
     @PostMapping({"/printDischargePage"})
     public ResponseEntity<?> printDischargePage(@RequestParam int id) throws DocumentException, IOException {
-        boolean result = this.printDischargePageService.printDischargePage(id);
+        boolean result = printDischargePageService.printDischargePage(id);
         return result ? ResponseEntity.ok("") : ResponseEntity.notFound().build();
     }
 
     @PostMapping({"/printTestReport"})
     public ResponseEntity<?> printTestReport(@RequestParam int id) {
-        boolean result = this.printTestReportService.printTestReport(id);
+        boolean result = printTestReportService.printTestReport(id);
         return result ? ResponseEntity.ok("") : ResponseEntity.notFound().build();
     }
 
     @PostMapping({"/recipePageData"})
     public ResponseEntity<?> recipePageData(@RequestParam int id) {
-        RecipePageDataDto recipePageDataDto = this.getDataForRecipePageService.getDataForRecipePage(id);
+        RecipePageDataDto recipePageDataDto = getDataForRecipePageService.getDataForRecipePage(id);
         return recipePageDataDto != null ? ResponseEntity.ok(recipePageDataDto) : ResponseEntity.notFound().build();
     }
 }

@@ -19,8 +19,8 @@ public class LabProtDaoImpl implements LabProtDao{
     public List<LabprotEntity> findAllByIdpr(int id) {
         try {
             return labprotRepository.findAllByIdpr(id);
-        } catch (Exception var3) {
-            log.error("Error findAllByIdpr : {}, {}", ExceptionUtils.getMessage(var3), ExceptionUtils.getMessage(var3.getCause()));
+        } catch (Exception e) {
+            log.error("Error findAllByIdpr : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return Collections.emptyList();
         }
     }
