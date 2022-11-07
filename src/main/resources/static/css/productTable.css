@@ -1,0 +1,151 @@
+#container-product-table-filter {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#form-product-teble {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.classHeight {
+    height: 35px;
+}
+
+.classWidth {
+    width: 160px;
+}
+
+#select-type-date {
+    width: 173px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#productTable {
+    border: 1px solid black;
+}
+
+#productTable th {
+    border: 1px solid black;
+    text-align: center;
+}
+
+#productTable td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+#productTable_length {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 1.5%;
+}
+
+#container-product-table-filter {
+    margin-left: 1.5%;
+}
+
+#dateStart {
+    margin-bottom: 10px;
+    height: 35px;
+}
+
+#timeStart {
+    margin-bottom: 10px;
+}
+
+#container-input-text {
+    margin-left: 15px;
+}
+
+#input1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 193px;
+}
+
+#input2 {
+    margin-bottom: 10px;
+    width: 193px;
+}
+
+#container-button-form-product {
+    margin-left: 15px;
+}
+
+#button1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#containet-label-button {
+    margin-left: 15px;
+}
+
+#button3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#button4 {
+    margin-bottom: 10px;
+}
+
+#container-calibration-table-button {
+    margin-left: 15px;
+}
+
+#button6 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#button7 {
+    margin-bottom: 10px;
+}
+
+.borderColor {
+    border-color: rgb(108, 117, 125);
+    border-width: 1px;
+}
+
+#productTable_info {
+    margin-left: 1.5%;
+}
+
+#productTable_paginate {
+    margin-right: 1.5%;
+}
+
+#container-product-table {
+    background-color: rgb(230, 230, 232);
+}
+
+.calibrationPageLink {
+    text-decoration: none;
+    padding-top: 7px;
+}
+
+@media print {
+
+    #container-product-table-filter {
+        display: none;
+    }
+
+    #productTable_length {
+        display: none;
+    }
+
+    #productTable_info {
+        display: none;
+    }
+
+    #productTable_paginate {
+        display: none;
+    }
+    #productTable td {
+        font-size: 13px;
+    }
+
+}
