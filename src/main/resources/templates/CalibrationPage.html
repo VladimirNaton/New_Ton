@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Журнал взвешиваний</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lidercss.css}">
+
+
+</head>
+<body>
+<div id="container-lider-table">
+    <p id="filterLable">Фильтр</p>
+    <form id="container-lider-table-filter">
+        <div id="containerData">
+            <label>
+                <input id="dateStart" placeholder="Дата начала" class="textbox-n form-select-sm" type="text"
+                       onfocus="(this.type='date')"
+                       onblur="(this.placeholder == 'Дата начала' ? this.type='text' : this.type='date')">
+            </label>
+            <label>
+                <input class="form-select-sm" id="timeStart" type="time" value="00:00">
+            </label>
+            <br>
+            <label>
+                <input id="dateEnd" placeholder="Дата конца" class="textbox-n form-select-sm" type="text"
+                       onfocus="(this.type='date')"
+                       onblur="(this.placeholder == 'Дата конца' ? this.type='text' : this.type='date')">
+            </label>
+            <label>
+                <input id="timeEnd" class="form-select-sm" type="time" value="00:00">
+            </label>
+        </div>
+        <div id="scalesContainer">
+            <label class="fontWeight">Весы
+                <br>
+                <select id="scales" class="form-select-sm" style="width: 100px; margin-top: 15px">
+                    <option value="all">Все</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </label>
+        </div>
+
+        <div id="operFio">
+            <label class="fontWeight">ФИО оператора
+                <br>
+                <select id="fioOper" class="form-select-sm" aria-label="Disabled select example"
+                        style="width: 200px; margin-top: 15px">
+                    <option value="all">Все</option>
+                </select>
+            </label>
+        </div>
+
+        <div id="buttonContainer">
+            <div id="buttonConteiner1">
+                <button id="button1" type="submit" class="btn btn-outline-secondary widthButton btn-sm fontWeight">
+                    Применить
+                </button>
+                <br>
+                <button id="button2" type="reset" class="btn btn-outline-secondary widthButton btn-sm fontWeight">
+                    Сброс
+                </button>
+            </div>
+
+            <div id="buttonConteiner2">
+                <button id="button3" class="btn btn-outline-secondary btn-block widthButton fontWeight btn-sm"
+                        onclick="printClick()">Печать
+                    таблицы
+                </button>
+                <br>
+                <div id="button4" class="btn btn-outline-secondary btn-block widthButton fontWeight btn-sm">Exel</div>
+            </div>
+        </div>
+    </form>
+
+    <table id="liderTable" class="table table-bordered" style="width:97%">
+        <thead>
+        <tr>
+            <th>Дата/время</th>
+            <th>№ весов</th>
+            <th>Вес план.</th>
+            <th>Вес факт.</th>
+            <th>Пользователь</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/scriptlider.js}"></script>
+
+<script>
+    let printClick = function(){
+        window.print();
+    }
+</script>
+
+</body>
+</html>
