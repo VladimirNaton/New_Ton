@@ -1,6 +1,8 @@
 package com.new_ton.controller;
 
 
+import com.new_ton.domain.dto.DischargePageDto;
+import com.new_ton.service.DischargePageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,6 @@ import java.util.List;
 public class MainController {
 
     private final DischargePageService dischargePageService;
-    private final GetDataForRecipePageService getDataForRecipePageService;
 
     @GetMapping
     public String main() {

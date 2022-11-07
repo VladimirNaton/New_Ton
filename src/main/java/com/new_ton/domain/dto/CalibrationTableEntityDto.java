@@ -1,7 +1,7 @@
 package com.new_ton.domain.dto;
 
 
-import com.lider.domain.entities.CalibrationEntity;
+import com.new_ton.domain.entities.CalibrationEntity;
 import lombok.Data;
 
 import java.util.List;

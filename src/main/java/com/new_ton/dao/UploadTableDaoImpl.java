@@ -1,5 +1,7 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.entities.UnloadEntity;
+import com.new_ton.repository.UnloadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

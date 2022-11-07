@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Таблица продукта</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/productTable.css}">
+</head>
+<body>
+<div id="container-product-table">
+  <div id="container-product-table-filter">
+    <form id="form-product-teble">
+      <div id="continer-data-filter">
+        <div id="container-date-type-select">
+          <label>
+            <select class="form-select-sm classHeight borderColor" id="select-type-date">
+              <option value="dateCreate">Дата создания</option>
+              <option value="datePlan">Дата план</option>
+              <option value="dateProduction">Дата производства</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            <input id="dateStart" placeholder="Дата начала"
+                   class="textbox-n form-select-sm classHeight borderColor"
+                   type="text"
+                   onfocus="(this.type='date')"
+                   onblur="(this.placeholder == 'Дата начала' ? this.type='text' : this.type='date')">
+          </label>
+          <label>
+            <input class="form-select-sm classHeight borderColor" id="timeStart" type="time" value="00:00">
+          </label>
+        </div>
+        <div>
+          <label>
+            <input id="dateEnd" placeholder="Дата конца"
+                   class="textbox-n form-select-sm classHeight borderColor"
+                   type="text"
+                   onfocus="(this.type='date')"
+                   onblur="(this.placeholder == 'Дата конца' ? this.type='text' : this.type='date')">
+          </label>
+          <label>
+            <input id="timeEnd" class="form-select-sm classHeight borderColor" type="time" value="00:00">
+          </label>
+        </div>
+      </div>
+      <div id="container-input-text">
+        <label>
+          <input type="text" id="input1" class="form-select-sm classHeight borderColor" placeholder="Бренд">
+        </label>
+        <br>
+        <label>
+          <input type="text" id="input2" class="form-select-sm classHeight borderColor"
+                 placeholder="Название продукта">
+        </label>
+        <br>
+        <label>
+          <select id="input3" class="form-select-sm classHeight borderColor">
+            <option value="">Спецификация</option>
+            <option value="Основная">Основная спецификация</option>
+            <option value="Рабочая">Рабочая спецификация</option>
+          </select>
+
+        </label>
+      </div>
+      <div id="container-button-form-product">
+        <button id="button1"
+                class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth">
+          Применить
+        </button>
+        <br>
+        <button id="button2" type="reset"
+                class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth">Сбросить
+          фильтры
+        </button>
+      </div>
+    </form>
+
+
+    <div id="containet-label-button">
+      <button id="button3"  class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth">
+        Рецептура
+      </button>
+      <br>
+      <a id="button4"
+         class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth calibrationPageLink">Слив</a>
+
+
+      <br>
+      <button sec:authorize ="hasRole('ADMIN')" id="button5"  class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth">
+        Протокол
+      </button>
+    </div>
+    <div id="container-calibration-table-button">
+
+      <a id="button6" th:href="@{/calibrationPage}" target="_blank"
+         class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth calibrationPageLink">Таблица
+        калибровки</a>
+
+      <br>
+      <button id="button7" class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth"
+              onclick="printClick()">
+        Печать
+      </button>
+      <br>
+      <button id="button8" class="btn btn-outline-secondary widthButton btn-sm fontWeight classHeight classWidth">
+        Exel
+      </button>
+    </div>
+  </div>
+
+
+  <table id="productTable" class="table table-bordered" style="width:97%">
+    <thead>
+    <tr>
+      <th id="th1">Id продукта</th>
+      <th>Дата создания</th>
+      <th>Дата план</th>
+      <th>Дата производства</th>
+      <th>Бренд</th>
+      <th>Название продукта</th>
+      <th>Спецификация</th>
+      <th>Процент</th>
+      <th>Вес</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+</div>
+
+
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/productTable.js}"></script>
+
+
+<script>
+
+  let printClick = function () {
+    $('#th1').text("id")
+    window.print();
+    $('#th1').text("Id продукта")
+  }
+
+</script>
+
+
+</body>
+</html>

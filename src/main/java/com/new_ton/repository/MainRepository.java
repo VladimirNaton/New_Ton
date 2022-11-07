@@ -1,7 +1,7 @@
 package com.new_ton.repository;
 
 
-import com.lider.domain.entities.MainEntity;
+import com.new_ton.domain.entities.MainEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

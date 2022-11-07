@@ -1,6 +1,6 @@
 package com.new_ton.repository;
 
-import com.lider.domain.entities.RawEntity;
+import com.new_ton.domain.entities.RawEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

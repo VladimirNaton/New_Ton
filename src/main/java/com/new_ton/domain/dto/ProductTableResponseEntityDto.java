@@ -1,6 +1,6 @@
 package com.new_ton.domain.dto;
 
-import com.lider.domain.entities.MainEntity;
+import com.new_ton.domain.entities.MainEntity;
 import lombok.Data;
 
 import java.util.List;

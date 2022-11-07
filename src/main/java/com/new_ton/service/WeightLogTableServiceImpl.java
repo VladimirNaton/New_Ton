@@ -1,11 +1,12 @@
 package com.new_ton.service;
 
-import com.lider.dao.CalibrationTableDao;
-import com.lider.domain.dto.CalibrationTableDto;
-import com.lider.domain.dto.CalibrationTableEntityDto;
-import com.lider.domain.dto.WeighingLogRequestDto;
-import com.lider.domain.dto.WeightLogTableResponseDto;
-import com.lider.domain.entities.CalibrationEntity;
+import com.new_ton.dao.CalibrationTableDao;
+import com.new_ton.domain.dto.CalibrationTableDto;
+import com.new_ton.domain.dto.CalibrationTableEntityDto;
+import com.new_ton.domain.dto.WeighingLogRequestDto;
+import com.new_ton.domain.dto.WeightLogTableResponseDto;
+import com.new_ton.domain.entities.CalibrationEntity;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +19,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class WeightLogTableServiceImpl implements WeightLogTableService {
     private static final Logger log = LoggerFactory.getLogger(WeightLogTableServiceImpl.class);
     private final CalibrationTableDao calibrationTableDao;
     private final ColumnNameService columnNameService;
 
-    public WeightLogTableServiceImpl(CalibrationTableDao calibrationTableDao, ColumnNameService columnNameService) {
-        this.calibrationTableDao = calibrationTableDao;
-        this.columnNameService = columnNameService;
-    }
 
     public WeightLogTableResponseDto getWeightLogTableData(WeighingLogRequestDto weighingLogRequestDto) {
         try {
@@ -65,8 +63,8 @@ public class WeightLogTableServiceImpl implements WeightLogTableService {
 
             weightLogTableResponseDto.setData(calibrationTableDtoList);
             return weightLogTableResponseDto;
-        } catch (Exception var13) {
-            log.error("Error getWeightLogTableData : {}, {}", ExceptionUtils.getMessage(var13), ExceptionUtils.getMessage(var13.getCause()));
+        } catch (Exception e) {
+            log.error("Error getWeightLogTableData : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
     }

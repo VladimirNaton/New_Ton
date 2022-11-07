@@ -1,7 +1,7 @@
 package com.new_ton.service;
 
-import com.lider.dao.UserDao;
-import com.lider.domain.entities.UserEntity;
+import com.new_ton.dao.UserDao;
+import com.new_ton.domain.entities.UserEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

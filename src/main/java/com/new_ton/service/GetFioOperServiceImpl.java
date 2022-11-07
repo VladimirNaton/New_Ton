@@ -1,7 +1,7 @@
 package com.new_ton.service;
 
 
-import com.lider.dao.CalibrationTableDao;
+import com.new_ton.dao.CalibrationTableDao;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

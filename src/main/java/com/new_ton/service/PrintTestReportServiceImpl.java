@@ -1,11 +1,11 @@
 package com.new_ton.service;
 
 
-import com.lider.dao.LabProtDao;
-import com.lider.dao.MainTableDao;
-import com.lider.domain.dto.*;
-import com.lider.domain.entities.LabprotEntity;
-import com.lider.domain.entities.MainEntity;
+import com.new_ton.dao.LabProtDao;
+import com.new_ton.dao.MainTableDao;
+import com.new_ton.domain.dto.*;
+import com.new_ton.domain.entities.LabprotEntity;
+import com.new_ton.domain.entities.MainEntity;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

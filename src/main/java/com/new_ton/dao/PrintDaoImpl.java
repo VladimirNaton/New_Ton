@@ -1,5 +1,6 @@
 package com.new_ton.dao;
 
+import com.new_ton.repository.PrintRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

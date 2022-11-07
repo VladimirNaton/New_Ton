@@ -1,5 +1,9 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.dto.CalibrationTableEntityDto;
+import com.new_ton.domain.dto.WeighingLogRequestDto;
+import com.new_ton.domain.entities.CalibrationEntity;
+import com.new_ton.repository.CalibrationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

@@ -1,5 +1,7 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.entities.RawEntity;
+
 import java.util.List;
 import java.util.Optional;
 

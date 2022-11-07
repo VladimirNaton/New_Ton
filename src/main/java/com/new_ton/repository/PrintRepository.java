@@ -1,7 +1,7 @@
 package com.new_ton.repository;
 
 
-import com.lider.domain.entities.PrintEntity;
+import com.new_ton.domain.entities.PrintEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

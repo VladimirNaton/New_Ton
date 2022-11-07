@@ -2,15 +2,16 @@ package com.new_ton.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lider.dao.MainTableDao;
-import com.lider.dao.RawTableDao;
-import com.lider.dao.UploadTableDao;
-import com.lider.domain.dto.RecipePageDataDto;
-import com.lider.domain.dto.SumWeightDto;
-import com.lider.domain.entities.MainEntity;
-import com.lider.domain.entities.RawEntity;
-import com.lider.domain.entities.RecipeMainTableDto;
-import com.lider.domain.entities.UnloadEntity;
+import com.new_ton.dao.MainTableDao;
+import com.new_ton.dao.RawTableDao;
+import com.new_ton.dao.UploadTableDao;
+import com.new_ton.domain.dto.RecipePageDataDto;
+import com.new_ton.domain.dto.SumWeightDto;
+import com.new_ton.domain.entities.MainEntity;
+import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.entities.RecipeMainTableDto;
+import com.new_ton.domain.entities.UnloadEntity;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageService {
     private static final Logger log = LoggerFactory.getLogger(GetDataForRecipePageServiceImpl.class);
@@ -28,11 +30,6 @@ public class GetDataForRecipePageServiceImpl implements GetDataForRecipePageServ
     private final RawTableDao rawTableDao;
     private final UploadTableDao uploadTableDao;
 
-    public GetDataForRecipePageServiceImpl(MainTableDao mainTableDao, RawTableDao rawTableDao, UploadTableDao uploadTableDao) {
-        this.mainTableDao = mainTableDao;
-        this.rawTableDao = rawTableDao;
-        this.uploadTableDao = uploadTableDao;
-    }
 
     public RecipePageDataDto getDataForRecipePage(int idProd) {
         try {

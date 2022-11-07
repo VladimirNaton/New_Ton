@@ -1,12 +1,12 @@
 package com.new_ton.service;
 
 
-import com.lider.dao.MainTableDao;
-import com.lider.domain.dto.ProductTableDto;
-import com.lider.domain.dto.ProductTableRequestDto;
-import com.lider.domain.dto.ProductTableResponseDto;
-import com.lider.domain.dto.ProductTableResponseEntityDto;
-import com.lider.domain.entities.MainEntity;
+import com.new_ton.dao.MainTableDao;
+import com.new_ton.domain.dto.ProductTableDto;
+import com.new_ton.domain.dto.ProductTableRequestDto;
+import com.new_ton.domain.dto.ProductTableResponseDto;
+import com.new_ton.domain.dto.ProductTableResponseEntityDto;
+import com.new_ton.domain.entities.MainEntity;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

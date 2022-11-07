@@ -1,7 +1,8 @@
 package com.new_ton.service;
 
-import com.lider.dao.UploadTableDao;
-import com.lider.domain.dto.DischargePageDto;
+import com.new_ton.dao.UploadTableDao;
+import com.new_ton.domain.dto.DischargePageDto;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +12,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class DischargePageServiceImpl implements DischargePageService {
     private static final Logger log = LoggerFactory.getLogger(DischargePageServiceImpl.class);
     private final UploadTableDao uploadTableDao;
-
-    public DischargePageServiceImpl(UploadTableDao uploadTableDao) {
-        this.uploadTableDao = uploadTableDao;
-    }
 
     public List<DischargePageDto> getDischangeList(int id) {
         try {

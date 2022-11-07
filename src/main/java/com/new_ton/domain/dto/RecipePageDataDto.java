@@ -1,7 +1,7 @@
 package com.new_ton.domain.dto;
 
 
-import com.lider.domain.entities.RecipeMainTableDto;
+import com.new_ton.domain.entities.RecipeMainTableDto;
 import lombok.Data;
 
 import java.util.List;
