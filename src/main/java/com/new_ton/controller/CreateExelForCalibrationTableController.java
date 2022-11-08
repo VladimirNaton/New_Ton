@@ -7,6 +7,7 @@ import com.new_ton.service.ProductTableExelServiceImpl;
 import com.new_ton.service.ProductTableService;
 import com.new_ton.service.WeightLogTableService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

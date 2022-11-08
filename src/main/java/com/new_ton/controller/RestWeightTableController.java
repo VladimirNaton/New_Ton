@@ -6,10 +6,12 @@ import com.new_ton.domain.dto.*;
 import com.new_ton.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @RequestMapping({"/api/v1"})
