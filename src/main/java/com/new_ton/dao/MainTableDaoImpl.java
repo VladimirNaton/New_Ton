@@ -119,6 +119,7 @@ public class MainTableDaoImpl implements MainTableDao {
 
             productTableResponseEntityDto.setMainEntityList(mainEntityList);
             productTableResponseEntityDto.setRecordsTotal(pageCount);
+            entityManager.close();
 
             return productTableResponseEntityDto;
         } catch (Exception e) {

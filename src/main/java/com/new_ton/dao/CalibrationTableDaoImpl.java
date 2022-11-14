@@ -113,6 +113,7 @@ public class CalibrationTableDaoImpl implements CalibrationTableDao {
                 queryResult.setFirstResult(weighingLogRequestDto.getStart());
                 queryResult.setMaxResults(weighingLogRequestDto.getLength());
             }
+            entityManager.close();
 
             List<CalibrationEntity> calibrationEntityList = queryResult.getResultList();
             calibrationTableEntityDto.setCalibrationEntityList(calibrationEntityList);
