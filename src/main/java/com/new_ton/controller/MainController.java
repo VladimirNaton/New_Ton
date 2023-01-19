@@ -3,16 +3,16 @@ package com.new_ton.controller;
 
 import com.new_ton.domain.dto.DischargePageDto;
 import com.new_ton.service.DischargePageService;
+import com.new_ton.service.GerUserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,26 +22,17 @@ public class MainController {
 
     private final DischargePageService dischargePageService;
 
+    private final GerUserRoleService gerUserRoleService;
+
     @GetMapping
     public String main() {
-        return "redirect:role_action";
+        return "redirect:login";
     }
 
-
     @GetMapping("/role_action")
-    public String roleAction() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        var authorities = auth.getAuthorities();
-        var roleOptional = authorities.stream().findFirst();
-        if (roleOptional.isPresent()) {
-            var role = roleOptional.get();
-            if (role.getAuthority().equals("ROLE_ADMIN") || role.getAuthority().equals("ROLE_USER")) {
-                return "redirect:productPage";
-            } else {
-                return "redirect:technologist_page";
-            }
-        }
-        return "";
+    public String roleAction(HttpServletRequest httpServletRequest) {
+        String userRole = gerUserRoleService.getUserRole(httpServletRequest);
+        return "redirect:technologist_page";
     }
 
     @GetMapping({"/calibrationPage"})

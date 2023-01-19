@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/technologystPage.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/techologistPage.js}"></script>
+
+
 </head>
 <body>
-<h1>Страница технолога !</h1>
+<div id="main-container-technologist-page">
+    <div id="head-container">
+        <div id="start-string">
+            <div id="name-user">Технолог</div>
+            <div id="title-page">Страница редактирования продукта</div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; justify-content: space-between">
+            <div>
+                <div id="container-information">
+                    <div id="first-row-information">
+                        <input type="text" placeholder="Бренд" readonly value="NT">
+                        <input type="text" placeholder="Дата производства" readonly value="556-55-564654">
+                    </div>
+                    <div id="second-row-information">
+                        <input type="text" placeholder="Название продукта" readonly value="56vds.f[eqw[f">
+                        <label>Общий вес, кг <br>
+                            <input type="text" placeholder="Общий вес">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="button-container">
+                    <button>Страница продукта</button>
+                    <br>
+                    <button>В производстве</button>
+                    <br>
+                    <button>Отправить операционисту</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="product-catalog-head"></div>
+        <div id="product-catalog-body">
+            <div id="product-catalog-left">
+                <div id="product-catalog-start-string-left">Отобразить каталог</div>
+                <div id="left-table-container">
+                    <table id="left-product-table">
+                        <thead>
+                        <tr>
+                            <td>idpr</td>
+                            <td>brend</td>
+                            <td>nameprod</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div id="product-catalog-right">
+                <div id="product-catalog-start-string-right">Продукт в производство</div>
+                <div id="right-table-container">
+                    <table id="right-product-table">
+                        <thead>
+                        <tr>
+                            <td>idpr</td>
+                            <td>brend</td>
+                            <td>nameprod</td>
+                            <td>datecr</td>
+                            <td>percent</td>
+                            <td>mass</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
