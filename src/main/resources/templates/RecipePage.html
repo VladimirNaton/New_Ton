@@ -1,251 +1,254 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Рецептура</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
-  <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
-  <script type="text/javascript" th:src="@{js/recipePage.js}"></script>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/recipePage.css}">
+    <meta charset="UTF-8">
+    <title>Рецептура</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{js/recipePage.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/recipePage.css}">
 </head>
 <body>
-<button sec:authorize ="hasRole('ADMIN')" id="printBtn" class="btn btn-outline-secondary btn-sm" style="margin-left: 1%; margin-top: 15px"
+<button id="printBtn" class="btn btn-outline-secondary btn-sm" style="margin-left: 1%; margin-top: 15px"
         onclick="printClick()">Печать
 </button>
 <div id="main-container-recipe">
-  <div id="container-head-recipe">
-    <div id="left-container-head-recipe">
-      <table>
-        <tr>
-          <td id="td-img" class="borderTd"><img id="label-img"
-                                                th:src="@{image/new_ton.png}"
-                                                alt=""></td>
-          <td id="number-recipe" class="borderTd">№ Рецептури
-          </td>
-          <td id="td-middle-container" colspan="5" style="text-align: center" class="fontSizeNumberRecipe">
-            РЕЦЕПТУРА
-          </td>
-        </tr>
-        <tr>
-          <td class="borderTd fontSizeLeftTable" style="text-align: center" id="date"></td>
-          <td class="borderTd fontSizeTd fontSizeLeftTable" id="number-task">№ Змінного завдання:</td>
-          <td colspan="5" id="conf">
-            КОНФІДЕНЦІЙНО!
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="borderTd fontSizeTd fontSizeLeftTable" id="date-task">Дата змінного завдання</td>
-          <td colspan="5"></td>
-        </tr>
-        <tr>
-          <td class="fontSizeTd">Вага замісу, кг</td>
-          <td id="number" class="borderTd fontSizeTd fontSizeLeftTable">0.0</td>
-        </tr>
-        <tr>
-          <td id="1"></td>
-          <td class="borderTd fontSizeTd fontSizeLeftTable" id="dils">Диссольвер:№3 (діжа <span id="deg"></span>л)</td>
-          <td id="recipe-give1"></td>
-          <td id="recipe-give2"></td>
-          <td id="recipe-give3">
-            Рецептуру видав(ла):
-          </td>
-          <td id="recipe-give4"></td>
-          <td id="signature">
-            Підпис
-          </td>
-        </tr>
-      </table>
+    <div id="container-head-recipe">
+        <div id="left-container-head-recipe">
+            <table>
+                <tr>
+                    <td id="td-img" class="borderTd"><img id="label-img"
+                                                          th:src="@{image/new_ton.png}"
+                                                          alt=""></td>
+                    <td id="number-recipe" class="borderTd">№ Рецептури
+                    </td>
+                    <td id="td-middle-container" colspan="5" style="text-align: center" class="fontSizeNumberRecipe">
+                        РЕЦЕПТУРА
+                    </td>
+                </tr>
+                <tr>
+                    <td class="borderTd fontSizeLeftTable" style="text-align: center" id="date"></td>
+                    <td class="borderTd fontSizeTd fontSizeLeftTable" id="number-task">№ Змінного завдання:</td>
+                    <td colspan="5" id="conf">
+                        КОНФІДЕНЦІЙНО!
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="borderTd fontSizeTd fontSizeLeftTable" id="date-task">Дата змінного завдання</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td class="fontSizeTd">Вага замісу, кг</td>
+                    <td id="number" class="borderTd fontSizeTd fontSizeLeftTable">0.0</td>
+                </tr>
+                <tr>
+                    <td id="1"></td>
+                    <td class="borderTd fontSizeTd fontSizeLeftTable" id="dils">Диссольвер:№3 (діжа <span
+                            id="deg"></span>л)
+                    </td>
+                    <td id="recipe-give1"></td>
+                    <td id="recipe-give2"></td>
+                    <td id="recipe-give3">
+                        Рецептуру видав(ла):
+                    </td>
+                    <td id="recipe-give4"></td>
+                    <td id="signature">
+                        Підпис
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="container-table-right">
+            <table>
+                <tr>
+                    <td id="right1" class="borderTd fontSizeLeftTable">Код форми:</td>
+                    <td id="right2" class="borderTd fontSizeLeftTable">ФК2-14</td>
+                </tr>
+                <tr>
+                    <td id="right3" class="borderTd fontSizeLeftTable">Дата створення:</td>
+                    <td id="right4" class="borderTd fontSizeLeftTable"></td>
+                </tr>
+                <tr>
+                    <td id="right5" class="borderTd fontSizeLeftTable">Дата перегляду:</td>
+                    <td id="right6" class="borderTd fontSizeLeftTable"></td>
+                </tr>
+                <tr>
+                    <td id="right7" class="borderTd fontSizeLeftTable">Фактична дата виробництва</td>
+                    <td id="right8" class="borderTd fontSizeLeftTable"></td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div id="container-table-right">
-      <table>
-        <tr>
-          <td id="right1" class="borderTd fontSizeLeftTable">Код форми:</td>
-          <td id="right2" class="borderTd fontSizeLeftTable">ФК2-14</td>
-        </tr>
-        <tr>
-          <td id="right3" class="borderTd fontSizeLeftTable">Дата створення:</td>
-          <td id="right4" class="borderTd fontSizeLeftTable"></td>
-        </tr>
-        <tr>
-          <td id="right5" class="borderTd fontSizeLeftTable">Дата перегляду:</td>
-          <td id="right6" class="borderTd fontSizeLeftTable"></td>
-        </tr>
-        <tr>
-          <td id="right7" class="borderTd fontSizeLeftTable">Фактична дата виробництва</td>
-          <td id="right8" class="borderTd fontSizeLeftTable"></td>
-        </tr>
-      </table>
+    <div id="container-name-product">
+        <div id="name-product1"><span>Найменування продукту :</span><span>  </span><span id="name-prod"></span></div>
+        <div id="name-product2">Технологічна частина</div>
     </div>
-  </div>
-  <div id="container-name-product">
-    <div id="name-product1"><span>Найменування продукту :</span><span>  </span><span id="name-prod"></span></div>
-    <div id="name-product2">Технологічна частина</div>
-  </div>
-  <div id="container-main-table" style="display: flex">
-    <table width="98%" style="margin-right: auto; margin-left: auto;">
-      <thead>
-      <tr>
-        <th id="container-main-table-th1" class="borderTd">Порядок<br> заванта<br>ження</th>
-        <th id="container-main-table-th2" class="borderTd">Найменування сировини</th>
-        <th id="container-main-table-th3" class="borderTd">Вміст, %</th>
-        <th id="container-main-table-th4" class="borderTd">Маса, <br>кг</th>
-        <th id="container-main-table-th5" class="borderTd">Фактичне<br> завантаження,<br> кг</th>
-        <th id="container-main-table-th6" class="borderTd">Допустиме<br> відхилення, кг</th>
-        <th id="container-main-table-th7" class="borderTd">Допустиме<br> відхилення, %</th>
-        <th id="container-main-table-th8" class="borderTd">Відхилення факт<br> заван ваги від<br> заданного, кг
-        </th>
-        <th id="container-main-table-th9" class="borderTd">Час<br> завантажен<br>ня, хв</th>
-        <th id="container-main-table-th10" class="borderTd">Швидкість<br> обороти в <br> хв</th>
-        <th id="container-main-table-th11" class="borderTd">Відхилення<br/> від заданних<br> обертів</th>
-        <th id="container-main-table-th12" class="borderTd">Фактичні<br> максимальні<br> оберти</th>
-        <th id="container-main-table-th13" class="borderTd">Час<br> перемішування згідно<br> рецептури,<br> год
-          хв.
-        </th>
-        <th id="container-main-table-th14" class="borderTd">Час<br> перемішування<br> фактично,<br> год хв.</th>
-        <th id="container-main-table-th15" class="borderTd">Температура<br> в цеху</th>
-        <th id="container-main-table-th16" class="borderTd">Дата начала операції</th>
-        <th id="container-main-table-th17" class="borderTd">Дата кінця операції</th>
-        <th id="container-main-table-th18" class="borderTd">Температура<br> ПФЛФМ</th>
-        <th id="container-main-table-th19" class="borderTd">Вологість <br> середовища, % <br> та <br>температура,
-          ℃
-        </th>
-        <th id="container-main-table-th20" class="borderTd">Примітка</th>
-      </tr>
-      </thead>
-      <tbody id="mainTableTBody">
-      <tr>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd" id="all-mass-sum">0.00</td>
-        <td class="borderTd" id="all-mass-fact"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-      </tr>
-      <tr>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd" style="font-weight: bold">Загальний час :</td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd" id="all-time-made"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd" id="time-mixed"></td>
-        <td class="borderTd" id="time-mixed-fact"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd"></td>
-        <td class="borderTd" colspan="3" style="font-weight: bold">Загальний час виробництва :</td>
-        <td class="borderTd"><span id="time" style="font-weight: bold"></span><span style="font-weight: bold"> хв.</span></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td class="borderTd" id="fact-percent">0.00</td>
-        <td class="borderTd" id="mass">0.00</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      </tbody>
-    </table>
-    <br>
-  </div>
+    <div id="container-main-table" style="display: flex">
+        <table width="98%" style="margin-right: auto; margin-left: auto;">
+            <thead>
+            <tr>
+                <th id="container-main-table-th1" class="borderTd">Порядок<br> заванта<br>ження</th>
+                <th id="container-main-table-th2" class="borderTd">Найменування сировини</th>
+                <th id="container-main-table-th3" class="borderTd">Вміст, %</th>
+                <th id="container-main-table-th4" class="borderTd">Маса, <br>кг</th>
+                <th id="container-main-table-th5" class="borderTd">Фактичне<br> завантаження,<br> кг</th>
+                <th id="container-main-table-th6" class="borderTd">Допустиме<br> відхилення, кг</th>
+                <th id="container-main-table-th7" class="borderTd">Допустиме<br> відхилення, %</th>
+                <th id="container-main-table-th8" class="borderTd">Відхилення факт<br> заван ваги від<br> заданного, кг
+                </th>
+                <th id="container-main-table-th9" class="borderTd">Час<br> завантажен<br>ня, хв</th>
+                <th id="container-main-table-th10" class="borderTd">Швидкість<br> обороти в <br> хв</th>
+                <th id="container-main-table-th11" class="borderTd">Відхилення<br/> від заданних<br> обертів</th>
+                <th id="container-main-table-th12" class="borderTd">Фактичні<br> максимальні<br> оберти</th>
+                <th id="container-main-table-th13" class="borderTd">Час<br> перемішування згідно<br> рецептури,<br> год
+                    хв.
+                </th>
+                <th id="container-main-table-th14" class="borderTd">Час<br> перемішування<br> фактично,<br> год хв.</th>
+                <th id="container-main-table-th15" class="borderTd">Температура<br> в цеху</th>
+                <th id="container-main-table-th16" class="borderTd">Дата начала операції</th>
+                <th id="container-main-table-th17" class="borderTd">Дата кінця операції</th>
+                <th id="container-main-table-th18" class="borderTd">Температура<br> ПФЛФМ</th>
+                <th id="container-main-table-th19" class="borderTd">Вологість <br> середовища, % <br> та <br>температура,
+                    ℃
+                </th>
+                <th id="container-main-table-th20" class="borderTd">Примітка</th>
+            </tr>
+            </thead>
+            <tbody id="mainTableTBody">
+            <tr>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd" id="all-mass-sum">0.00</td>
+                <td class="borderTd" id="all-mass-fact"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+            </tr>
+            <tr>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd" style="font-weight: bold">Загальний час :</td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd" id="all-time-made"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd" id="time-mixed"></td>
+                <td class="borderTd" id="time-mixed-fact"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd"></td>
+                <td class="borderTd" colspan="3" style="font-weight: bold">Загальний час виробництва :</td>
+                <td class="borderTd"><span id="time" style="font-weight: bold"></span><span style="font-weight: bold"> хв.</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="borderTd" id="fact-percent">0.00</td>
+                <td class="borderTd" id="mass">0.00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
 
-  <div id="container-attention-img" style="border: 2px solid black; width: 30%; margin-left: 1%; margin-top: 8px">
-    <table id="table-attention-img">
-      <tr>
-        <td colspan="2" style="text-align: center"><img id="attention_img" th:src="@{image/Attention.gif}"
-                                                        alt=""></td>
-      </tr>
-      <tr>
-        <td style="text-align: left; width: 40%"><img id="suit-img" th:src="@{image/костюм.gif}" alt=""> <img
-                id="glass-img" th:src="@{image/очки.gif}" alt="">
-          <img id="mask-img" th:src="@{image/противогаз.gif}" alt=""><img id="gloves-img"
-                                                                          th:src="@{image/перчатки.gif}"
-                                                                          alt=""></td>
-        <td style="font-weight: bold; font-size: 0.65rem">Зауваження, засипання компонентів виконувати в <br>
-          захисних окулярах, масці гумових рукавичках
-        </td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td id="cor-td"><img id="korr-img" style="width: 27%"
-                             th:src="@{image/корозия.gif}" alt=""></td>
-        <td style="font-weight: bold; font-size: 0.60rem">Уникати попадання компонентів на шкіру, в очі,<br>
-          уникати вдихання парів
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div id="container-sum">
-    <table id="table-sum">
-      <tr>
-        <td id="table-sum-td1" class="tableSumBold" th:colspan="${5}">Кількість злитої фарби по тарі</td>
-        <td id="table-sum-td2"></td>
-        <td id="table-sum-td3" class="borderTd tableSumBold">
-          Відмітка о перевірці заповнення : П.І.Б.
-        </td>
-        <td id="table-sum-td4"></td>
-        <td id="table-sum-td5" class="borderTd tableSumBold">
-          Підпис
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td class="tableSumBold tableSumWidth"><span>Б1 = </span><span id="b1"></span></td>
-        <td class="tableSumWidth tableSumBold"><span>Б2 = </span><span id="b2"></span></td>
-        <td class="tableSumBold tableSumWidth"><span>Б3 = </span><span id="b3"></span></td>
-        <td class="tableSumWidth tableSumBold"><span>Б4 = </span><span id="b4"></span>
-        </td>
-        <td class="tableSumBold tableSumWidth"><span>∑ = </span><span id="sum"></span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-  </div>
+    <div id="container-attention-img" style="border: 2px solid black; width: 30%; margin-left: 1%; margin-top: 8px">
+        <table id="table-attention-img">
+            <tr>
+                <td colspan="2" style="text-align: center"><img id="attention_img" th:src="@{image/Attention.gif}"
+                                                                alt=""></td>
+            </tr>
+            <tr>
+                <td style="text-align: left; width: 40%"><img id="suit-img" th:src="@{image/костюм.gif}" alt=""> <img
+                        id="glass-img" th:src="@{image/очки.gif}" alt="">
+                    <img id="mask-img" th:src="@{image/противогаз.gif}" alt=""><img id="gloves-img"
+                                                                                    th:src="@{image/перчатки.gif}"
+                                                                                    alt=""></td>
+                <td style="font-weight: bold; font-size: 0.65rem">Зауваження, засипання компонентів виконувати в <br>
+                    захисних окулярах, масці гумових рукавичках
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td id="cor-td"><img id="korr-img" style="width: 27%"
+                                     th:src="@{image/корозия.gif}" alt=""></td>
+                <td style="font-weight: bold; font-size: 0.60rem">Уникати попадання компонентів на шкіру, в очі,<br>
+                    уникати вдихання парів
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="container-sum">
+        <table id="table-sum">
+            <tr>
+                <td id="table-sum-td1" class="tableSumBold" th:colspan="${5}">Кількість злитої фарби по тарі</td>
+                <td id="table-sum-td2"></td>
+                <td id="table-sum-td3" class="borderTd tableSumBold">
+                    Відмітка о перевірці заповнення : П.І.Б.
+                </td>
+                <td id="table-sum-td4"></td>
+                <td id="table-sum-td5" class="borderTd tableSumBold">
+                    Підпис
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="tableSumBold tableSumWidth"><span>Б1 = </span><span id="b1"></span></td>
+                <td class="tableSumWidth tableSumBold"><span>Б2 = </span><span id="b2"></span></td>
+                <td class="tableSumBold tableSumWidth"><span>Б3 = </span><span id="b3"></span></td>
+                <td class="tableSumWidth tableSumBold"><span>Б4 = </span><span id="b4"></span>
+                </td>
+                <td class="tableSumBold tableSumWidth"><span>∑ = </span><span id="sum"></span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 </div>
 <div id="id" style="display: none" th:text="${id}"></div>
 
 <script>
-  let printClick = function () {
-    window.print();
-  }
+    let printClick = function () {
+        window.print();
+    }
 </script>
 
 </body>
