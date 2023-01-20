@@ -2,7 +2,9 @@ package com.new_ton.controller;
 
 
 import com.new_ton.domain.dto.RequestTechnologistPageLeftTableDto;
+import com.new_ton.domain.dto.RequestTechnologistPageRightTableDto;
 import com.new_ton.domain.dto.TechnologistPageLeftTableResponseDto;
+import com.new_ton.domain.dto.TechnologistPageRightTableResponseDto;
 import com.new_ton.service.SearchDataForTablesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,12 @@ public class SearchDataForTableController {
     @PostMapping("/data-for-technologist-left-table")
     public TechnologistPageLeftTableResponseDto getDataForLeftProductTableTechnologistPage(RequestTechnologistPageLeftTableDto requestTechnologistPageLeftTableDto) {
         return searchDataForTablesService.getDataForTechnologistLeftTable(requestTechnologistPageLeftTableDto);
+    }
+
+
+    @PostMapping("/data-for-technologist-right-table")
+    public TechnologistPageRightTableResponseDto getDataForRightProductTableTechnologistPage(RequestTechnologistPageRightTableDto requestTechnologistPageRightTableDto) {
+        return searchDataForTablesService.getDataForTechnologistRightTable(requestTechnologistPageRightTableDto);
     }
 
 

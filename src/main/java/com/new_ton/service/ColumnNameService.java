@@ -8,4 +8,6 @@ public interface ColumnNameService {
     String getColumnNameProductTable(String columnNumber);
 
     String getColumnNameByTechnologistPageLeftDataTable(String columnNumber);
+
+    String getColumnNameByTechnologistPageRightDataTable(String columnNumber);
 }

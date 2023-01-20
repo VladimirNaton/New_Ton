@@ -1,82 +1,72 @@
 package com.new_ton.domain.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "main")
 public class MainEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idpr")
-    private int idpr;
-    @Basic
+    private Integer idpr;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datecr")
-    private Timestamp datecr;
-    @Basic
+    private Date datecr;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datepl")
-    private Timestamp datepl;
-    @Basic
+    private Date datepl;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datemade")
-    private Timestamp datemade;
-    @Basic
+    private Date datemade;
     @Column(name = "state")
     private Integer state;
-    @Basic
     @Column(name = "brend")
     private String brend;
-    @Basic
     @Column(name = "nameprod")
     private String nameprod;
-    @Basic
     @Column(name = "sp")
     private String sp;
-    @Basic
     @Column(name = "percent")
     private Double percent;
-    @Basic
     @Column(name = "mass")
     private Double mass;
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datestart")
-    private Timestamp datestart;
-    @Basic
+    private Date datestart;
     @Column(name = "timemade")
     private Integer timemade;
-    @Basic
     @Column(name = "tempprodmin")
     private Double tempprodmin;
-    @Basic
     @Column(name = "tempprodmax")
     private Double tempprodmax;
-    @Basic
     @Column(name = "operfio")
     private String operfio;
-    @Basic
     @Column(name = "deg")
     private Integer deg;
-    @Basic
     @Column(name = "labfio")
     private String labfio;
-    @Basic
     @Column(name = "numbprot")
     private Integer numbprot;
-    @Basic
     @Column(name = "numbpart")
     private Integer numbpart;
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expdate")
-    private Timestamp expdate;
-    @Basic
+    private Date expdate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateprot")
-    private Timestamp dateprot;
-    @Basic
+    private Date dateprot;
     @Column(name = "filtr")
     private String filtr;
-    @Basic
     @Column(name = "comment")
     private String comment;
 }

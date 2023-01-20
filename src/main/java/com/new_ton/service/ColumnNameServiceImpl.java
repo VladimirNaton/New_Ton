@@ -101,4 +101,29 @@ public class ColumnNameServiceImpl implements ColumnNameService {
         }
         return columnName;
     }
+
+    @Override
+    public String getColumnNameByTechnologistPageRightDataTable(String columnNumber) {
+        String columnName = "";
+        try {
+            switch (columnNumber) {
+                case "0":
+                    columnName = "idpr";
+                    break;
+                case "1":
+                    columnName = "brend";
+                    break;
+                case "2":
+                    columnName = "nameprod";
+                    break;
+                case "3":
+                    columnName = "datecr";
+                    break;
+            }
+
+        } catch (Exception e) {
+            log.error("Error ColumnNameServiceImpl getColumnNameByTechnologistPageRightDataTable : {}, {} ", ExceptionUtils.getMessage(e.getCause()), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return columnName;
+    }
 }

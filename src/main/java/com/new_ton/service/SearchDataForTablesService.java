@@ -1,9 +1,13 @@
 package com.new_ton.service;
 
 import com.new_ton.domain.dto.RequestTechnologistPageLeftTableDto;
+import com.new_ton.domain.dto.RequestTechnologistPageRightTableDto;
 import com.new_ton.domain.dto.TechnologistPageLeftTableResponseDto;
+import com.new_ton.domain.dto.TechnologistPageRightTableResponseDto;
 
 public interface SearchDataForTablesService {
 
     TechnologistPageLeftTableResponseDto getDataForTechnologistLeftTable(RequestTechnologistPageLeftTableDto requestTechnologistPageLeftTableDto);
+
+    TechnologistPageRightTableResponseDto getDataForTechnologistRightTable(RequestTechnologistPageRightTableDto requestTechnologistPageRightTableDto);
 }

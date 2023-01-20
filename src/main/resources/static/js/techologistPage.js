@@ -8,19 +8,8 @@ $(document).ready(function () {
             "url": "/search/data-for-technologist-left-table",
             "type": "POST",
             data: function (data) {
-                orderColumn = data.order[0].column;
-                orderType = data.order[0].dir;
-
                 data.orderColumn = data.order[0].column;
                 data.orderType = data.order[0].dir;
-                // data.typeDate = typeDate;
-                // data.startDate = startDate;
-                // data.endDate = endDate;
-                // data.brend = brend;
-                // data.productName = productName;
-                // data.specification = specification;
-                // data.requestFlag = 'request';
-
             }
         },
         "lengthMenu": [[10, 15, 20], [10, 15, 20]],
@@ -29,6 +18,40 @@ $(document).ready(function () {
             {"data": "brend"},
             {"data": "nameprod"}
         ],
+    });
+
+
+    var rightProductTable = $('#right-product-table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "searching": false,
+        "ajax": {
+            "url": "/search/data-for-technologist-right-table",
+            "type": "POST",
+            data: function (data) {
+                data.orderColumn = data.order[0].column;
+                data.orderType = data.order[0].dir;
+            }
+        },
+        "lengthMenu": [[10, 15, 20], [10, 15, 20]],
+        "columns": [
+            {"data": "idpr"},
+            {"data": "brend"},
+            {"data": "nameprod"},
+            {"data": "datecr"},
+            {"data": "percent"},
+            {"data": "mass"}
+        ],
+        "columnDefs": [
+            {
+                "targets": 4,
+                "orderable": false
+            },
+            {
+                "targets": 5,
+                "orderable": false
+            }
+        ]
     });
 
 
