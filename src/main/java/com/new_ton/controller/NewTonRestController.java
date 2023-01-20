@@ -6,7 +6,6 @@ import com.new_ton.domain.dto.*;
 import com.new_ton.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping({"/api/v1"})
 @RestController
-public class RestWeightTableController {
+public class NewTonRestController {
 
     private final WeightLogTableService weightLogTableService;
     private final GetFioOperService getFioOperService;
@@ -37,8 +36,8 @@ public class RestWeightTableController {
     }
 
     @PostMapping({"/getProductTableData"})
-    public ProductTableResponseDto getProductTableData(ProductTableRequestDto productTableRequestDto) {
-        return productTableService.getProductTableDate(productTableRequestDto);
+    public ProductResponseDto getProductTableData(RequestDataTableDto requestDataTableDto) {
+        return productTableService.getProductTableDate(requestDataTableDto);
     }
 
     @PostMapping({"/printDischargePage"})

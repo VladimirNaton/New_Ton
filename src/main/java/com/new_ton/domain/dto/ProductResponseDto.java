@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProductTableResponseDto {
+public class ProductResponseDto {
     private int draw;
     private List<ProductTableDto> data;
     private Long recordsTotal;

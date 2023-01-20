@@ -6,7 +6,6 @@ $(document).ready(function () {
         url: '/api/v1/recipePageData?id=' + idSelected,
         method: 'post',
         success: function (data) {
-            console.log(data)
 
             let sumWeightDto = data.sumWeightDto;
             if (sumWeightDto.barrel1 !== null) {

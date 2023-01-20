@@ -3,8 +3,8 @@ package com.new_ton.service;
 
 import com.new_ton.dao.MainTableDao;
 import com.new_ton.domain.dto.ProductTableDto;
-import com.new_ton.domain.dto.ProductTableRequestDto;
-import com.new_ton.domain.dto.ProductTableResponseDto;
+import com.new_ton.domain.dto.RequestDataTableDto;
+import com.new_ton.domain.dto.ProductResponseDto;
 import com.new_ton.domain.dto.ProductTableResponseEntityDto;
 import com.new_ton.domain.entities.MainEntity;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ public class ProductTableServiceImpl implements ProductTableService {
     private final ColumnNameService columnNameService;
 
 
-    public ProductTableResponseDto getProductTableDate(ProductTableRequestDto productTableRequestDto) {
+    public ProductResponseDto getProductTableDate(RequestDataTableDto requestDataTableDto) {
         try {
-            ProductTableResponseDto productTableResponseDto = new ProductTableResponseDto();
-            String column = columnNameService.getColumnNameProductTable(productTableRequestDto.getOrderColumn());
-            productTableRequestDto.setOrderColumn(column);
-            ProductTableResponseEntityDto productTableResponseEntityDto = mainTableDao.getProductTableData(productTableRequestDto);
+            ProductResponseDto productResponseDto = new ProductResponseDto();
+            String column = columnNameService.getColumnNameProductTable(requestDataTableDto.getOrderColumn());
+            requestDataTableDto.setOrderColumn(column);
+            ProductTableResponseEntityDto productTableResponseEntityDto = mainTableDao.getProductTableData(requestDataTableDto);
             List<MainEntity> mainEntityList = productTableResponseEntityDto.getMainEntityList();
             List<ProductTableDto> data = new ArrayList<>();
 
@@ -74,14 +74,14 @@ public class ProductTableServiceImpl implements ProductTableService {
                 data.add(productTableDto);
             }
 
-            productTableResponseDto.setData(data);
-            if (productTableRequestDto.getRequestFlag().equals("request")) {
-                productTableResponseDto.setDraw(productTableRequestDto.getDraw());
-                productTableResponseDto.setRecordsTotal(productTableResponseEntityDto.getRecordsTotal());
-                productTableResponseDto.setRecordsFiltered(productTableResponseEntityDto.getRecordsTotal());
+            productResponseDto.setData(data);
+            if (requestDataTableDto.getRequestFlag().equals("request")) {
+                productResponseDto.setDraw(requestDataTableDto.getDraw());
+                productResponseDto.setRecordsTotal(productTableResponseEntityDto.getRecordsTotal());
+                productResponseDto.setRecordsFiltered(productTableResponseEntityDto.getRecordsTotal());
             }
 
-            return productTableResponseDto;
+            return productResponseDto;
         } catch (Exception e) {
             log.error("Error getProductTableDate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;

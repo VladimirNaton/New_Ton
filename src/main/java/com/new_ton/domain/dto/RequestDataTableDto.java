@@ -4,7 +4,8 @@ package com.new_ton.domain.dto;
 import lombok.Data;
 
 @Data
-public class ProductTableRequestDto {
+public class RequestDataTableDto {
+
     private Integer start;
     private Integer length;
     private Integer draw;

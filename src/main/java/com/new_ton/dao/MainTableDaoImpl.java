@@ -1,6 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.ProductTableRequestDto;
+import com.new_ton.domain.dto.RequestDataTableDto;
 import com.new_ton.domain.dto.ProductTableResponseEntityDto;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.repository.MainRepository;
@@ -27,7 +27,7 @@ public class MainTableDaoImpl implements MainTableDao {
 
 
     @Override
-    public ProductTableResponseEntityDto getProductTableData(ProductTableRequestDto productTableRequestDto) {
+    public ProductTableResponseEntityDto getProductTableData(RequestDataTableDto requestDataTableDto) {
 
         try {
             ProductTableResponseEntityDto productTableResponseEntityDto = new ProductTableResponseEntityDto();
@@ -36,9 +36,9 @@ public class MainTableDaoImpl implements MainTableDao {
             StringBuilder count = new StringBuilder();
             String where = " where ";
 
-            if (productTableRequestDto.getStartDate().equals("all") && productTableRequestDto.getEndDate().equals("all") &&
-                    productTableRequestDto.getBrend().equals("") && productTableRequestDto.getProductName().equals("") &&
-                    productTableRequestDto.getSpecification().equals("")) {
+            if (requestDataTableDto.getStartDate().equals("all") && requestDataTableDto.getEndDate().equals("all") &&
+                    requestDataTableDto.getBrend().equals("") && requestDataTableDto.getProductName().equals("") &&
+                    requestDataTableDto.getSpecification().equals("")) {
                 where = "";
             }
 
@@ -47,73 +47,73 @@ public class MainTableDaoImpl implements MainTableDao {
             query.append(" select me from MainEntity me ").append(where);
             count.append(" select count(me) from MainEntity me ").append(where);
 
-            if (!productTableRequestDto.getTypeDate().equals("") && !productTableRequestDto.getStartDate().equals("all")) {
+            if (!requestDataTableDto.getTypeDate().equals("") && !requestDataTableDto.getStartDate().equals("all")) {
 
-                String typeDate = getTypeDateService.getTypeDate(productTableRequestDto.getTypeDate());
-                query.append("me.").append(typeDate).append(" >= '").append(productTableRequestDto.getStartDate()).append("'");
-                count.append("me.").append(typeDate).append(" >= '").append(productTableRequestDto.getStartDate()).append("'");
+                String typeDate = getTypeDateService.getTypeDate(requestDataTableDto.getTypeDate());
+                query.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'");
+                count.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'");
                 filterCount.add(1);
             }
 
-            if (!productTableRequestDto.getTypeDate().equals("") && !productTableRequestDto.getStartDate().equals("all")) {
-                String typeDate = getTypeDateService.getTypeDate(productTableRequestDto.getTypeDate());
+            if (!requestDataTableDto.getTypeDate().equals("") && !requestDataTableDto.getStartDate().equals("all")) {
+                String typeDate = getTypeDateService.getTypeDate(requestDataTableDto.getTypeDate());
 
                 if (filterCount.size() > 0) {
                     query.append(" and ");
                     count.append(" and ");
                 }
 
-                query.append("me.").append(typeDate).append(" <= '").append(productTableRequestDto.getEndDate()).append("'");
-                count.append("me.").append(typeDate).append(" <= '").append(productTableRequestDto.getEndDate()).append("'");
+                query.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
+                count.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
                 filterCount.add(1);
             }
 
-            if (!productTableRequestDto.getBrend().equals("")) {
+            if (!requestDataTableDto.getBrend().equals("")) {
 
                 if (filterCount.size() > 0) {
                     query.append(" and ");
                     count.append(" and ");
                 }
-                query.append(" LOWER(me.brend) LIKE LOWER ('").append("%").append(productTableRequestDto.getBrend()).append("%')");
-                count.append(" LOWER(me.brend) LIKE LOWER ('").append("%").append(productTableRequestDto.getBrend()).append("%')");
+                query.append(" LOWER(me.brend) LIKE LOWER ('").append("%").append(requestDataTableDto.getBrend()).append("%')");
+                count.append(" LOWER(me.brend) LIKE LOWER ('").append("%").append(requestDataTableDto.getBrend()).append("%')");
 
             }
 
-            if (!productTableRequestDto.getProductName().equals("")) {
+            if (!requestDataTableDto.getProductName().equals("")) {
 
                 if (filterCount.size() > 0) {
                     query.append(" and ");
                     count.append(" and ");
                 }
-                query.append(" LOWER(me.nameprod) LIKE LOWER ('").append("%").append(productTableRequestDto.getProductName()).append("%')");
-                count.append(" LOWER(me.nameprod) LIKE LOWER ('").append("%").append(productTableRequestDto.getProductName()).append("%')");
+                query.append(" LOWER(me.nameprod) LIKE LOWER ('").append("%").append(requestDataTableDto.getProductName()).append("%')");
+                count.append(" LOWER(me.nameprod) LIKE LOWER ('").append("%").append(requestDataTableDto.getProductName()).append("%')");
 
             }
 
-            if (!productTableRequestDto.getSpecification().equals("")) {
+            if (!requestDataTableDto.getSpecification().equals("")) {
 
                 if (filterCount.size() > 0) {
                     query.append(" and ");
                     count.append(" and ");
                 }
-                query.append(" LOWER(me.sp) LIKE LOWER ('").append("%").append(productTableRequestDto.getSpecification()).append("%')");
-                count.append(" LOWER(me.sp) LIKE LOWER ('").append("%").append(productTableRequestDto.getSpecification()).append("%')");
+                query.append(" LOWER(me.sp) LIKE LOWER ('").append("%").append(requestDataTableDto.getSpecification()).append("%')");
+                count.append(" LOWER(me.sp) LIKE LOWER ('").append("%").append(requestDataTableDto.getSpecification()).append("%')");
             }
 
-            query.append(" order by me.").append(productTableRequestDto.getOrderColumn()).append(" ").append(productTableRequestDto.getOrderType());
+            query.append(" order by me.").append(requestDataTableDto.getOrderColumn()).append(" ").append(requestDataTableDto.getOrderType());
 
             Query queryCount;
             Long pageCount = null;
-            if (productTableRequestDto.getRequestFlag().equals("request")) {
+            if (requestDataTableDto.getRequestFlag().equals("request")) {
                 queryCount = entityManager.createQuery(count.toString(), Long.class);
                 List<Long> resultList = queryCount.getResultList();
                 pageCount = resultList.get(0).longValue();
             }
 
             Query queryResult = entityManager.createQuery(query.toString(), MainEntity.class);
-            if (productTableRequestDto.getRequestFlag().equals("request") && productTableRequestDto.getLength() != -1) {
-                queryResult.setFirstResult(productTableRequestDto.getStart());
-                queryResult.setMaxResults(productTableRequestDto.getLength());
+            if (requestDataTableDto.getRequestFlag().equals("request") && requestDataTableDto.getLength() != -1) {
+                queryResult.setFirstResult(requestDataTableDto.getStart());
+                queryResult.setMaxResults(requestDataTableDto.getLength());
             }
             List<MainEntity> mainEntityList = queryResult.getResultList();
 

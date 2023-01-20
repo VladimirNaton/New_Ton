@@ -6,4 +6,6 @@ public interface ColumnNameService {
     String getColumnNameCalibrationTable(String columnNumber);
 
     String getColumnNameProductTable(String columnNumber);
+
+    String getColumnNameByTechnologistPageLeftDataTable(String columnNumber);
 }

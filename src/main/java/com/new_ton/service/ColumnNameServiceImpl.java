@@ -9,32 +9,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ColumnNameServiceImpl implements ColumnNameService {
 
-    public ColumnNameServiceImpl() {
-    }
-
     public String getColumnNameCalibrationTable(String columnNumber) {
         try {
             String columnName = null;
-
             if (columnNumber != null) {
-                if (columnNumber.equals("0")) {
-                    columnName = "date";
-                }
-
-                if (columnNumber.equals("1")) {
-                    columnName = "nw";
-                }
-
-                if (columnNumber.equals("2")) {
-                    columnName = "plmass";
-                }
-
-                if (columnNumber.equals("3")) {
-                    columnName = "factmass";
-                }
-
-                if (columnNumber.equals("4")) {
-                    columnName = "operfio";
+                switch (columnNumber) {
+                    case "0":
+                        columnName = "date";
+                        break;
+                    case "1":
+                        columnName = "nw";
+                        break;
+                    case "2":
+                        columnName = "plmass";
+                        break;
+                    case "3":
+                        columnName = "factmass";
+                        break;
+                    case "4":
+                        columnName = "operfio";
+                        break;
                 }
             } else {
                 columnName = "date";
@@ -50,46 +44,61 @@ public class ColumnNameServiceImpl implements ColumnNameService {
     public String getColumnNameProductTable(String columnNumber) {
         try {
             String columnName = null;
-            if (columnNumber.equals("0")) {
-                columnName = "idpr";
-            }
 
-            if (columnNumber.equals("1")) {
-                columnName = "datecr";
+            switch (columnNumber) {
+                case "0":
+                    columnName = "idpr";
+                    break;
+                case "1":
+                    columnName = "datecr";
+                    break;
+                case "2":
+                    columnName = "datepl";
+                    break;
+                case "3":
+                    columnName = "datemade";
+                    break;
+                case "4":
+                    columnName = "brend";
+                    break;
+                case "5":
+                    columnName = "nameprod";
+                    break;
+                case "6":
+                    columnName = "sp";
+                    break;
+                case "7":
+                    columnName = "percent";
+                    break;
+                case "8":
+                    columnName = "mass";
+                    break;
             }
-
-            if (columnNumber.equals("2")) {
-                columnName = "datepl";
-            }
-
-            if (columnNumber.equals("3")) {
-                columnName = "datemade";
-            }
-
-            if (columnNumber.equals("4")) {
-                columnName = "brend";
-            }
-
-            if (columnNumber.equals("5")) {
-                columnName = "nameprod";
-            }
-
-            if (columnNumber.equals("6")) {
-                columnName = "sp";
-            }
-
-            if (columnNumber.equals("7")) {
-                columnName = "percent";
-            }
-
-            if (columnNumber.equals("8")) {
-                columnName = "mass";
-            }
-
             return columnName;
         } catch (Exception e) {
             log.error("Error getColumnNameProductTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
             return null;
         }
+    }
+
+    @Override
+    public String getColumnNameByTechnologistPageLeftDataTable(String columnNumber) {
+        String columnName = "";
+        try {
+            switch (columnNumber) {
+                case "0":
+                    columnName = "idpr";
+                    break;
+                case "1":
+                    columnName = "brend";
+                    break;
+                case "2":
+                    columnName = "nameprod";
+                    break;
+            }
+        } catch (Exception e) {
+            log.error("Error ColumnNameServiceImpl getColumnNameByTechnologistPageLeftDataTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return columnName;
     }
 }
