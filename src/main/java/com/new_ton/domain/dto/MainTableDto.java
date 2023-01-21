@@ -30,14 +30,16 @@ public class MainTableDto {
     private Date dateprot;
     private String filtr;
     private String comment;
+    private String dateCreate;
 
-    public MainTableDto(Integer idpr, String brend, String nameprod, Date datecr, Double percent, Double mass) {
+    public MainTableDto(Integer idpr, String brend, String nameprod, Date datecr, Double percent, Double mass, String comment) {
         this.idpr = idpr;
         this.brend = brend;
         this.nameprod = nameprod;
         this.datecr = datecr;
         this.percent = percent;
         this.mass = mass;
+        this.comment = comment;
     }
 
 

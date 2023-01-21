@@ -18,9 +18,9 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/productPage", "/calibrationPage", "/dischargePage", "/recipePage", "/service/export/excel/**", "/api/v1/**", "/technologist_page", "/role_action").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_TECHNOLOGIST')");
+        http.authorizeRequests().antMatchers("/productPage", "/calibrationPage", "/dischargePage", "/recipePage", "/service/export/excel/**", "/api/v1/**", "/technologist-page", "/role-action").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_TECHNOLOGIST')");
         http.authorizeRequests().antMatchers("/**", "/login", "/logout").permitAll();
-        http.formLogin().loginPage("/login").defaultSuccessUrl("/role_action").failureUrl("/login?error=true").usernameParameter("login").passwordParameter("password");
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/role-action").failureUrl("/login?error=true").usernameParameter("login").passwordParameter("password");
     }
 
 }

@@ -9,6 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class SearchDataForTablesServiceImpl implements SearchDataForTablesService {
@@ -47,7 +52,12 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         TechnologistPageRightTableResponseDto responseDto = new TechnologistPageRightTableResponseDto();
         responseDto.setDraw(requestTechnologistPageRightTableDto.getDraw());
         responseDto.setRecordsTotal(page.getTotalElements());
-        responseDto.setData(page.getContent());
+        List<MainTableDto> mainTableDtoList = page.getContent().stream().peek(elem -> {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String strDate = dateFormat.format(elem.getDatecr());
+            elem.setDateCreate(strDate);
+        }).collect(Collectors.toList());
+        responseDto.setData(mainTableDtoList);
         responseDto.setRecordsFiltered(page.getTotalElements());
         return responseDto;
     }

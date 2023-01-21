@@ -12,46 +12,113 @@
 
 
 </head>
-<body>
+<body style="background-color: rgb(229, 230, 250)">
 <div id="main-container-technologist-page">
     <div id="head-container">
         <div id="start-string">
-            <div id="name-user">Технолог</div>
-            <div id="title-page">Страница редактирования продукта</div>
+            <div id="name-user" style="font-weight: bold">Технолог</div>
+            <div id="title-page" style="font-weight: bold">Страница редактирования продукта</div>
         </div>
-        <div style="display: flex; flex-wrap: nowrap; justify-content: space-between">
-            <div>
+        <div style="display: flex; flex-wrap: nowrap; justify-content: space-between; margin-top: 15px">
+            <div style="width: 70%">
                 <div id="container-information">
                     <div id="first-row-information">
-                        <input type="text" placeholder="Бренд" readonly value="NT">
-                        <input type="text" placeholder="Дата производства" readonly value="556-55-564654">
+                        <input id="first-row-brend" type="text" placeholder="Бренд" readonly class="input-border-style">
+                        <input id="first-row-date-production" type="text" placeholder="Дата производства" readonly
+                               class="input-border-style">
                     </div>
                     <div id="second-row-information">
-                        <input type="text" placeholder="Название продукта" readonly value="56vds.f[eqw[f">
-                        <label>Общий вес, кг <br>
-                            <input type="text" placeholder="Общий вес">
+                        <input id="second-row-product-name" type="text" placeholder="Название продукта" readonly
+                               class="input-border-style">
+                        <label><span style="font-weight: bold; font-size: 0.8rem">Общий вес, кг</span><br>
+                            <input type="text" placeholder="Общий вес" class="input-border-style" readonly>
                         </label>
                     </div>
                 </div>
             </div>
-            <div>
-                <div id="button-container">
-                    <button>Страница продукта</button>
-                    <br>
-                    <button>В производстве</button>
-                    <br>
-                    <button>Отправить операционисту</button>
+            <div style="width: 30%">
+                <div id="button-container" style="width: 100%">
+                    <div style="display: flex; justify-content: space-between">
+                        <div style="width: 65%"></div>
+                        <div style="width: 35%; text-align: right">
+                            <a th:href="@{/logout}" class="btn btn-outline-secondary btn-sm button-width"
+                               style="margin-bottom: 10px; width: 100%">Выход</a>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between">
+                        <div style="width: 50%"></div>
+                        <div style="width: 50%; text-align: right">
+                            <a th:href="@{/productPage}" class="btn btn-outline-secondary btn-sm button-width"
+                               style="margin-bottom: 10px; width: 70%">Страница продукта</a>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between">
+                        <div style="width: 50%"></div>
+                        <div style="width: 50%; text-align: right">
+                            <button type="button" class="btn btn-outline-secondary btn-sm button-width"
+                                    style="margin-bottom: 10px; width: 70%">В производстве
+                            </button>
+                        </div>
+                    </div>
+                    <div id="send-teller-container" style="display: flex; justify-content: space-between">
+                        <div style="width: 65%; display: flex; flex-wrap: nowrap; justify-content: right">
+                            <div style="display: table">
+                                <div style="padding-right: 5px; font-weight: bold; font-size: 0.8rem; display: table-cell; vertical-align: middle">
+                                    Возврат, дней
+                                </div>
+                            </div>
+
+                            <select style="width: 20%; margin-right: 10px" class="input-border-style">
+                                <option value="10" selected>10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        <div style="width: 35%; text-align: right">
+                            <button style="width: 100%" type="button"
+                                    class="btn btn-outline-secondary btn-sm button-width">
+                                Отправить
+                                операционисту
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="body-container">
-        <div id="product-catalog-head"></div>
+        <div id="product-catalog-head" style="display: flex; flex-wrap: nowrap">
+            <div id="left-head-button" style="width: 50%">
+                <div style="height: 50%"></div>
+                <div style="height: 50%;display: flex; flex-wrap: nowrap; margin-bottom: 10px">
+                    <div style="width: 50%; display: flex; flex-wrap: nowrap">
+                        <div>
+                            <input type="text" placeholder="Название продукта" class="input-border-style btn-sm" id="name-prod">
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="search-prod">Найти</button>
+                        </div>
+                    </div>
+                    <div style="width: 50%; text-align: right; margin-right: 5px">
+                        <button class="input-border-style btn btn-outline-secondary btn-sm" id="return-in-catalog">Венуться в каталог</button>
+                        <button class="input-border-style btn btn-outline-secondary btn-sm" id="select-product">Выбрать >>></button>
+                    </div>
+                </div>
+            </div>
+            <div id="right-head-button" style="width: 50%; text-align: left; padding-left: 3px">
+                <div style="height: 50%"></div>
+                <div style="height: 50%">
+                    <button class="input-border-style btn btn-outline-secondary btn-sm" id="return-from-recipe"><<< В каталог</button>
+                    <button class="input-border-style btn btn-outline-secondary btn-sm" id="edit-recipe">Редактировать рецепт</button>
+                </div>
+
+            </div>
+        </div>
         <div id="product-catalog-body">
             <div id="product-catalog-left">
                 <div id="product-catalog-start-string-left">Отобразить каталог</div>
                 <div id="left-table-container">
-                    <table id="left-product-table">
+                    <table id="left-product-table" style="width: 98%">
                         <thead>
                         <tr>
                             <td>idpr</td>
@@ -63,9 +130,11 @@
                 </div>
             </div>
             <div id="product-catalog-right">
-                <div id="product-catalog-start-string-right">Продукт в производство</div>
+                <div id="product-catalog-start-string-right" style="text-align: center; font-weight: bold ">Продукт в
+                    производство
+                </div>
                 <div id="right-table-container">
-                    <table id="right-product-table">
+                    <table id="right-product-table" style="width: 98%">
                         <thead>
                         <tr>
                             <td>idpr</td>
@@ -74,6 +143,7 @@
                             <td>datecr</td>
                             <td>percent</td>
                             <td>mass</td>
+                            <td>comment</td>
                         </tr>
                         </thead>
                     </table>

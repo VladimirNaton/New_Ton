@@ -127,6 +127,17 @@
     padding-top: 7px;
 }
 
+#button-main{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#container-button-exit{
+    margin-left: 15px;
+}
+
+
+
 @media print {
 
     #container-product-table-filter {

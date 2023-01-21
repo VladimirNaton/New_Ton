@@ -26,13 +26,13 @@ public class MainController {
 
     @GetMapping
     public String main() {
-        return "redirect:login";
+        return "redirect:/role-action";
     }
 
-    @GetMapping("/role_action")
+    @GetMapping("/role-action")
     public String roleAction(HttpServletRequest httpServletRequest) {
         String userRole = gerUserRoleService.getUserRole(httpServletRequest);
-        return "redirect:technologist_page";
+        return "redirect:technologist-page";
     }
 
     @GetMapping({"/calibrationPage"})
@@ -65,7 +65,7 @@ public class MainController {
 
 
     @Secured("ROLE_TECHNOLOGIST")
-    @GetMapping({"/technologist_page"})
+    @GetMapping({"/technologist-page"})
     public String getTechnologistPage() {
         return "TechnologistPage";
     }

@@ -1,3 +1,9 @@
+
+#main-container-technologist-page {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 #name-user {
     float: left;
 }
@@ -13,8 +19,111 @@
 
 #product-catalog-left {
     width: 50%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+}
+
+#product-catalog-body {
+    margin-top: 10px;
 }
 
 #product-catalog-right {
     width: 50%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+}
+
+#start-string {
+    margin-top: 10px;
+}
+
+#first-row-brend {
+    width: 10%;
+}
+
+#first-row-date-production {
+    width: 20%;
+}
+
+#second-row-product-name {
+    width: 35%;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+.button-width {
+    width: 100%;
+}
+
+#head-container {
+    padding-bottom: 15px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 2px 0;
+}
+
+#left-product-table_info {
+    margin-left: 10px;
+}
+
+#right-product-table_info {
+    margin-left: 10px;
+}
+
+#left-product-table_length {
+    margin-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#right-product-table_length {
+    margin-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#product-catalog-start-string-left {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#product-catalog-start-string-right {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+
+}
+
+#left-product-table {
+    border: 1px solid black;
+}
+
+#right-product-table {
+    border: 1px solid black;
+}
+
+#left-head-button {
+    padding-bottom: 15px;
+}
+
+#right-head-button {
+    padding-bottom: 15px;
 }
