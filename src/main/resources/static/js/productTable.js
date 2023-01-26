@@ -23,6 +23,25 @@ $(document).ready(function () {
                 startDate = $('#dateStart').val();
                 let startTime = $('#timeStart').val();
                 endDate = $('#dateEnd').val();
+                var dateNow = new Date();
+                var yearNow = dateNow.getFullYear();
+                var monthNow = (dateNow.getMonth() + 1);
+                if (monthNow < 10) {
+                    monthNow = '0' + monthNow;
+                }
+                var dayNow = dateNow.getDate();
+                if (dayNow < 10) {
+                    dayNow = '0' + dayNow;
+                }
+                var hoursNow = dateNow.getHours();
+                if (hoursNow < 10) {
+                    hoursNow = '0' + hoursNow;
+                }
+                var minutesNow = dateNow.getMinutes();
+                if (minutesNow < 10) {
+                    minutesNow = '0' + minutesNow;
+                }
+
                 let endTime = $('#timeEnd').val();
                 brend = $('#input1').val();
                 productName = $('#input2').val();
@@ -35,7 +54,7 @@ $(document).ready(function () {
                 }
 
                 if (endDate === '') {
-                    endDate = 'all'
+                    endDate = yearNow + '-' + monthNow + '-' + dayNow + ' ' + hoursNow + ':' + minutesNow;
                 } else {
                     endDate = endDate + ' ' + endTime
                 }

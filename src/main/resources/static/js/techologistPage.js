@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
-    var leftProductTable = $('#left-product-table').DataTable({
+    let idSelectedLeftTable = '';
+    let searchData = '';
+
+    let leftProductTable = $('#left-product-table').DataTable({
         "processing": true,
         "serverSide": true,
         "searching": false,
@@ -10,6 +13,7 @@ $(document).ready(function () {
             data: function (data) {
                 data.orderColumn = data.order[0].column;
                 data.orderType = data.order[0].dir;
+                data.searchValue = searchData;
             }
         },
         "lengthMenu": [[10, 15, 20], [10, 15, 20]],
@@ -21,7 +25,7 @@ $(document).ready(function () {
     });
 
 
-    var rightProductTable = $('#right-product-table').DataTable({
+    let rightProductTable = $('#right-product-table').DataTable({
         "processing": true,
         "serverSide": true,
         "searching": false,
@@ -63,12 +67,12 @@ $(document).ready(function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             let elem = $(this);
-            var idSelected = elem.find("td:first").html();
+            idSelectedLeftTable = elem.find("td:first").html();
         } else {
             leftProductTable.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
             let elem = $(this);
-            var idSelected = elem.find("td:first").html();
+            idSelectedLeftTable = elem.find("td:first").html();
         }
     });
 
@@ -80,6 +84,15 @@ $(document).ready(function () {
             $(this).addClass('selected');
         }
     });
+
+    $('#search-prod').click(function () {
+        searchData = $('#name-prod').val();
+        leftProductTable.ajax.reload();
+    })
+
+    $('#resetSearch').click(function () {
+        $('#name-prod').val('');
+    })
 
 
 })

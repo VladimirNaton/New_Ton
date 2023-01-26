@@ -10,4 +10,6 @@ public interface SearchDataForTablesDao {
     Page<CatalogDto> getDataForTechnologistLeftTable(Pageable pageable);
 
     Page<MainTableDto> getDataForTechnologistRightTable(Pageable pageable);
+
+    Page<CatalogDto> getDataForTechnologistLeftTableWithSearchData(Pageable pageable, String nameprod);
 }

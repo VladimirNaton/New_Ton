@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public UserDetails loadUserByUsername(String username) {
-        Optional<UserEntity> userEntityOptional = this.userDao.findByUserName(username);
+        Optional<UserEntity> userEntityOptional = userDao.findByUserName(username);
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = (UserEntity)userEntityOptional.get();
             return new User(userEntity.getUserName(), "{noop}" + userEntity.getUserPassword(), AuthorityUtils.createAuthorityList(new String[]{userEntity.getUserRole()}));

@@ -40,4 +40,14 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
         }
         return Page.empty();
     }
+
+    @Override
+    public Page<CatalogDto> getDataForTechnologistLeftTableWithSearchData(Pageable pageable, String nameprod) {
+        try {
+            return catalogRepository.findByNameProdWithPagination(nameprod, pageable);
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesDaoImpl getDataForTechnologistLeftTableWithSearchData {}, {} ", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
 }

@@ -30,7 +30,14 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         } else {
             pageable = PageRequest.of(requestTechnologistPageLeftTableDto.getStart() / requestTechnologistPageLeftTableDto.getLength(), requestTechnologistPageLeftTableDto.getLength(), Sort.by(columnName).descending());
         }
-        Page<CatalogDto> page = searchDataForTablesDao.getDataForTechnologistLeftTable(pageable);
+
+        Page<CatalogDto> page;
+        if (requestTechnologistPageLeftTableDto.getSearchValue().equals("")) {
+            page = searchDataForTablesDao.getDataForTechnologistLeftTable(pageable);
+        } else {
+            page = searchDataForTablesDao.getDataForTechnologistLeftTableWithSearchData(pageable, requestTechnologistPageLeftTableDto.getSearchValue());
+        }
+
         TechnologistPageLeftTableResponseDto responseDto = new TechnologistPageLeftTableResponseDto();
         responseDto.setDraw(requestTechnologistPageLeftTableDto.getDraw());
         responseDto.setRecordsTotal(page.getTotalElements());

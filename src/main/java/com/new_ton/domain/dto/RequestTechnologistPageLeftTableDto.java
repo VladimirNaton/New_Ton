@@ -11,4 +11,5 @@ public class RequestTechnologistPageLeftTableDto {
     private String orderType;
     private String brend;
     private String productName;
+    private String searchValue;
 }

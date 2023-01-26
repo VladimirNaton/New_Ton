@@ -36,36 +36,23 @@ public class MainTableDaoImpl implements MainTableDao {
             StringBuilder count = new StringBuilder();
             String where = " where ";
 
-            if (requestDataTableDto.getStartDate().equals("all") && requestDataTableDto.getEndDate().equals("all") &&
-                    requestDataTableDto.getBrend().equals("") && requestDataTableDto.getProductName().equals("") &&
-                    requestDataTableDto.getSpecification().equals("")) {
-                where = "";
-            }
-
             List<Integer> filterCount = new ArrayList<>();
 
             query.append(" select me from MainEntity me ").append(where);
             count.append(" select count(me) from MainEntity me ").append(where);
 
-            if (!requestDataTableDto.getTypeDate().equals("") && !requestDataTableDto.getStartDate().equals("all")) {
-
+            if (!requestDataTableDto.getTypeDate().equals("")) {
                 String typeDate = getTypeDateService.getTypeDate(requestDataTableDto.getTypeDate());
-                query.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'");
-                count.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'");
-                filterCount.add(1);
-            }
-
-            if (!requestDataTableDto.getTypeDate().equals("") && !requestDataTableDto.getStartDate().equals("all")) {
-                String typeDate = getTypeDateService.getTypeDate(requestDataTableDto.getTypeDate());
-
-                if (filterCount.size() > 0) {
-                    query.append(" and ");
-                    count.append(" and ");
+                if (requestDataTableDto.getStartDate().equals("all")) {
+                    query.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
+                    count.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
+                    filterCount.add(1);
                 }
-
-                query.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
-                count.append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
-                filterCount.add(1);
+                if (!requestDataTableDto.getStartDate().equals("all")) {
+                    query.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'").append(" and ").append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
+                    count.append("me.").append(typeDate).append(" >= '").append(requestDataTableDto.getStartDate()).append("'").append(" and ").append("me.").append(typeDate).append(" <= '").append(requestDataTableDto.getEndDate()).append("'");
+                    filterCount.add(1);
+                }
             }
 
             if (!requestDataTableDto.getBrend().equals("")) {
