@@ -1,15 +1,10 @@
 package com.new_ton.controller;
 
 
-import com.new_ton.domain.dto.RequestTechnologistPageLeftTableDto;
-import com.new_ton.domain.dto.RequestTechnologistPageRightTableDto;
-import com.new_ton.domain.dto.TechnologistPageLeftTableResponseDto;
-import com.new_ton.domain.dto.TechnologistPageRightTableResponseDto;
+import com.new_ton.domain.dto.*;
 import com.new_ton.service.SearchDataForTablesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/search")
@@ -28,6 +23,11 @@ public class SearchDataForTableController {
     @PostMapping("/data-for-technologist-right-table")
     public TechnologistPageRightTableResponseDto getDataForRightProductTableTechnologistPage(RequestTechnologistPageRightTableDto requestTechnologistPageRightTableDto) {
         return searchDataForTablesService.getDataForTechnologistRightTable(requestTechnologistPageRightTableDto);
+    }
+
+    @GetMapping("/get-data-by-selected-catalog-row")
+    public CatalogDtoSelectedRow getDataBySelectedCatalogRow(@RequestParam Integer idProd) {
+        return searchDataForTablesService.searchDataFromSelectedCatalogRow(idProd);
     }
 
 

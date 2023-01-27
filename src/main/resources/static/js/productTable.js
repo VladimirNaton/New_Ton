@@ -152,12 +152,14 @@ $(document).ready(function () {
         }
     });
 
+
+
     $('#button5').on("click", function () {
         if (idSelected !== '') {
             $.ajax({
-                url: '/api/v1/printTestReport?id=' + idSelected,
-                method: 'post',
-                data: JSON.stringify({'id': idSelected}),
+                url: '/api/v1/printTestReport',
+                method: 'POST',
+                data: {id: idSelected},
                 success: function (data) {
                     alert("Данные успешно отправленны на печать !");
                 },

@@ -127,3 +127,17 @@
 #right-head-button {
     padding-bottom: 15px;
 }
+
+#delete-recipe-modal {
+    width: 20%;
+    min-height: 15%;
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    background-color: wheat;
+    z-index: 1;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-bottom: 10px;
+}

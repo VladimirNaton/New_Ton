@@ -31,7 +31,7 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             pageable = PageRequest.of(requestTechnologistPageLeftTableDto.getStart() / requestTechnologistPageLeftTableDto.getLength(), requestTechnologistPageLeftTableDto.getLength(), Sort.by(columnName).descending());
         }
 
-        Page<CatalogDto> page;
+        Page<CatalogDtoByLeftTable> page;
         if (requestTechnologistPageLeftTableDto.getSearchValue().equals("")) {
             page = searchDataForTablesDao.getDataForTechnologistLeftTable(pageable);
         } else {
@@ -67,5 +67,14 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         responseDto.setData(mainTableDtoList);
         responseDto.setRecordsFiltered(page.getTotalElements());
         return responseDto;
+    }
+
+    @Override
+    public CatalogDtoSelectedRow searchDataFromSelectedCatalogRow(Integer idProd) {
+        CatalogDtoSelectedRow catalogDtoSelectedRow = searchDataForTablesDao.searchDataFromSelectedCatalogRow(idProd);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String strDate = dateFormat.format(catalogDtoSelectedRow.getDatecr());
+        catalogDtoSelectedRow.setDataCreate(strDate);
+        return catalogDtoSelectedRow;
     }
 }

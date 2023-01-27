@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface MainRepository extends JpaRepository<MainEntity, Integer> {
     Optional<MainEntity> findByIdpr(int id);
 
-    <T> Page<T> findAllBy(Class<T> type, Pageable pageable);
+    <T> Page<T> findAllByState(Integer state, Class<T> type, Pageable pageable);
 }
 

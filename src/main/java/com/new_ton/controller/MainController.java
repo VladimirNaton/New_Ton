@@ -69,4 +69,11 @@ public class MainController {
     public String getTechnologistPage() {
         return "TechnologistPage";
     }
+
+
+    @Secured("ROLE_TECHNOLOGIST")
+    @GetMapping("/edite-recipe")
+    public String getEditeRecipePage(@RequestParam String idProd) {
+        return "EditRecipeTechnologistPage";
+    }
 }

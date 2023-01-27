@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.CatalogDto;
+import com.new_ton.domain.dto.CatalogDtoSelectedRow;
+import com.new_ton.domain.dto.CatalogDtoByLeftTable;
 import com.new_ton.domain.dto.MainTableDto;
 import com.new_ton.repository.CatalogRepository;
 import com.new_ton.repository.MainRepository;
@@ -22,9 +23,9 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     private final MainRepository mainRepository;
 
     @Override
-    public Page<CatalogDto> getDataForTechnologistLeftTable(Pageable pageable) {
+    public Page<CatalogDtoByLeftTable> getDataForTechnologistLeftTable(Pageable pageable) {
         try {
-            return catalogRepository.findAllBy(CatalogDto.class, pageable);
+            return catalogRepository.findAllBy(CatalogDtoByLeftTable.class, pageable);
         } catch (Exception e) {
             log.error("Error SearchDataForTablesDaoImpl getDataForTechnologistLeftTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
@@ -34,7 +35,7 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     @Override
     public Page<MainTableDto> getDataForTechnologistRightTable(Pageable pageable) {
         try {
-            return mainRepository.findAllBy(MainTableDto.class, pageable);
+            return mainRepository.findAllByState(1, MainTableDto.class, pageable);
         } catch (Exception e) {
             log.error("Error SearchDataForTablesDaoImpl getDataForTechnologistRightTable : {}, {} ", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
@@ -42,12 +43,22 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     }
 
     @Override
-    public Page<CatalogDto> getDataForTechnologistLeftTableWithSearchData(Pageable pageable, String nameprod) {
+    public Page<CatalogDtoByLeftTable> getDataForTechnologistLeftTableWithSearchData(Pageable pageable, String nameprod) {
         try {
             return catalogRepository.findByNameProdWithPagination(nameprod, pageable);
         } catch (Exception e) {
             log.error("Error SearchDataForTablesDaoImpl getDataForTechnologistLeftTableWithSearchData {}, {} ", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return Page.empty();
+    }
+
+    @Override
+    public CatalogDtoSelectedRow searchDataFromSelectedCatalogRow(Integer idProd) {
+        try {
+            return catalogRepository.getDataBySelectedRowCatalog(idProd);
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesDaoImpl searchDataFromSelectedCatalogRow : {}, {} ", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
     }
 }

@@ -61,7 +61,6 @@ public class MainEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expdate")
     private Date expdate;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateprot")
     private Date dateprot;
@@ -69,4 +68,6 @@ public class MainEntity {
     private String filtr;
     @Column(name = "comment")
     private String comment;
+    @Column(name = "idcat")
+    private Integer idCat;
 }

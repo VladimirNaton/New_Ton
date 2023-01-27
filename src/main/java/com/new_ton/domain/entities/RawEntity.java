@@ -14,8 +14,8 @@ public class RawEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "idpr")
-    private Integer idpr;
+    @Column(name = "id_main")
+    private Integer idMain;
     @Basic
     @Column(name = "n")
     private Integer n;
