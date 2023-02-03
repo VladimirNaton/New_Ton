@@ -70,4 +70,7 @@ public class MainEntity {
     private String comment;
     @Column(name = "idcat")
     private Integer idCat;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "returndate")
+    private Date returndate;
 }

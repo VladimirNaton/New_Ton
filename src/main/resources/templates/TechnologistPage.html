@@ -81,14 +81,14 @@
                                 </div>
                             </div>
 
-                            <select style="width: 20%; margin-right: 10px" class="input-border-style">
+                            <select id="return-day" style="width: 20%; margin-right: 10px" class="input-border-style">
                                 <option value="10" selected>10</option>
                                 <option value="15">15</option>
                                 <option value="20">20</option>
                             </select>
                         </div>
                         <div style="width: 35%; text-align: right">
-                            <button style="width: 100%" type="button"
+                            <button id="send-teller" style="width: 100%" type="button"
                                     class="btn btn-outline-secondary btn-sm button-width">
                                 Отправить
                                 операционисту
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div style="width: 50%; text-align: right; margin-right: 5px">
-                        <button class="input-border-style btn btn-outline-secondary btn-sm" id="select-product">Выбрать
+                        <button class="input-border-style btn btn-outline-secondary btn-sm" id="move-to-production">В производство
                             >>>
                         </button>
                     </div>
@@ -150,9 +150,9 @@
                     <table id="left-product-table" style="width: 98%">
                         <thead>
                         <tr>
-                            <td>idpr</td>
-                            <td>brend</td>
-                            <td>nameprod</td>
+                            <th>idpr</th>
+                            <th>brend</th>
+                            <th>nameprod</th>
                         </tr>
                         </thead>
                     </table>
@@ -166,13 +166,13 @@
                     <table id="right-product-table" style="width: 98%">
                         <thead>
                         <tr>
-                            <td>idpr</td>
-                            <td>brend</td>
-                            <td>nameprod</td>
-                            <td>datecr</td>
-                            <td>percent</td>
-                            <td>mass</td>
-                            <td>comment</td>
+                            <th>idpr</th>
+                            <th>brend</th>
+                            <th>nameprod</th>
+                            <th>datecr</th>
+                            <th>percent</th>
+                            <th>mass</th>
+                            <th>comment</th>
                         </tr>
                         </thead>
                     </table>

@@ -2,6 +2,7 @@ package com.new_ton.controller;
 
 
 import com.new_ton.domain.dto.*;
+import com.new_ton.domain.dto.EditeRecipeTableRequestDto;
 import com.new_ton.service.SearchDataForTablesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,27 @@ public class SearchDataForTableController {
         return searchDataForTablesService.searchDataFromSelectedCatalogRow(idProd);
     }
 
+
+    @PostMapping("/data-for-edite-recipe-table")
+    public EditeRecipeResponseDto searchDataForEditeRecipeTable(EditeRecipeTableRequestDto editeRecipeTableRequestDto) {
+        return searchDataForTablesService.searchDataForEditeRecipeTable(editeRecipeTableRequestDto);
+    }
+
+
+    @GetMapping("/get-data-for-head-string-edite-recipe/{idProd}")
+    public GetDataForInformationStringEditeRecipeDto getDataForInformationStringEditeRecipe(@PathVariable(name = "idProd") Integer idProd) {
+        return searchDataForTablesService.getDataForInformationStringEditeRecipe(idProd);
+    }
+
+    @PostMapping("/data-for-edite-recipe-component-table")
+    public EditeRecipeCatalogTableResponseDto searchDataForEditeRecipeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto) {
+        return searchDataForTablesService.getDataForEditeRecipeComponentTable(editeRecipeTableRequestDto);
+    }
+
+
+    @GetMapping("/get-data-for-selected-row-edite-recipe-table/{id}")
+    public GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowEditeRecipeTable(@PathVariable(name = "id") Integer id) {
+        return searchDataForTablesService.getDataForSelectedRowEditeRecipeTable(id);
+    }
 
 }

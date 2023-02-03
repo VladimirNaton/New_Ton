@@ -1,5 +1,7 @@
 package com.new_ton.repository;
 
+import com.new_ton.domain.dto.EditeRecipeTableDto;
+import com.new_ton.domain.dto.GetDataForSelectedRowEditeRecipeTableResponseDto;
 import com.new_ton.domain.entities.RawEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,5 +23,15 @@ public interface RawRepository extends JpaRepository<RawEntity, Integer> {
     @Modifying
     @Query("delete from RawEntity r where r.idMain = ?1")
     void deleteAllByIdMain(Integer idMain);
+
+    @Query("select new com.new_ton.domain.dto.EditeRecipeTableDto(r.id ,r.n, r.stage, r.code, r.nameraw, r.percent, r.mass, r.devper, r.devmass) from RawEntity r where r.idMain = ?1 order by r.n asc ")
+    List<EditeRecipeTableDto> findAllIdMain(Integer idMain);
+
+
+    @Query("select new com.new_ton.domain.dto.GetDataForSelectedRowEditeRecipeTableResponseDto(r.id, r.n, r.stage, r.nameraw, r.percent, r.mass, r.devper, r.devmass, r.timemix, r.timemix, r.pastpart, r.pastdate, r.filter) from RawEntity r where r.id =?1")
+    GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowEditeRecipeTable(Integer id);
+
+    @Query("select re  from RawEntity re where re.idMain = ?1 and re.n > ?2")
+    List<RawEntity> selectAllByIdAndSequenceNumber(Integer idMain, Integer sequenceNumber);
 }
 

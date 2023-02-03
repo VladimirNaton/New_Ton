@@ -73,7 +73,8 @@ public class MainController {
 
     @Secured("ROLE_TECHNOLOGIST")
     @GetMapping("/edite-recipe")
-    public String getEditeRecipePage(@RequestParam String idProd) {
+    public String getEditeRecipePage(@RequestParam String idProd, Model model) {
+        model.addAttribute("idProd", idProd);
         return "EditRecipeTechnologistPage";
     }
 }

@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
-    let idSelectedLeftTable = '';
+    let idSelectedCatalogTable = '';
     let searchData = '';
     let modalShow = false;
     let idSelectedProductTable = '';
 
-    let leftProductTable = $('#left-product-table').DataTable({
+    let catalogProductTable = $('#left-product-table').DataTable({
         "processing": true,
         "serverSide": true,
         "searching": false,
@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 
 
-    let rightProductTable = $('#right-product-table').DataTable({
+    let mainProductTable = $('#right-product-table').DataTable({
         "processing": true,
         "serverSide": true,
         "searching": false,
@@ -50,7 +50,7 @@ $(document).ready(function () {
             "type": "POST",
             data: function (data) {
                 data.orderColumn = data.order[0].column;
-                data.orderType = data.order[0].dir;
+                data.orderType = "desc";
             }
         },
         "lengthMenu": [[10, 15, 20], [10, 15, 20]],
@@ -100,14 +100,14 @@ $(document).ready(function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
                 let elem = $(this);
-                idSelectedLeftTable = elem.find("td:first").html();
-                getDataBySelectedCatalogRow(idSelectedLeftTable);
+                idSelectedCatalogTable = elem.find("td:first").html();
+                getDataBySelectedCatalogRow(idSelectedCatalogTable);
             } else {
-                leftProductTable.$('tr.selected').removeClass('selected');
+                catalogProductTable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
                 let elem = $(this);
-                idSelectedLeftTable = elem.find("td:first").html();
-                getDataBySelectedCatalogRow(idSelectedLeftTable);
+                idSelectedCatalogTable = elem.find("td:first").html();
+                getDataBySelectedCatalogRow(idSelectedCatalogTable);
             }
         }
     });
@@ -119,7 +119,7 @@ $(document).ready(function () {
                 let elem = $(this);
                 idSelectedProductTable = elem.find("td:first").html();
             } else {
-                rightProductTable.$('tr.selected').removeClass('selected');
+                mainProductTable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
                 let elem = $(this);
                 idSelectedProductTable = elem.find("td:first").html();
@@ -130,20 +130,23 @@ $(document).ready(function () {
     $('#search-prod').click(function () {
         if (!modalShow) {
             searchData = $('#name-prod').val();
-            leftProductTable.ajax.reload();
+            idSelectedCatalogTable = '';
+            catalogProductTable.ajax.reload();
+            removeDataFromInformationRows();
         }
     })
 
     $('#resetSearch').click(function () {
         $('#name-prod').val('');
         searchData = '';
-        leftProductTable.ajax.reload();
-
+        idSelectedCatalogTable = '';
+        catalogProductTable.ajax.reload();
+        removeDataFromInformationRows();
     })
 
 
     function getDataBySelectedCatalogRow(idProd) {
-        if (idSelectedLeftTable !== '') {
+        if (idSelectedCatalogTable !== '') {
             $.ajax({
                 url: '/search/get-data-by-selected-catalog-row?idProd=' + idProd,
                 method: 'get',
@@ -188,7 +191,7 @@ $(document).ready(function () {
                 modalShow = false;
                 idSelectedProductTable = '';
                 $('#delete-recipe-modal').hide();
-                rightProductTable.ajax.reload();
+                mainProductTable.ajax.reload();
             },
             beforeSend: function () {
             },
@@ -200,11 +203,83 @@ $(document).ready(function () {
     })
 
     $('#edit-recipe').click(function () {
-        if (idSelectedProductTable !== '') {
-            let url = './edite-recipe?idProd=' + idSelectedProductTable;
-            window.open(url, '_blank');
-        } else {
-            alert("Вы не выбрали ни одной записи !!!");
+        if (!modalShow) {
+            if (idSelectedProductTable !== '') {
+                let url = './edite-recipe?idProd=' + idSelectedProductTable;
+                window.open(url, '_blank');
+            } else {
+                alert("Вы не выбрали ни одной записи !!!");
+            }
+        }
+    })
+
+    $('#move-to-production').click(function () {
+        if (!modalShow) {
+            if (idSelectedCatalogTable !== '') {
+                $.ajax({
+                    url: '/update/move-catalog-row-to-main/' + idSelectedCatalogTable,
+                    method: 'put',
+                    success: function (data) {
+                        if (data) {
+                            idSelectedCatalogTable = '';
+                            mainProductTable.ajax.reload();
+                        } else {
+                            alert("Возникла ошибка при передаче продукта в производство !!!");
+                        }
+                    },
+                    beforeSend: function () {
+                    },
+                    complete: function () {
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            } else {
+                alert("Вы не выбрали ни одной записи !!!");
+            }
+        }
+    })
+
+    function removeDataFromInformationRows() {
+        $('#first-row-brend').val('');
+        $('#first-row-date-production').val('');
+        $('#second-row-product-name').val('');
+        $('#common-weight').val('');
+    }
+
+    $('#send-teller').click(function () {
+        if (!modalShow) {
+            if (idSelectedProductTable !== '') {
+                let days = $('#return-day').find('option:selected').val();
+                let data = {
+                    id: idSelectedProductTable,
+                    days: days
+                }
+                $.ajax({
+                    url: '/update/send-product-to-teller',
+                    method: 'put',
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        if (data) {
+                            if (data) {
+                                idSelectedCatalogTable = '';
+                                mainProductTable.ajax.reload();
+                            }
+                        } else {
+                            alert("Возникла ошибка при передаче продукта в производство !!!");
+                        }
+                    },
+                    beforeSend: function () {
+                    },
+                    complete: function () {
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            } else {
+                alert("Вы не выбрали ни одной записи !!!");
+            }
         }
     })
 

@@ -1,11 +1,14 @@
 package com.new_ton.domain.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
-@Data
+@ToString
+@EqualsAndHashCode
+@Setter
+@Getter
 @Entity
 @Table(name = "raw")
 public class RawEntity {
@@ -13,79 +16,59 @@ public class RawEntity {
     @Id
     @Column(name = "id")
     private int id;
-    @Basic
     @Column(name = "id_main")
     private Integer idMain;
-    @Basic
     @Column(name = "n")
     private Integer n;
-    @Basic
     @Column(name = "stage")
     private Integer stage;
-    @Basic
     @Column(name = "code")
     private Integer code;
-    @Basic
     @Column(name = "nameraw")
     private String nameraw;
-    @Basic
     @Column(name = "percent")
     private Double percent;
-    @Basic
     @Column(name = "mass")
     private Double mass;
-    @Basic
     @Column(name = "devper")
     private Double devper;
-    @Basic
     @Column(name = "devmass")
     private Double devmass;
-    @Basic
     @Column(name = "factmass")
     private Double factmass;
-    @Basic
     @Column(name = "factmassdev")
     private Double factmassdev;
-    @Basic
     @Column(name = "tempdep")
     private Double tempdep;
-    @Basic
     @Column(name = "wetdep")
     private Double wetdep;
-    @Basic
     @Column(name = "prodtemp")
     private Double prodtemp;
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datestart")
-    private Timestamp datestart;
-    @Basic
+    private Date datestart;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datestop")
-    private Timestamp datestop;
-    @Basic
+    private Date datestop;
     @Column(name = "timemade")
     private Integer timemade;
-    @Basic
     @Column(name = "turnmix")
     private Integer turnmix;
-    @Basic
     @Column(name = "devturn")
     private Integer devturn;
-    @Basic
     @Column(name = "timemix")
     private Integer timemix;
-    @Basic
     @Column(name = "factturn")
     private Integer factturn;
-    @Basic
     @Column(name = "facttimemix")
     private Integer facttimemix;
-    @Basic
     @Column(name = "eq")
     private Integer eq;
-    @Basic
     @Column(name = "pastpart")
     private Integer pastpart;
-    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "pastdate")
-    private Timestamp pastdate;
+    private Date pastdate;
+    @Column(name = "filter")
+    private String filter;
 }
