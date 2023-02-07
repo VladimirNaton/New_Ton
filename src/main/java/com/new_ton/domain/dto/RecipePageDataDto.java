@@ -16,7 +16,7 @@ public class RecipePageDataDto {
     private RecipeMainTableDto code8Stage2;
     private Integer allTimeMade;
     private String nameProd;
-    private Double mainMass;
+    private Integer mainMass;
     private Integer deg;
     private String dateMade;
     private String currentDate;

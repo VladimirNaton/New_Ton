@@ -2,11 +2,11 @@ package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
+import com.new_ton.domain.dto.AddOrReplaceComponentToRecipeRequestDto;
+import com.new_ton.domain.dto.SaveRecipeDto;
 import com.new_ton.domain.dto.SendProductToTellerDto;
-import com.new_ton.domain.entities.CatalogEntity;
-import com.new_ton.domain.entities.CatrecEntity;
-import com.new_ton.domain.entities.MainEntity;
-import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.dto.UpdateSelectedRowOfRecipeDto;
+import com.new_ton.domain.entities.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -132,9 +132,195 @@ public class UpdateDataServiceImpl implements UpdateDataService {
                 Integer sequenceNumber = elem.getN();
                 elem.setN(--sequenceNumber);
             }).collect(Collectors.toList());
-            return updateDataDao.updateRawEntity(rawEntityList);
+            return updateDataDao.updateRawEntityList(rawEntityList);
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl deleteSelectedRowFromRecipeTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean addComponentToRecipe(AddOrReplaceComponentToRecipeRequestDto addOrReplaceComponentToRecipeRequestDto) {
+        try {
+            Calendar calendar = new GregorianCalendar(1111, 10, 11, 11, 11, 11);
+            Date date = calendar.getTime();
+            Integer maxSequenceNumber = null;
+            maxSequenceNumber = searchDataForTablesDao.selectMaxSequenceNumber(addOrReplaceComponentToRecipeRequestDto.getIdMain());
+            RawEntity rawEntity = new RawEntity();
+            if (maxSequenceNumber != null) {
+                rawEntity.setN(++maxSequenceNumber);
+            } else {
+                rawEntity.setN(1);
+            }
+
+            rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date);
+
+            rawEntity.setIdMain(addOrReplaceComponentToRecipeRequestDto.getIdMain());
+            rawEntity.setStage(0);
+            rawEntity.setPercent(0.0);
+            rawEntity.setMass(0.0);
+            rawEntity.setDevper(0.0);
+            rawEntity.setDevmass(0.0);
+            rawEntity.setFactmass(0.0);
+            rawEntity.setFactmassdev(0.0);
+            rawEntity.setTempdep(0.0);
+            rawEntity.setWetdep(0.0);
+            rawEntity.setProdtemp(0.0);
+            rawEntity.setDatestart(date);
+            rawEntity.setDatestop(date);
+            rawEntity.setTimemade(0);
+            rawEntity.setTurnmix(0);
+            rawEntity.setDevturn(0);
+            rawEntity.setTimemix(0);
+            rawEntity.setFactturn(0);
+            rawEntity.setFacttimemix(0);
+            rawEntity.setEq(0);
+            rawEntity.setFilter(0);
+            return updateDataDao.saveNewRowToRawTable(rawEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl addComponentToRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean replaceSelectedRecipeElement(AddOrReplaceComponentToRecipeRequestDto addOrReplaceComponentToRecipeRequestDto) {
+        try {
+            Calendar calendar = new GregorianCalendar(1111, 10, 11, 11, 11, 11);
+            Date date = calendar.getTime();
+            Optional<RawEntity> rawEntityOptional = searchDataForTablesDao.getRawEntityById(addOrReplaceComponentToRecipeRequestDto.getIdSelectedElemRecipeTable());
+            if (rawEntityOptional.isPresent()) {
+                RawEntity rawEntity = rawEntityOptional.get();
+
+                rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date);
+
+                rawEntity.setIdMain(addOrReplaceComponentToRecipeRequestDto.getIdMain());
+                rawEntity.setStage(0);
+                rawEntity.setPercent(0.0);
+                rawEntity.setMass(0.0);
+                rawEntity.setDevper(0.0);
+                rawEntity.setDevmass(0.0);
+                rawEntity.setFactmass(0.0);
+                rawEntity.setFactmassdev(0.0);
+                rawEntity.setTempdep(0.0);
+                rawEntity.setWetdep(0.0);
+                rawEntity.setProdtemp(0.0);
+                rawEntity.setDatestart(date);
+                rawEntity.setDatestop(date);
+                rawEntity.setTimemade(0);
+                rawEntity.setTurnmix(0);
+                rawEntity.setDevturn(0);
+                rawEntity.setTimemix(0);
+                rawEntity.setFactturn(0);
+                rawEntity.setFacttimemix(0);
+                rawEntity.setEq(0);
+                rawEntity.setFilter(0);
+                return updateDataDao.updateRawEntity(rawEntity);
+            }
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl replaceSelectedRecipeElement : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    private RawEntity addSomeParameter(Integer code, Integer idComponentTable, RawEntity rawEntity, String nameSelectedComponent, Date date) {
+        if (code == null || code < 3) {
+            Optional<CatrawEntity> catrawEntityOptional = searchDataForTablesDao.getCatrawEntityById(idComponentTable);
+            if (catrawEntityOptional.isPresent()) {
+                CatrawEntity catrawEntity = catrawEntityOptional.get();
+                rawEntity.setNameraw(catrawEntity.getNameraw());
+                rawEntity.setCode(catrawEntity.getCode());
+                rawEntity.setPastpart(catrawEntity.getPart());
+                rawEntity.setPastdate(catrawEntity.getDate());
+            }
+        } else {
+            rawEntity.setNameraw(nameSelectedComponent);
+            rawEntity.setCode(code);
+            rawEntity.setPastpart(0);
+            rawEntity.setPastdate(date);
+        }
+        return rawEntity;
+    }
+
+    @Transactional
+    @Override
+    public boolean updateSelectedRowOfRecipe(UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto) {
+        try {
+            searchDataForTablesDao.getRawEntityById(updateSelectedRowOfRecipeDto.getSelectedComponentId()).ifPresent(elem -> {
+                if (updateSelectedRowOfRecipeDto.getSequenceNumber() != null) {
+                    elem.setN(updateSelectedRowOfRecipeDto.getSequenceNumber());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getStage() != null) {
+                    elem.setStage(updateSelectedRowOfRecipeDto.getStage());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPercent() != null) {
+                    elem.setPercent(updateSelectedRowOfRecipeDto.getPercent());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMass() != null) {
+                    elem.setMass(updateSelectedRowOfRecipeDto.getMass());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getInfelicityPercent() != null) {
+                    elem.setDevper(updateSelectedRowOfRecipeDto.getInfelicityPercent());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getInfelicityMass() != null) {
+                    elem.setDevmass(updateSelectedRowOfRecipeDto.getInfelicityMass());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMixing() != null) {
+                    elem.setTurnmix(updateSelectedRowOfRecipeDto.getMixing());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMixingTime() != null) {
+                    elem.setTimemix(updateSelectedRowOfRecipeDto.getMixingTime());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPart() != null) {
+                    elem.setPastpart(updateSelectedRowOfRecipeDto.getPart());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPastDate() != null) {
+                    elem.setPastdate(updateSelectedRowOfRecipeDto.getPastDate());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getFilter() != null) {
+                    elem.setFilter(updateSelectedRowOfRecipeDto.getFilter());
+                }
+                updateDataDao.updateRawEntity(elem);
+            });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateSelectedRowOfRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean saveRecipe(SaveRecipeDto saveRecipeDto) {
+        try {
+            searchDataForTablesDao.getMainEntityById(saveRecipeDto.getIdMain())
+                    .ifPresent(elem -> {
+                        if (saveRecipeDto.getComment().equals("")) {
+                            elem.setComment("норм");
+                        } else {
+                            elem.setComment(saveRecipeDto.getComment());
+                        }
+                        elem.setTempprodmin(saveRecipeDto.getTempMin());
+                        elem.setTempprodmax(saveRecipeDto.getTempMax());
+                        elem.setMass(saveRecipeDto.getCommonWeight());
+                        elem.setPercent(saveRecipeDto.getControl());
+                        elem.setDatecr(new Date());
+                        updateDataDao.updateMainEntity(elem);
+                    });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl saveRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

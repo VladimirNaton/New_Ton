@@ -17,14 +17,14 @@ public class GetDataForInformationStringEditeRecipeDto {
 
     private Double tempMax;
 
-    private Double mass;
+    private Integer mass;
 
     private Double percent;
 
     private String dateString;
 
 
-    public GetDataForInformationStringEditeRecipeDto(String brend, Date dateCreate, String nameProd, Double tempMin, Double tempMax, Double mass, Double percent) {
+    public GetDataForInformationStringEditeRecipeDto(String brend, Date dateCreate, String nameProd, Double tempMin, Double tempMax, Integer mass, Double percent) {
         this.brend = brend;
         this.dateCreate = dateCreate;
         this.nameProd = nameProd;

@@ -70,5 +70,5 @@ public class RawEntity {
     @Column(name = "pastdate")
     private Date pastdate;
     @Column(name = "filter")
-    private String filter;
+    private Integer filter;
 }

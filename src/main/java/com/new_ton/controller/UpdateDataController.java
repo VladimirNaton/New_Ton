@@ -1,6 +1,9 @@
 package com.new_ton.controller;
 
+import com.new_ton.domain.dto.AddOrReplaceComponentToRecipeRequestDto;
+import com.new_ton.domain.dto.SaveRecipeDto;
 import com.new_ton.domain.dto.SendProductToTellerDto;
+import com.new_ton.domain.dto.UpdateSelectedRowOfRecipeDto;
 import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,27 @@ public class UpdateDataController {
     @DeleteMapping("/delete-selected-row-from-recipe-table/{id}")
     public boolean deleteSelectedRowFromRecipeTable(@PathVariable(name = "id") Integer id) {
         return updateDataService.deleteSelectedRowFromRecipeTable(id);
+    }
+
+    @PostMapping("/add-component-to-recipe")
+    public boolean addComponentToRecipe(@RequestBody AddOrReplaceComponentToRecipeRequestDto addOrReplaceComponentToRecipeRequestDto) {
+        return updateDataService.addComponentToRecipe(addOrReplaceComponentToRecipeRequestDto);
+    }
+
+    @PutMapping("/replace-selected-recipe-element")
+    public boolean replaceSelectedRecipeElement(@RequestBody AddOrReplaceComponentToRecipeRequestDto addOrReplaceComponentToRecipeRequestDto) {
+        return updateDataService.replaceSelectedRecipeElement(addOrReplaceComponentToRecipeRequestDto);
+    }
+
+    @PutMapping("/selected-row-of-recipe")
+    public boolean updateSelectedRowOfRecipe(@RequestBody UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto) {
+        return updateDataService.updateSelectedRowOfRecipe(updateSelectedRowOfRecipeDto);
+    }
+
+
+    @PutMapping("/save-recipe")
+    public boolean saveRecipe(@RequestBody SaveRecipeDto saveRecipeDto) {
+        return updateDataService.saveRecipe(saveRecipeDto);
     }
 
 

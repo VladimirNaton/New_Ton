@@ -1,5 +1,6 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.dto.SaveRecipeDto;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.RawEntity;
 import com.new_ton.repository.CatalogRepository;
@@ -72,12 +73,45 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
     }
 
     @Override
-    public boolean updateRawEntity(List<RawEntity> rawEntityList) {
+    public boolean updateRawEntityList(List<RawEntity> rawEntityList) {
         try {
             rawRepository.saveAllAndFlush(rawEntityList);
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl updateRawEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveNewRowToRawTable(RawEntity rawEntity) {
+        try {
+            rawRepository.save(rawEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl saveNewRowToRawTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateRawEntity(RawEntity rawEntity) {
+        try {
+            rawRepository.saveAndFlush(rawEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateRawEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateMainEntity(MainEntity mainEntity) {
+        try {
+            mainRepository.saveAndFlush(mainEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateMainEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

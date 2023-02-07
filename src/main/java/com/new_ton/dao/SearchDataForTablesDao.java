@@ -1,10 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.*;
-import com.new_ton.domain.entities.CatalogEntity;
-import com.new_ton.domain.entities.CatrecEntity;
-import com.new_ton.domain.entities.MainEntity;
-import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.entities.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -38,4 +35,10 @@ public interface SearchDataForTablesDao {
     GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowEditeRecipeTable(Integer id);
 
     List<RawEntity> getAllByIdAndSequenceNumber(Integer idMain, Integer sequenceNumber);
+
+    Integer selectMaxSequenceNumber(Integer idMain);
+
+    Optional<CatrawEntity> getCatrawEntityById(Integer id);
+
+    Optional<RawEntity> getRawEntityById(Integer id);
 }

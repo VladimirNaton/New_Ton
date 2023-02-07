@@ -1,10 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.*;
-import com.new_ton.domain.entities.CatalogEntity;
-import com.new_ton.domain.entities.CatrecEntity;
-import com.new_ton.domain.entities.MainEntity;
-import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -161,5 +158,35 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
             log.error("Error searchDataForTablesDaoImpl getAllByIdAndSequenceNumber : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Integer selectMaxSequenceNumber(Integer idMain) {
+        try {
+            return rawRepository.getMaxSequenceNumber(idMain);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl selectMaxSequenceNumber : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public Optional<CatrawEntity> getCatrawEntityById(Integer id) {
+        try {
+            return catrawRepository.findById(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getCatRawEntityById : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<RawEntity> getRawEntityById(Integer id) {
+        try {
+            return rawRepository.findById(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getRawEntityById : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Optional.empty();
     }
 }

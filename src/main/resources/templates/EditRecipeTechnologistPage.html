@@ -48,7 +48,8 @@
                     </label>
                     <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
                             style="font-size: small; font-weight: bold">max</span><br>
-                        <input id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1" style="width: 100%; text-align: center; font-weight: bold"
+                        <input id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1"
+                               style="width: 100%; text-align: center; font-weight: bold"
                                placeholder="Макс. темпр" class="input-border-style">
                     </label>
                 </div>
@@ -56,11 +57,12 @@
                      style="width: 100%; display: flex; flex-wrap: nowrap">
                     <div style="width: 50%">
                         <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
-                            <input id="common-weight-edite-recipe" type="number" step="0.001" class="input-border-style"
+                            <input id="common-weight-edite-recipe" type="number" step="1" class="input-border-style"
                                    style="text-align: center; width: 100%; font-weight: bold">
                         </label>
                         <label style="font-weight: bold; width: 49%; text-align: center">Контроль,%<br>
-                            <input readonly id="control" type="text" class="input-border-style" style="width: 100%; font-weight: bold; text-align: center">
+                            <input readonly id="control" type="text" class="input-border-style"
+                                   style="width: 100%; font-weight: bold; text-align: center">
                         </label>
                     </div>
                 </div>
@@ -70,56 +72,71 @@
     <div id="middle-container-edite-recipe">
         <div id="first-row-middle-edite-recipe" style="display: flex; flex-wrap: nowrap">
             <label style="width: 3.5%; text-align: center"><span style="font-weight: bold">N</span><br>
-                <input id="sequence-number-input" type="number" min="1" step="1" class="input-border-style input-selected-row-information">
+                <input id="sequence-number-input" type="number" min="1" step="1"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label style="width: 3%; text-align: center; margin-left: 10px"><span
                     style="font-weight: bold">Этап</span><br>
-                <input id="stage-input" type="text" class="input-border-style input-selected-row-information" readonly>
+                <input id="stage-input" type="number" min="0" step="1"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="name-prod-label" style="width: 35%; text-align: center; margin-left: 10px"><span
                     style="font-weight: bold">Название</span><br>
-                <input id="name-prod-input" readonly type="text" class="input-border-style" style="width: 100%; font-weight: bold">
+                <input id="name-prod-input" readonly type="text" class="input-border-style"
+                       style="width: 100%; font-weight: bold">
             </label>
-            <label id="percent" style="text-align: center; width: 6%;display: none; margin-left: 10px; text-align: center; font-weight: bold"><span
+            <label id="percent"
+                   style="text-align: center; width: 6%;display: none; margin-left: 10px; text-align: center; font-weight: bold"><span
                     style="font-weight: bold">Процент, %</span><br>
-                <input id="percent-input" type="number" step="0.01" min="0" class="input-border-style input-selected-row-information">
+                <input id="percent-input" type="number" step="0.01" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
-            <label id="mass" style="text-align: center; width: 6%; display: none; margin-left: 10px"><span style="font-weight: bold">Масса, кг</span><br>
-                <input id="mass-input" type="number" step="0.001" min="0" class="input-border-style input-selected-row-information">
+            <label id="mass" style="text-align: center; width: 6%; display: none; margin-left: 10px"><span
+                    style="font-weight: bold">Масса, кг</span><br>
+                <input id="mass-input" type="number" step="0.001" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="mixing" style="text-align: center; width: 9%; display: none; margin-left: 10px"><span
                     style="font-weight: bold">Перемеш. об.мин.</span><br>
-                <input id="mixing-input" type="number" min="0" step="1" class="input-border-style input-selected-row-information">
+                <input id="mixing-input" type="number" min="0" step="1"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="mixing-time" style="text-align: center; width: 7%; display: none; margin-left: 10px"><span
                     style="font-weight: bold">Время, мин.</span><br>
-                <input id="mixing-time-input" type="number" step="1" min="0" class="input-border-style input-selected-row-information">
+                <input id="mixing-time-input" type="number" step="1" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="filter" style="text-align: center; width: 9%; display: none; margin-left: 10px"><span
                     style="font-weight: bold">Разм. фильтра, мкр.</span><br>
-                <input id="filter-input" type="number" step="1" min="0" class="input-border-style input-selected-row-information">
+                <input id="filter-input" type="number" step="1" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="infelicity-percent" style="text-align: center; width: 6%; display: none; margin-left: 10px"><span
                     style="font-weight: bold">Погр. %</span><br>
-                <input id="infelicity-percent-input" type="number" step="0.01" min="0" class="input-border-style input-selected-row-information">
+                <input id="infelicity-percent-input" type="number" step="0.01" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="infelicity-mass" style="width: 6%; text-align: center; display: none; margin-left: 10px"><span
                     style="font-weight: bold">Погр. кг</span><br>
-                <input id="infelicity-mass-input" type="number" step="0.001" min="0" class="input-border-style input-selected-row-information">
+                <input id="infelicity-mass-input" type="number" step="0.001" min="0"
+                       class="input-border-style input-selected-row-information">
             </label>
             <label id="part-label" style="width: 4%; text-align: center; margin-left: 10px; display: none"><span
                     style="font-weight: bold">Партия</span><br>
-                <input id="part" class="input-border-style input-selected-row-information" type="text">
+                <input id="part" class="input-border-style input-selected-row-information" type="number">
             </label>
-            <label id="part-date-label" style="width: 8%; text-align: center; margin-left: 10px; display: none"><span
+            <label id="part-date-label" style="width: 9%; text-align: center; margin-left: 10px; display: none"><span
                     style="font-weight: bold">Дата</span><br>
                 <input id="past-date" class="input-border-style input-selected-row-information" type="datetime-local">
             </label>
             <div style="width: 10%; display: flex; margin-left: 10px; align-items: end">
-                <button style="width: 100%;  height: 54%; margin-bottom: 0.2%" id="save-change" class="btn btn-outline-secondary btn-sm" type="button">Сохранить изменения</button>
+                <button style="width: 100%;  height: 54%; margin-bottom: 0.2%" id="save-change"
+                        class="btn btn-outline-secondary btn-sm" type="button">Сохранить изменения
+                </button>
             </div>
 
         </div>
+        <div id="error-message" style="text-align: left; color: #a52834; display: none; margin-left: 0.5%"></div>
         <div id="second-row-middle-edite-recipe" style="margin-top: 15px; display: flex; flex-wrap: nowrap">
             <input id="comment-technologist" type="text" placeholder="Комментарий оператору в цех"
                    class="input-border-style" style="width: 60%">
@@ -131,7 +148,9 @@
         <div style="display: flex; flex-wrap: nowrap">
             <div id="left-head-button-edite-recipe" style="width: 50%">
                 <div style="text-align: right">
-                    <button id="remove-component-from-recipe" class="btn btn-outline-secondary btn-sm">Удалить компонент</button>
+                    <button id="remove-component-from-recipe" class="btn btn-outline-secondary btn-sm">Удалить
+                        компонент
+                    </button>
                 </div>
                 <div style="margin-bottom: 10px"></div>
             </div>
@@ -141,7 +160,7 @@
                         <button id="add-component" class="btn btn-outline-secondary btn-sm">Добавить компонент</button>
                     </div>
                     <div style="width: 17%">
-                        <button id="update-component" class="btn btn-outline-secondary btn-sm">Заменить компонент
+                        <button id="replace-component" class="btn btn-outline-secondary btn-sm">Заменить компонент
                         </button>
                     </div>
                     <div style="width: 17%">

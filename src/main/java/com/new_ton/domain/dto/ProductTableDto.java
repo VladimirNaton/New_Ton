@@ -12,5 +12,5 @@ public class ProductTableDto {
     private String nameprod;
     private String sp;
     private Double percent;
-    private Double mass;
+    private Integer mass;
 }

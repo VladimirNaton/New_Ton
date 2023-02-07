@@ -5,6 +5,14 @@ $(document).ready(function () {
     let findComponent = '';
     let codeSelectedElemRecipeTable;
     let idSelectedElemRecipeTable = '';
+    let idSelectedElemComponentTable = '';
+    let idMain = '';
+    let nameComponent = '';
+    let sequenceNumberFirstValue = '';
+    let errorMessageShow = false;
+
+    idMain = $('#id-edite-recipe').text();
+    nameComponent = $("#component-select option:selected").text();
 
 
     let editeRecipeTable = $('#edite-recipe-table').DataTable({
@@ -77,11 +85,11 @@ $(document).ready(function () {
     $('#edite-recipe-table tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
-            let elem = $(this);
-            codeSelectedElemRecipeTable = elem[0].cells[2].innerText;
-            showRecipeComponentInformation(codeSelectedElemRecipeTable);
-            idSelectedElemRecipeTable = editeRecipeTable.row(this).data().id;
-            getDataForSelectedRowEditeRecipeTable(idSelectedElemRecipeTable);
+            codeSelectedElemRecipeTable = '';
+            idSelectedElemRecipeTable = '';
+            sequenceNumberFirstValue = '';
+            clearInputData();
+            hideAllParameter();
         } else {
             editeRecipeTable.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
@@ -106,7 +114,6 @@ $(document).ready(function () {
                     $('#temp-min').val(data.tempMin);
                     $('#temp-max').val(data.tempMax);
                     $('#common-weight-edite-recipe').val(data.mass);
-                    $('#control').val(data.percent);
                 },
                 beforeSend: function () {
                 },
@@ -159,6 +166,8 @@ $(document).ready(function () {
 
     $('#component-select').change(function () {
         selectedComponents = $('#component-select').find('option:selected').val();
+        nameComponent = $("#component-select option:selected").text();
+        idSelectedElemComponentTable = '';
         switch (selectedComponents) {
             case '1':
                 if (columnVisible) {
@@ -226,15 +235,11 @@ $(document).ready(function () {
     $('#component-table tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
-            let elem = $(this);
-            let code = elem[0].cells[0].innerText;
-            let id = componentTable.row(this).data().id;
+            idSelectedElemComponentTable = '';
         } else {
             componentTable.$('tr.selected').removeClass('selected');
-            let id = componentTable.row(this).data().id;
             $(this).addClass('selected');
-            let elem = $(this);
-            let code = elem[0].cells[0].innerText;
+            idSelectedElemComponentTable = componentTable.row(this).data().id;
         }
     });
 
@@ -340,6 +345,9 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data) {
                         editeRecipeTable.ajax.reload();
+                        idSelectedElemComponentTable = '';
+                        clearInputData();
+                        hideAllParameter();
                     }
                 },
                 beforeSend: function () {
@@ -377,6 +385,9 @@ $(document).ready(function () {
                 if (codeSelectedElemRecipeTable === '3' || codeSelectedElemRecipeTable === '5' || codeSelectedElemRecipeTable === '7') {
                     compliteAnotherRowInformation(data);
                 }
+
+                checkMassAndInfelicityMass();
+                sequenceNumberFirstValue = $('#sequence-number-input').val();
             },
             beforeSend: function () {
             },
@@ -437,4 +448,395 @@ $(document).ready(function () {
         $('#name-prod-input').val(data.nameraw);
     }
 
+    $('#common-weight-edite-recipe').change(function () {
+        let commonWeight = Math.round(Number($('#common-weight-edite-recipe').val()));
+        if (commonWeight !== 0) {
+            let percent = Number($('#percent-input').val());
+            if (percent !== 0) {
+                let result = (commonWeight / 100) * percent;
+                $('#mass-input').val(result.toFixed(2));
+            }
+
+            let infelicityPercent = Number($('#infelicity-percent-input').val());
+            if (infelicityPercent !== 0) {
+                let result = (commonWeight / 100) * infelicityPercent;
+                $('#infelicity-mass-input').val(result.toFixed(2))
+            }
+        }
+        let tableData = getTableData();
+        let mass = Math.round(Number(calculateMassElements(tableData)));
+
+        if (mass !== commonWeight) {
+            $('#control').css('background-color', 'crimson');
+        } else {
+            $('#control').css('background-color', 'white');
+        }
+
+    })
+
+    $('#percent-input').change(function () {
+        let percent = Number($('#percent-input').val());
+        if (percent !== 0) {
+            let result = calculateMass(percent);
+            $('#mass-input').val(result.toFixed(2));
+            checkMassAndInfelicityMass();
+            checkCommonPercents();
+        }
+    })
+
+    $('#mass-input').change(function () {
+        let mass = Number($('#mass-input').val());
+        if (mass !== 0 && $("#percent").is(":visible")) {
+            let result = calculatePercent(mass);
+            $('#percent-input').val(result.toFixed(2));
+            checkMassAndInfelicityMass();
+            checkCommonPercents();
+        }
+    })
+
+    $('#infelicity-percent-input').change(function () {
+        let percent = Number($('#infelicity-percent-input').val());
+        if (percent !== 0) {
+            let result = calculateInfelicityMass(percent);
+            $('#infelicity-mass-input').val(result.toFixed(2));
+            checkMassAndInfelicityMass();
+            checkCommonPercents();
+        }
+    })
+
+    $('#infelicity-mass-input').change(function () {
+        let mass = Number($('#infelicity-mass-input').val());
+        if (mass !== 0) {
+            let result = calculateInfelicityPercent(mass);
+            $('#infelicity-percent-input').val(result.toFixed(2));
+            checkMassAndInfelicityMass();
+            checkCommonPercents();
+        }
+    })
+
+    $('#stage-input').change(function () {
+        let stage = Number($('#stage-input').val());
+        if (stage !== 0) {
+            $('#error-message').hide();
+        }
+        sequenceNumberError();
+    })
+
+
+    function checkMassAndInfelicityMass() {
+        let massInfelicity = Number($('#infelicity-mass-input').val()).toFixed(2);
+        let percentInfelicity = Number($('#infelicity-percent-input').val()).toFixed(2);
+        let percent = Number($('#percent-input').val()).toFixed(2);
+        let mass = Number($('#mass-input').val()).toFixed(2);
+        let calculatedMass = calculateMass(percent).toFixed(2);
+        if (calculatedMass !== mass) {
+            $('#mass-input').css('background-color', 'crimson');
+        } else {
+            $('#mass-input').css('background-color', 'white');
+        }
+
+        let calculatedInfelicityMass = calculateInfelicityMass(percentInfelicity).toFixed(2);
+        if (calculatedInfelicityMass !== massInfelicity) {
+            $('#infelicity-mass-input').css('background-color', 'crimson');
+        } else {
+            $('#infelicity-mass-input').css('background-color', 'white');
+        }
+    }
+
+    function calculateMass(percent) {
+        let commonWeight = Number($('#common-weight-edite-recipe').val());
+        let result = (commonWeight / 100) * percent;
+        return result;
+    }
+
+    function calculatePercent(mass) {
+        let commonWeight = Number($('#common-weight-edite-recipe').val());
+        let result = mass / (commonWeight / 100);
+        return result;
+    }
+
+    function calculateInfelicityMass(percent) {
+        let commonWeight = Number($('#common-weight-edite-recipe').val());
+        let result = (commonWeight / 100) * percent;
+        return result;
+    }
+
+    function calculateInfelicityPercent(mass) {
+        let commonWeight = Number($('#common-weight-edite-recipe').val());
+        let result = mass / (commonWeight / 100);
+        return result;
+    }
+
+
+    editeRecipeTable.on('draw', function () {
+        checkCommonPercents();
+    });
+
+    function getTableData() {
+        let tableData = editeRecipeTable.rows().data();
+        return tableData;
+    }
+
+    function calculatePercents(data) {
+        let percents = 0;
+        $.each(data, function (key, value) {
+            percents += value.percent;
+        });
+        return percents;
+    }
+
+    function calculateMassElements(data) {
+        let mass = 0;
+        $.each(data, function (key, value) {
+            mass += value.mass;
+        });
+        return mass;
+
+    }
+
+    function checkCommonPercents() {
+        let tableData = getTableData();
+        let percents = Number(calculatePercents(tableData)).toFixed(2);
+        $('#control').val(percents);
+        changeColorCommonPercentsInput(percents);
+    }
+
+    function changeColorCommonPercentsInput(percents) {
+        if (percents < 100 || percents > 100) {
+            $('#control').css('background-color', 'crimson');
+        } else {
+            $('#control').css('background-color', 'white');
+        }
+    }
+
+    $('#add-component').click(function () {
+        if (idSelectedElemComponentTable !== '' && idMain !== '') {
+            addNewComponentToRecipe(idSelectedElemComponentTable, idMain, '', '')
+            clearInputData();
+            hideAllParameter();
+        } else {
+            if (selectedComponents > 2 && selectedComponents < 9) {
+                addNewComponentToRecipe(idSelectedElemComponentTable, idMain, nameComponent, selectedComponents);
+                clearInputData();
+                hideAllParameter();
+            } else {
+                alert("Вы не выбрали ни одной записи !!!");
+            }
+
+        }
+    })
+
+    function addNewComponentToRecipe(idSelectedElemComponentTable, idMain, nameComponent, code) {
+        let data = {
+            "idComponentTable": idSelectedElemComponentTable,
+            "idMain": idMain,
+            "nameSelectedComponent": nameComponent,
+            "code": code
+        }
+        $.ajax({
+            url: '/update/add-component-to-recipe',
+            method: 'post',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data) {
+                    editeRecipeTable.ajax.reload();
+                }
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    $('#replace-component').click(function () {
+        if (idSelectedElemRecipeTable !== '' && idSelectedElemComponentTable !== '' || idSelectedElemRecipeTable !== '' && (selectedComponents > 2 && selectedComponents < 9)) {
+            replaceAjax();
+        } else {
+            alert("Вы не выбрали ни одной записи или не выбран элемент в одной из таблиц !!!");
+        }
+    })
+
+    function replaceAjax() {
+        let data = {
+            "idComponentTable": idSelectedElemComponentTable,
+            "idMain": idMain,
+            "nameSelectedComponent": nameComponent,
+            "code": selectedComponents,
+            "idSelectedElemRecipeTable": idSelectedElemRecipeTable
+        }
+        $.ajax({
+            url: '/update/replace-selected-recipe-element',
+            method: 'put',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data) {
+                    editeRecipeTable.ajax.reload();
+                    clearInputData();
+                    hideAllParameter();
+                }
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    $('#save-change').click(function () {
+        if (idSelectedElemRecipeTable !== '') {
+            let sequenceNumber = $('#sequence-number-input').val();
+            let stage = $('#stage-input').val();
+            let percent = $('#percent-input').val();
+            let mass = $('#mass-input').val();
+            let mixing = $('#mixing-input').val();
+            let mixingTime = $('#mixing-time-input').val();
+            let filter = $('#filter-input').val();
+            let infelicityPercent = $('#infelicity-percent-input').val();
+            let infelicityMass = $('#infelicity-mass-input').val();
+            let part = $('#part').val();
+            let pastDate = $('#past-date').val();
+
+            if (stage === '0') {
+                errorStageMessage();
+            } else {
+                $('#error-message').hide();
+            }
+            if (stage !== '0' && !errorMessageShow) {
+                let data = {
+                    "sequenceNumber": sequenceNumber,
+                    "stage": stage,
+                    "percent": percent,
+                    "mass": mass,
+                    "mixing": mixing,
+                    "mixingTime": mixingTime,
+                    "filter": filter,
+                    "infelicityPercent": infelicityPercent,
+                    "infelicityMass": infelicityMass,
+                    "part": part,
+                    "pastDate": pastDate,
+                    "selectedComponentId": idSelectedElemRecipeTable
+                }
+                $.ajax({
+                    url: '/update/selected-row-of-recipe',
+                    method: 'put',
+                    contentType: 'application/json;charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        if (data) {
+                            editeRecipeTable.ajax.reload();
+                            alert("Данные успешно обновленны !!!");
+                            idSelectedElemRecipeTable = '';
+                            clearInputData();
+                            hideAllParameter();
+                        }
+                    },
+                    beforeSend: function () {
+                    },
+                    complete: function () {
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            }
+        }
+    })
+
+    function clearInputData() {
+        $('#sequence-number-input').val('');
+        $('#stage-input').val('');
+        $('#percent-input').val('');
+        $('#mass-input').val('');
+        $('#mixing-input').val('');
+        $('#mixing-time-input').val('');
+        $('#filter-input').val('');
+        $('#infelicity-percent-input').val('');
+        $('#infelicity-mass-input').val('');
+        $('#part').val('');
+        $('#past-date').val('');
+        $('#name-prod-input').val('');
+    }
+
+    $('#save-recipe').click(function () {
+        let comment = $('#comment-technologist').val();
+        let tempMin = $('#temp-min').val();
+        let tempMax = $('#temp-max').val();
+        let commonWeight = $('#common-weight-edite-recipe').val();
+        let idMain = $('#id-edite-recipe').text();
+        let control = $('#control').val();
+        let data = {
+            "comment": comment,
+            "tempMin": tempMin,
+            "tempMax": tempMax,
+            "commonWeight": commonWeight,
+            "idMain": idMain,
+            "control": control
+        }
+        $.ajax({
+            url: '/update/save-recipe',
+            method: 'put',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data) {
+                    alert("Данные успешно обновленны !!!");
+                } else {
+                    alert("Возникла ошибка при обновлении данных !!!");
+                }
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    })
+
+    function checkSequenceNumber(data, sequenceNumber) {
+        let present = false;
+        $.each(data, function (key, value) {
+            if (Number(sequenceNumber) === Number(value.n)) {
+                present = true;
+            }
+        });
+        return present;
+
+    }
+
+    $('#sequence-number-input').change(function () {
+        sequenceNumberError();
+    });
+
+    function sequenceNumberError() {
+        let dataTable = getTableData();
+        let sequenceNumber = $('#sequence-number-input').val();
+
+        let present = checkSequenceNumber(dataTable, sequenceNumber);
+        if (present) {
+            errorSequenceNumberMessage();
+            errorMessageShow = true;
+        }
+        if (!present || sequenceNumber === sequenceNumberFirstValue) {
+            $('#error-message').hide();
+            errorMessageShow = false;
+        }
+    }
+
+    function errorSequenceNumberMessage() {
+        $('#error-message').text("Такой номер по порядку уже присутствует !!!");
+        $('#error-message').show();
+
+    }
+
+    function errorStageMessage() {
+        $('#error-message').text("Этап не может быть равен 0  !!!");
+        $('#error-message').show();
+    }
 })

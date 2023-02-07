@@ -77,4 +77,10 @@ public class MainController {
         model.addAttribute("idProd", idProd);
         return "EditRecipeTechnologistPage";
     }
+
+    @Secured("ROLE_TECHNOLOGIST")
+    @GetMapping("/product-in-production-page")
+    public String productInProductionPage() {
+        return "ProductInProduction";
+    }
 }
