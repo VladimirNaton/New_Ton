@@ -471,7 +471,7 @@ $(document).ready(function () {
         } else {
             $('#control').css('background-color', 'white');
         }
-
+        checkCommonPercents();
     })
 
     $('#percent-input').change(function () {
@@ -577,12 +577,14 @@ $(document).ready(function () {
         return tableData;
     }
 
-    function calculatePercents(data) {
-        let percents = 0;
+    function calculatePercents() {
+        let data = getTableData();
+        let mass = 0;
         $.each(data, function (key, value) {
-            percents += value.percent;
+            mass += value.mass;
         });
-        return percents;
+        let commonWeight = Number($('#common-weight-edite-recipe').val()) / 100;
+        return (mass / commonWeight).toFixed(2);
     }
 
     function calculateMassElements(data) {
@@ -596,7 +598,7 @@ $(document).ready(function () {
 
     function checkCommonPercents() {
         let tableData = getTableData();
-        let percents = Number(calculatePercents(tableData)).toFixed(2);
+        let percents = calculatePercents(tableData);
         $('#control').val(percents);
         changeColorCommonPercentsInput(percents);
     }

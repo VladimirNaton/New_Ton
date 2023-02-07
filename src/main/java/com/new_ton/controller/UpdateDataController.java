@@ -51,5 +51,10 @@ public class UpdateDataController {
         return updateDataService.saveRecipe(saveRecipeDto);
     }
 
+    @PutMapping("/update-data-by-catalog-from-main/{id}")
+    public boolean updateDataByCatalogFromMain(@PathVariable(name = "id") Integer idMain) {
+        return false;
+    }
+
 
 }

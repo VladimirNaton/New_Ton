@@ -284,4 +284,32 @@ $(document).ready(function () {
     })
 
 
+    $('#return-from-recipe').click(function () {
+        if (idSelectedProductTable !== '') {
+            $.ajax({
+                url: '/update/update-data-by-catalog-from-main/' + idSelectedProductTable,
+                method: 'put',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    if (data) {
+
+                    } else {
+                        alert("Возникла ошибка при обновлении данных !!!");
+                    }
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+
+        } else {
+            alert("Вы не выбрали рецепт для обновления в каталоге !!!");
+        }
+
+    })
+
+
 })
