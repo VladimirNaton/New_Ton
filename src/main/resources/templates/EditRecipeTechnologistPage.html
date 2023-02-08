@@ -23,13 +23,15 @@
         <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
             <div id="left-container-head-edite-recipe">
                 <div id="first-row-information-head-edite-recipe">
-                    <label><span style="visibility: hidden">Бренд</span><br>
+                    <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
                         <input id="edite-recipe-head-brend" type="text" readonly placeholder="Бренд"
                                class="input-border-style"
                                style="text-align: center; font-weight: bold; width: 100%">
                     </label>
-                    <input id="edite-recipe-head-date-create" type="text" readonly placeholder="Дата производства"
-                           class="input-border-style" style="text-align: center; font-weight: bold">
+                    <label style="width: 69%">
+                        <input id="edite-recipe-head-date-create" type="text" readonly placeholder="Дата производства"
+                               class="input-border-style" style="text-align: center; font-weight: bold; width: 98%">
+                    </label>
                 </div>
                 <div id="second-row-information-head-edite-recipe">
                     <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
@@ -86,8 +88,8 @@
                        style="width: 100%; font-weight: bold">
             </label>
             <label id="percent"
-                   style="text-align: center; width: 6%;display: none; margin-left: 10px; text-align: center; font-weight: bold"><span
-                    style="font-weight: bold">Процент, %</span><br>
+                   style="text-align: center; width: 7%;display: none; margin-left: 10px; text-align: center; font-weight: bold"><span
+                    style="font-weight: bold;">Процент, %</span><br>
                 <input id="percent-input" type="number" step="0.01" min="0"
                        class="input-border-style input-selected-row-information">
             </label>
@@ -129,7 +131,7 @@
                     style="font-weight: bold">Дата</span><br>
                 <input id="past-date" class="input-border-style input-selected-row-information" type="datetime-local">
             </label>
-            <div style="width: 10%; display: flex; margin-left: 10px; align-items: end">
+            <div style="width: 13%; display: flex; margin-left: 10px; align-items: end">
                 <button style="width: 100%;  height: 54%; margin-bottom: 0.2%" id="save-change"
                         class="btn btn-outline-secondary btn-sm" type="button">Сохранить изменения
                 </button>
@@ -156,10 +158,10 @@
             </div>
             <div id="right-head-button-edite-recipe" style="width: 50%">
                 <div style="display: flex; flex-wrap: nowrap; margin-top: 10px">
-                    <div style="width: 17%; margin-left: 10px">
+                    <div style="width: 25%; margin-left: 10px">
                         <button id="add-component" class="btn btn-outline-secondary btn-sm">Добавить компонент</button>
                     </div>
-                    <div style="width: 17%">
+                    <div style="width: 25%">
                         <button id="replace-component" class="btn btn-outline-secondary btn-sm">Заменить компонент
                         </button>
                     </div>
@@ -193,10 +195,9 @@
             </div>
         </div>
         <div style="display: flex; flex-wrap: nowrap">
-            <div id="table-recipe-container">
+            <div id="table-recipe-container" style="width: 50%">
                 <div id="start-string-recipe-table">Рецепт</div>
-                <div>
-                    <table id="edite-recipe-table" style="width: 98%">
+                    <table id="edite-recipe-table" style="width: 98%; font-size: 0.8rem">
                         <thead>
                         <tr>
                             <th>id</th>
@@ -211,12 +212,10 @@
                         </tr>
                         </thead>
                     </table>
-                </div>
             </div>
-            <div id="table-component-container">
+            <div id="table-component-container" style="width: 50%">
                 <div id="start-string-component-table">Компоненты</div>
-                <div>
-                    <table id="component-table">
+                    <table id="component-table" style="width: 98%; font-size: 0.8rem">
                         <thead>
                         <tr>
                             <th>id</th>
@@ -225,7 +224,6 @@
                         </tr>
                         </thead>
                     </table>
-                </div>
             </div>
         </div>
     </div>

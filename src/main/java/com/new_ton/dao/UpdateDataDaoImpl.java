@@ -1,6 +1,8 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.SaveRecipeDto;
+import com.new_ton.domain.entities.CatalogEntity;
+import com.new_ton.domain.entities.CatrecEntity;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.RawEntity;
 import com.new_ton.repository.CatalogRepository;
@@ -23,6 +25,8 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
 
     private final RawRepository rawRepository;
     private final MainRepository mainRepository;
+    private final CatrecRepository catrecRepository;
+    public final CatalogRepository catalogRepository;
 
     @Override
     public Integer saveNewMainRow(MainEntity mainEntity) {
@@ -112,6 +116,39 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl updateMainEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCatrecEntityByIdCat(Integer idCat) {
+        try {
+            catrecRepository.deleteAllByIdCat(idCat);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl deleteCatrecEntityByIdCat : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveCatrecEntity(List<CatrecEntity> catrecEntityList) {
+        try {
+            catrecRepository.saveAllAndFlush(catrecEntityList);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl saveCatrecEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateCatalogEntity(CatalogEntity catalogEntity) {
+        try {
+            catalogRepository.saveAndFlush(catalogEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateCatalogEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

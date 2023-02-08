@@ -53,7 +53,7 @@ public class UpdateDataController {
 
     @PutMapping("/update-data-by-catalog-from-main/{id}")
     public boolean updateDataByCatalogFromMain(@PathVariable(name = "id") Integer idMain) {
-        return false;
+        return updateDataService.updateDataByCatalogFromMain(idMain);
     }
 
 

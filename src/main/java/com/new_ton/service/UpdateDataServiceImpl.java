@@ -324,4 +324,47 @@ public class UpdateDataServiceImpl implements UpdateDataService {
         }
         return false;
     }
+
+    @Transactional
+    @Override
+    public boolean updateDataByCatalogFromMain(Integer idMain) {
+        try {
+            searchDataForTablesDao.getMainEntityById(idMain).ifPresent(elem -> {
+                List<RawEntity> rawEntityList = searchDataForTablesDao.getRawEntityByIdMain(idMain);
+                updateDataDao.deleteCatrecEntityByIdCat(elem.getIdCat());
+                List<CatrecEntity> catrecEntityList = new ArrayList<>();
+                for (RawEntity raw : rawEntityList) {
+                    CatrecEntity catrecEntity = new CatrecEntity();
+                    catrecEntity.setIdCat(elem.getIdCat());
+                    catrecEntity.setN(raw.getN());
+                    catrecEntity.setStage(raw.getStage());
+                    catrecEntity.setCode(raw.getCode());
+                    catrecEntity.setNameraw(raw.getNameraw());
+                    catrecEntity.setPercent(raw.getPercent());
+                    catrecEntity.setMass(raw.getMass());
+                    catrecEntity.setDevper(raw.getDevper());
+                    catrecEntity.setDevmass(raw.getDevmass());
+                    catrecEntity.setTurnmix(raw.getTurnmix());
+                    catrecEntity.setTimemix(raw.getTimemix());
+                    catrecEntityList.add(catrecEntity);
+                }
+                updateDataDao.saveCatrecEntity(catrecEntityList);
+
+                searchDataForTablesDao.getCatalogEntityById(elem.getIdCat())
+                        .ifPresent(catalog -> {
+                            catalog.setTempprodmax(elem.getTempprodmax());
+                            catalog.setTempprodmin(elem.getTempprodmin());
+                            catalog.setMass(elem.getMass());
+                            catalog.setPercent(elem.getPercent());
+                            catalog.setDatecr(new Date());
+                            updateDataDao.updateCatalogEntity(catalog);
+                        });
+            });
+
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateDataByCatalogFromMain : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
 }

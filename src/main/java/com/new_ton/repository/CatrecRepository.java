@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CatrecRepository extends JpaRepository<CatrecEntity, Integer> {
     List<CatrecEntity> findAllByIdCat(Integer id);
+    void deleteAllByIdCat(Integer idCat);
 }

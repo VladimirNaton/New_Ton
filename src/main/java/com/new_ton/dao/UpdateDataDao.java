@@ -1,6 +1,8 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.SaveRecipeDto;
+import com.new_ton.domain.entities.CatalogEntity;
+import com.new_ton.domain.entities.CatrecEntity;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.RawEntity;
 
@@ -23,4 +25,10 @@ public interface UpdateDataDao {
     boolean updateRawEntity(RawEntity rawEntity);
 
     boolean updateMainEntity(MainEntity mainEntity);
+
+    boolean deleteCatrecEntityByIdCat(Integer idCat);
+
+    boolean saveCatrecEntity(List<CatrecEntity> catrecEntityList);
+
+    boolean updateCatalogEntity(CatalogEntity catalogEntity);
 }

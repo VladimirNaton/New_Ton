@@ -19,7 +19,6 @@ $(document).ready(function () {
         "processing": true,
         "serverSide": true,
         "searching": false,
-        "lengthChange": false,
         "paging": false,
         "info": false,
         "ajax": {
@@ -114,6 +113,7 @@ $(document).ready(function () {
                     $('#temp-min').val(data.tempMin);
                     $('#temp-max').val(data.tempMax);
                     $('#common-weight-edite-recipe').val(data.mass);
+                    checkCommonPercents();
                 },
                 beforeSend: function () {
                 },
@@ -583,6 +583,7 @@ $(document).ready(function () {
         $.each(data, function (key, value) {
             mass += value.mass;
         });
+
         let commonWeight = Number($('#common-weight-edite-recipe').val()) / 100;
         return (mass / commonWeight).toFixed(2);
     }
@@ -624,7 +625,6 @@ $(document).ready(function () {
             } else {
                 alert("Вы не выбрали ни одной записи !!!");
             }
-
         }
     })
 
@@ -642,7 +642,7 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             success: function (data) {
                 if (data) {
-                    editeRecipeTable.ajax.reload();
+                    editeRecipeTable.ajax.reload(checkCommonPercents());
                 }
             },
             beforeSend: function () {
@@ -677,7 +677,7 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             success: function (data) {
                 if (data) {
-                    editeRecipeTable.ajax.reload();
+                    editeRecipeTable.ajax.reload(checkCommonPercents());
                     clearInputData();
                     hideAllParameter();
                 }
@@ -744,6 +744,7 @@ $(document).ready(function () {
                     complete: function () {
                     },
                     error: function (xhr, status, error) {
+                        alert("Возникла ошибка при обновлении данных !!!");
                     }
                 });
             }
@@ -797,6 +798,7 @@ $(document).ready(function () {
             complete: function () {
             },
             error: function (xhr, status, error) {
+                alert("Возникла ошибка при обновлении данных !!!");
             }
         });
     })

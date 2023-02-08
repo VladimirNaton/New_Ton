@@ -183,4 +183,26 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         }
         return null;
     }
+
+    @Override
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable() {
+        try {
+            List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForProductInProductionTable();
+            getDataForProductInProductionTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String datecrStr = dateFormat.format(elem.getDatecr());
+                String dateplStr = dateFormat.format(elem.getDatepl());
+                elem.setDatecrStr(datecrStr);
+                elem.setDateplStr(dateplStr);
+            }).collect(Collectors.toList());
+
+            GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
+            return getDataForProductInProductionTable;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
 }

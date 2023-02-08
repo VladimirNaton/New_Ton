@@ -99,9 +99,11 @@ $(document).ready(function () {
         if (!modalShow) {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
-                let elem = $(this);
-                idSelectedCatalogTable = elem.find("td:first").html();
-                getDataBySelectedCatalogRow(idSelectedCatalogTable);
+                idSelectedCatalogTable = '';
+                $('#first-row-brend').val('');
+                $('#first-row-date-production').val('');
+                $('#second-row-product-name').val('');
+                $('#common-weight').val('');
             } else {
                 catalogProductTable.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
@@ -292,7 +294,7 @@ $(document).ready(function () {
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     if (data) {
-
+                        alert("Данные успешно обновленны !!!");
                     } else {
                         alert("Возникла ошибка при обновлении данных !!!");
                     }

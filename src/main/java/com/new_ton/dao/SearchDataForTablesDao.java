@@ -41,4 +41,8 @@ public interface SearchDataForTablesDao {
     Optional<CatrawEntity> getCatrawEntityById(Integer id);
 
     Optional<RawEntity> getRawEntityById(Integer id);
+
+    List<RawEntity> getRawEntityByIdMain(Integer idMain);
+
+    List<GetDataForProductInProductionTableDto> getDataForProductInProductionTable();
 }

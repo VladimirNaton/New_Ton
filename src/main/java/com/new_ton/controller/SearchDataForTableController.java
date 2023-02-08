@@ -54,4 +54,9 @@ public class SearchDataForTableController {
         return searchDataForTablesService.getDataForSelectedRowEditeRecipeTable(id);
     }
 
+    @GetMapping("/get-data-for-product-in-production-table")
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable() {
+        return searchDataForTablesService.getDataForProductInProductionTable();
+    }
+
 }

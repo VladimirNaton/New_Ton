@@ -19,4 +19,6 @@ public interface UpdateDataService {
     boolean updateSelectedRowOfRecipe(UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto);
 
     boolean saveRecipe(SaveRecipeDto saveRecipeDto);
+
+    boolean updateDataByCatalogFromMain(Integer idMain);
 }

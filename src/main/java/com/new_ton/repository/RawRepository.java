@@ -37,5 +37,7 @@ public interface RawRepository extends JpaRepository<RawEntity, Integer> {
 
     @Query("select max(r.n) from RawEntity r where r.idMain = ?1")
     Integer getMaxSequenceNumber(Integer idMain);
+
+    List<RawEntity> findAllByIdMain(Integer idMain);
 }
 

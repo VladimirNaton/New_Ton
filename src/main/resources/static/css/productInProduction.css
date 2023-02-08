@@ -64,25 +64,28 @@
 }
 
 #product-in-production-table-container-main {
-    width: 100%;
+    margin-top: 15px;
     border-style: solid;
     border-radius: 5px;
     border-color: gray;
-    margin-right: 5px;
 }
 
 #product-in-production-start-string {
     background-color: #10a9f2;
-    margin-left: 10px;
-    margin-right: 10px;
     font-weight: bold;
     text-align: center;
     border: 1px solid black;
     margin-top: 5px;
+    margin-right:5px;
+    margin-left: 5px;
 }
 
 #product-in-production-table {
     border: 1px solid black;
+}
+#product-in-production-table_wrapper{
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 

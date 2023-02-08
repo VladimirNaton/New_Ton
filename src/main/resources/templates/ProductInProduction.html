@@ -20,14 +20,16 @@
             <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
                 <div id="left-container-head-product-in-production">
                     <div id="first-row-information-head-product-in-production">
-                        <label><span style="visibility: hidden">Бренд</span><br>
+                        <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
                             <input id="product-in-production-head-brend" type="text" readonly placeholder="Бренд"
                                    class="input-border-style"
                                    style="text-align: center; font-weight: bold; width: 100%">
                         </label>
-                        <input id="product-in-production-head-date-create" type="text" readonly
-                               placeholder="Дата производства"
-                               class="input-border-style" style="text-align: center; font-weight: bold">
+                        <label style="width: 67.8%">
+                            <input id="product-in-production-head-date-create" type="text" readonly
+                                   placeholder="Дата производства"
+                                   class="input-border-style" style="text-align: center; font-weight: bold; width: 100%">
+                        </label>
                     </div>
                     <div id="second-row-information-head-product-in-production">
                         <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
@@ -66,10 +68,10 @@
                 </div>
                 <div id="right-container-product-in-production">
                     <div style="width: 100%">
-                        <a th:href="@{/}" class="btn btn-outline-secondary btn-sm" style="width: 30%">На главную</a>
+                        <a th:href="@{/}" class="btn btn-outline-secondary btn-sm" style="width: 36%">На главную</a>
                     </div>
                     <div style="width: 100%">
-                        <a th:href="@{/logout}" class="btn btn-outline-secondary btn-sm" style="width: 30%">Выход</a>
+                        <a th:href="@{/logout}" class="btn btn-outline-secondary btn-sm" style="width: 36%">Выход</a>
                     </div>
                 </div>
             </div>
@@ -81,32 +83,30 @@
             <div style="width: 35%"></div>
             <div style="width: 30%; text-align: right">
                 <button id="look-recipe-product-in-production" class="btn btn-outline-secondary btn-sm"
-                        style="width: 30%">Посмотреть рецепт
+                        style="width: 36%">Посмотреть рецепт
                 </button>
             </div>
         </div>
         <div id="body-container-product-in-production-page-body">
             <div id="product-in-production-table-container-main">
                 <div id="product-in-production-start-string">Продукты в работе</div>
-                <div>
-                    <table id="product-in-production-table">
-                        <thead>
-                        <tr>
-                            <th>idpr</th>
-                            <th>datecr</th>
-                            <th>datepl</th>
-                            <th>brend</th>
-                            <th>nameprod</th>
-                            <th>percent</th>
-                            <th>mass</th>
-                            <th>temprprodmin</th>
-                            <th>temprprodmax</th>
-                            <th>comment</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-
+                <div></div>
+                <table id="product-in-production-table" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th>idpr</th>
+                        <th>datecr</th>
+                        <th>datepl</th>
+                        <th>brend</th>
+                        <th>nameprod</th>
+                        <th>percent</th>
+                        <th>mass</th>
+                        <th>temprprodmin</th>
+                        <th>temprprodmax</th>
+                        <th>comment</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>

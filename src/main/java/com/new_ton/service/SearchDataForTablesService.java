@@ -18,4 +18,6 @@ public interface SearchDataForTablesService {
     EditeRecipeCatalogTableResponseDto getDataForEditeRecipeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeComponentTableRequestDto);
 
     GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowEditeRecipeTable(Integer id);
+
+    GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable();
 }

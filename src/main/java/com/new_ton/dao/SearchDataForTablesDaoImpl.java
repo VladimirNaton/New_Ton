@@ -189,4 +189,24 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public List<RawEntity> getRawEntityByIdMain(Integer idMain) {
+        try {
+            return rawRepository.findAllByIdMain(idMain);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getRawEntityByIdMain : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<GetDataForProductInProductionTableDto> getDataForProductInProductionTable() {
+        try {
+            return mainRepository.getDataForProductInProductionTable();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
 }
