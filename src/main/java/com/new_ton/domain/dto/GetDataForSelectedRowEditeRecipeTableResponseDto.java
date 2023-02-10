@@ -22,8 +22,9 @@ public class GetDataForSelectedRowEditeRecipeTableResponseDto {
     private String dateString;
     private Double factMass;
     private Double factMassDev;
+    private Integer componentLoaded;
 
-    public GetDataForSelectedRowEditeRecipeTableResponseDto(int id, Integer n, Integer stage, String nameraw, Double percent, Double mass, Double devper, Double devmass, Integer turnmix, Integer timemix, Integer pastpart, Date pastdate, Integer filter, Double factMass, Double factMassDev) {
+    public GetDataForSelectedRowEditeRecipeTableResponseDto(int id, Integer n, Integer stage, String nameraw, Double percent, Double mass, Double devper, Double devmass, Integer turnmix, Integer timemix, Integer pastpart, Date pastdate, Integer filter, Double factMass, Double factMassDev, Integer componentLoaded) {
         this.id = id;
         this.n = n;
         this.stage = stage;
@@ -39,5 +40,6 @@ public class GetDataForSelectedRowEditeRecipeTableResponseDto {
         this.filter = filter;
         this.factMass = factMass;
         this.factMassDev = factMassDev;
+        this.componentLoaded = componentLoaded;
     }
 }

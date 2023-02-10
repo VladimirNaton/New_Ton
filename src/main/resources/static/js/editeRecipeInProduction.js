@@ -113,6 +113,7 @@ $(document).ready(function () {
                     $('#temp-min').val(data.tempMin);
                     $('#temp-max').val(data.tempMax);
                     $('#common-weight-edite-recipe').val(data.mass);
+                    $('#comment-technologist').val(data.comment);
                     checkCommonPercents();
                 },
                 beforeSend: function () {
@@ -433,6 +434,11 @@ $(document).ready(function () {
         $('#infelicity-mass-input').val(data.devmass);
         $('#mass-input-product-in-production').val(data.factMass);
         $('#infelicity-mass-input-product-in-production').val(data.factMassDev);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyCode1();
+        } else {
+            addPropertyReadOnlyCode1();
+        }
     }
 
     function complitePastRowInformation(data) {
@@ -447,6 +453,11 @@ $(document).ready(function () {
         $('#past-date').val(data.dateString);
         $('#mass-input-product-in-production').val(data.factMass);
         $('#infelicity-mass-input-product-in-production').val(data.factMassDev);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyCode2();
+        } else {
+            addPropertyReadOnlyCode2();
+        }
     }
 
     function compliteSolventRowInformation(data) {
@@ -454,6 +465,11 @@ $(document).ready(function () {
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
         $('#mass-input').val(data.mass);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyCode6();
+        } else {
+            addPropertyReadOnlyCode6();
+        }
     }
 
     function compliteMixingRowInformation(data) {
@@ -462,6 +478,11 @@ $(document).ready(function () {
         $('#name-prod-input').val(data.nameraw);
         $('#mixing-input').val(data.turnmix);
         $('#mixing-time-input').val(data.timemix);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyCode8();
+        } else {
+            addPropertyReadOnlyCode8();
+        }
     }
 
     function compliteFilterRowInformation(data) {
@@ -469,12 +490,22 @@ $(document).ready(function () {
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
         $('#filter-input').val(data.filter);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyCode4();
+        } else {
+            addPropertyReadOnlyCode4();
+        }
     }
 
     function compliteAnotherRowInformation(data) {
         $('#sequence-number-input').val(data.n);
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
+        if (data.componentLoaded === 0) {
+            removePropertyReadOnlyAnotherCode();
+        } else {
+            addPropertyReadOnlyAnotherCode();
+        }
     }
 
     $('#percent-input').change(function () {
@@ -589,15 +620,6 @@ $(document).ready(function () {
 
         let commonWeight = Number($('#common-weight-edite-recipe').val()) / 100;
         return (mass / commonWeight).toFixed(2);
-    }
-
-    function calculateMassElements(data) {
-        let mass = 0;
-        $.each(data, function (key, value) {
-            mass += value.mass;
-        });
-        return mass;
-
     }
 
     function checkCommonPercents() {
@@ -848,4 +870,94 @@ $(document).ready(function () {
         $('#error-message').text("Этап не может быть равен 0  !!!");
         $('#error-message').show();
     }
+
+    function addPropertyReadOnlyCode1() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+        $('#percent-input').attr('readonly', true);
+        $('#mass-input').attr('readonly', true);
+        $('#infelicity-percent-input').attr('readonly', true);
+        $('#infelicity-mass-input').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyCode1() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+        $('#percent-input').attr('readonly', false);
+        $('#mass-input').attr('readonly', false);
+        $('#infelicity-percent-input').attr('readonly', false);
+        $('#infelicity-mass-input').attr('readonly', false);
+    }
+
+    function addPropertyReadOnlyCode2() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+        $('#percent-input').attr('readonly', true);
+        $('#mass-input').attr('readonly', true);
+        $('#infelicity-percent-input').attr('readonly', true);
+        $('#infelicity-mass-input').attr('readonly', true);
+        $('#part').attr('readonly', true);
+        $('#past-date').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyCode2() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+        $('#percent-input').attr('readonly', false);
+        $('#mass-input').attr('readonly', false);
+        $('#infelicity-percent-input').attr('readonly', false);
+        $('#infelicity-mass-input').attr('readonly', false);
+        $('#part').attr('readonly', false);
+        $('#past-date').attr('readonly', false);
+    }
+
+    function addPropertyReadOnlyCode6() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+        $('#mass-input').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyCode6() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+        $('#mass-input').attr('readonly', false);
+    }
+
+    function addPropertyReadOnlyCode4() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+        $('#filter-input').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyCode4() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+        $('#filter-input').attr('readonly', false);
+    }
+
+    function addPropertyReadOnlyCode8() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+        $('#mixing-input').attr('readonly', true);
+        $('#mixing-time-input').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyCode8() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+        $('#mixing-input').attr('readonly', true);
+        $('#mixing-time-input').attr('readonly', true);
+    }
+
+    function addPropertyReadOnlyAnotherCode() {
+        $('#sequence-number-input').attr('readonly', true);
+        $('#stage-input').attr('readonly', true);
+    }
+
+    function removePropertyReadOnlyAnotherCode() {
+        $('#sequence-number-input').attr('readonly', false);
+        $('#stage-input').attr('readonly', false);
+    }
+
+
 })

@@ -23,8 +23,10 @@ public class GetDataForInformationStringEditeRecipeDto {
 
     private String dateString;
 
+    private String comment;
 
-    public GetDataForInformationStringEditeRecipeDto(String brend, Date dateCreate, String nameProd, Double tempMin, Double tempMax, Integer mass, Double percent) {
+
+    public GetDataForInformationStringEditeRecipeDto(String brend, Date dateCreate, String nameProd, Double tempMin, Double tempMax, Integer mass, Double percent, String comment) {
         this.brend = brend;
         this.dateCreate = dateCreate;
         this.nameProd = nameProd;
@@ -32,5 +34,6 @@ public class GetDataForInformationStringEditeRecipeDto {
         this.tempMax = tempMax;
         this.mass = mass;
         this.percent = percent;
+        this.comment = comment;
     }
 }

@@ -113,6 +113,7 @@ $(document).ready(function () {
                     $('#temp-min').val(data.tempMin);
                     $('#temp-max').val(data.tempMax);
                     $('#common-weight-edite-recipe').val(data.mass);
+                    $('#comment-technologist').val(data.comment);
                     checkCommonPercents();
                 },
                 beforeSend: function () {

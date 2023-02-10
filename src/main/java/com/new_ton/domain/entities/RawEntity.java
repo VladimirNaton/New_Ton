@@ -71,4 +71,6 @@ public class RawEntity {
     private Date pastdate;
     @Column(name = "filter")
     private Integer filter;
+    @Column(name = "component_loaded")
+    private Integer componentLoaded;
 }

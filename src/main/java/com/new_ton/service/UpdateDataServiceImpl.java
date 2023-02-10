@@ -177,6 +177,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             rawEntity.setFacttimemix(0);
             rawEntity.setEq(0);
             rawEntity.setFilter(0);
+            rawEntity.setComponentLoaded(0);
             return updateDataDao.saveNewRowToRawTable(rawEntity);
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl addComponentToRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
@@ -216,6 +217,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
                 rawEntity.setFacttimemix(0);
                 rawEntity.setEq(0);
                 rawEntity.setFilter(0);
+                rawEntity.setComponentLoaded(0);
                 return updateDataDao.updateRawEntity(rawEntity);
             }
         } catch (Exception e) {
