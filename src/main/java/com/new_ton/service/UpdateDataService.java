@@ -1,14 +1,14 @@
 package com.new_ton.service;
 
-import com.new_ton.domain.dto.AddOrReplaceComponentToRecipeRequestDto;
-import com.new_ton.domain.dto.SaveRecipeDto;
-import com.new_ton.domain.dto.SendProductToTellerDto;
-import com.new_ton.domain.dto.UpdateSelectedRowOfRecipeDto;
+import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
+import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
+import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
+import com.new_ton.domain.dto.technologistdto.UpdateSelectedRowOfRecipeDto;
 
 public interface UpdateDataService {
     boolean moveCatalogRowToMain(Integer id);
 
-    boolean sentProductToTeller(SendProductToTellerDto sendProductToTellerDto);
+    boolean sentProductToTeller(SendProductToAccountManagerDto sendProductToAccountManagerDto);
 
     boolean deleteSelectedRowFromRecipeTable(Integer id);
 

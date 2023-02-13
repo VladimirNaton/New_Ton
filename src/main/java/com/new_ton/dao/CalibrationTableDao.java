@@ -1,7 +1,7 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.CalibrationTableEntityDto;
-import com.new_ton.domain.dto.WeighingLogRequestDto;
+import com.new_ton.domain.dto.productionpage.CalibrationTableEntityDto;
+import com.new_ton.domain.dto.productionpage.WeighingLogRequestDto;
 
 import java.util.List;
 

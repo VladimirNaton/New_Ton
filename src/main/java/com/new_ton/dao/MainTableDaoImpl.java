@@ -1,7 +1,7 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.RequestDataTableDto;
-import com.new_ton.domain.dto.ProductTableResponseEntityDto;
+import com.new_ton.domain.dto.productionpage.RequestDataTableDto;
+import com.new_ton.domain.dto.productionpage.ProductTableResponseEntityDto;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.repository.MainRepository;
 import com.new_ton.service.GetTypeDateService;

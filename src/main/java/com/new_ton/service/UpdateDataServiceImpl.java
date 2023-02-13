@@ -2,10 +2,10 @@ package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
-import com.new_ton.domain.dto.AddOrReplaceComponentToRecipeRequestDto;
-import com.new_ton.domain.dto.SaveRecipeDto;
-import com.new_ton.domain.dto.SendProductToTellerDto;
-import com.new_ton.domain.dto.UpdateSelectedRowOfRecipeDto;
+import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
+import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
+import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
+import com.new_ton.domain.dto.technologistdto.UpdateSelectedRowOfRecipeDto;
 import com.new_ton.domain.entities.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,14 +103,14 @@ public class UpdateDataServiceImpl implements UpdateDataService {
     }
 
     @Override
-    public boolean sentProductToTeller(SendProductToTellerDto sendProductToTellerDto) {
+    public boolean sentProductToTeller(SendProductToAccountManagerDto sendProductToAccountManagerDto) {
         try {
-            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(sendProductToTellerDto.getId());
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(sendProductToAccountManagerDto.getId());
             if (mainEntityOptional.isPresent()) {
                 MainEntity mainEntity = mainEntityOptional.get();
                 mainEntity.setState(2);
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, sendProductToTellerDto.getDays());
+                calendar.add(Calendar.DATE, sendProductToAccountManagerDto.getDays());
                 Date returnDate = calendar.getTime();
                 mainEntity.setReturndate(returnDate);
                 return updateDataDao.sendProductToTeller(mainEntity);

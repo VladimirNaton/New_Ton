@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.*;
+import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -208,5 +209,25 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
             log.error("Error searchDataForTablesDaoImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
+    }
+
+    @Override
+    public Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithoutParam(Pageable pageable) {
+        try {
+            return mainRepository.findAllByState(2, AccountManagerTableDataDto.class, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForAccountManagerTableWithoutParam : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
+
+    @Override
+    public Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithParam(Pageable pageable, String searchValue) {
+        try {
+            return mainRepository.findAllByStateAndNameprodContainingIgnoreCase(2, searchValue, AccountManagerTableDataDto.class, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForAccountManagerTableWithParam : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
     }
 }

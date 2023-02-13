@@ -1,0 +1,74 @@
+#main-container-account-manager {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#start-string {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+}
+
+#left-container-head {
+    width: 35%;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#head-brend {
+    width: 30%;
+}
+
+#head-date-create {
+    width: 65%;
+}
+
+#head-name-prod {
+    width: 98.5%;
+}
+
+#middle-container-head {
+    width: 35%;
+}
+
+#head-container {
+    padding-bottom: 15px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 2px 0;
+}
+
+#left-head-button {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+#table-account-manager-container {
+    width: 100%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+}
+
+#start-string-account-manager-table {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#account-manager-table_wrapper {
+    margin-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+}

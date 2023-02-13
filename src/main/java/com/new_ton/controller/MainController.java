@@ -1,7 +1,7 @@
 package com.new_ton.controller;
 
 
-import com.new_ton.domain.dto.DischargePageDto;
+import com.new_ton.domain.dto.productionpage.DischargePageDto;
 import com.new_ton.service.DischargePageService;
 import com.new_ton.service.GerUserRoleService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class MainController {
     @GetMapping("/role-action")
     public String roleAction(HttpServletRequest httpServletRequest) {
         String userRole = gerUserRoleService.getUserRole(httpServletRequest);
-        return "redirect:technologist-page";
+        return redirectRole(userRole);
     }
 
     @GetMapping({"/calibrationPage"})
@@ -90,5 +90,21 @@ public class MainController {
     public String recipeInProductionEditePage(@RequestParam String idProd, Model model) {
         model.addAttribute("idProd", idProd);
         return "RecipeInProductionEditePage";
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @GetMapping("/account-manager-page")
+    public String getAccountManagerPage() {
+        return "AccountManagerPage";
+    }
+
+
+    private String redirectRole(String userRole) {
+        if (userRole.equals("ROLE_TECHNOLOGIST")) {
+            return "redirect:technologist-page";
+        } else if (userRole.equals("ROLE_ACCOUNTMANAGER")) {
+            return "redirect:account-manager-page";
+        }
+        return null;
     }
 }

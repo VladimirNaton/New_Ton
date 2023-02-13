@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.*;
+import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,4 +46,8 @@ public interface SearchDataForTablesDao {
     List<RawEntity> getRawEntityByIdMain(Integer idMain);
 
     List<GetDataForProductInProductionTableDto> getDataForProductInProductionTable();
+
+    Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithoutParam(Pageable pageable);
+
+    Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithParam(Pageable pageable, String searchValue);
 }

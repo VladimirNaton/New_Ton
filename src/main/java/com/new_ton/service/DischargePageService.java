@@ -1,6 +1,6 @@
 package com.new_ton.service;
 
-import com.new_ton.domain.dto.DischargePageDto;
+import com.new_ton.domain.dto.productionpage.DischargePageDto;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 #start-string-edite-recipe {
-
+    margin-top: 10px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -22,10 +22,6 @@
 
 #edite-recipe-head-date-create {
     width: 65%;
-}
-
-#start-string-edite-recipe {
-    margin-top: 10px;
 }
 
 #edite-recipe-head-name-prod {

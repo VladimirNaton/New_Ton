@@ -2,10 +2,10 @@ package com.new_ton.service;
 
 
 import com.new_ton.dao.MainTableDao;
-import com.new_ton.domain.dto.ProductTableDto;
-import com.new_ton.domain.dto.RequestDataTableDto;
-import com.new_ton.domain.dto.ProductResponseDto;
-import com.new_ton.domain.dto.ProductTableResponseEntityDto;
+import com.new_ton.domain.dto.productionpage.ProductTableDto;
+import com.new_ton.domain.dto.productionpage.RequestDataTableDto;
+import com.new_ton.domain.dto.productionpage.ProductResponseDto;
+import com.new_ton.domain.dto.productionpage.ProductTableResponseEntityDto;
 import com.new_ton.domain.entities.MainEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

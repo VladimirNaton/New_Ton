@@ -1,13 +1,11 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.SaveRecipeDto;
 import com.new_ton.domain.entities.CatalogEntity;
 import com.new_ton.domain.entities.CatrecEntity;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.RawEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UpdateDataDao {
     Integer saveNewMainRow(MainEntity mainEntity);

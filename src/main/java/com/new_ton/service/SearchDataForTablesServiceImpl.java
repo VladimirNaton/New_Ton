@@ -1,8 +1,11 @@
 package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
-import com.new_ton.domain.dto.*;
-import com.new_ton.domain.dto.EditeRecipeTableRequestDto;
+import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataResponseDto;
+import com.new_ton.domain.dto.accountmanager.AccountManagerTableRequestDto;
+import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
+import com.new_ton.domain.dto.technologistdto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -202,6 +205,37 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
 
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public AccountManagerTableDataResponseDto getDataForAccountManagerTable(AccountManagerTableRequestDto accountManagerTableRequestDto) {
+        try {
+            Pageable pageable = PageRequest.of(accountManagerTableRequestDto.getStart() / accountManagerTableRequestDto.getLength(), accountManagerTableRequestDto.getLength(), Sort.by("idpr").ascending());
+
+            Page<AccountManagerTableDataDto> page;
+            if (accountManagerTableRequestDto.getSearchValue().equals("")) {
+                page = searchDataForTablesDao.getDataForAccountManagerTableWithoutParam(pageable);
+            } else {
+                page = searchDataForTablesDao.getDataForAccountManagerTableWithParam(pageable, accountManagerTableRequestDto.getSearchValue());
+            }
+
+            List<AccountManagerTableDataDto> accountManagerTableDataDtos = page.getContent()
+                    .stream().peek(elem -> {
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        String datecrStr = dateFormat.format(elem.getDatecr());
+                        elem.setStrDate(datecrStr);
+                    }).collect(Collectors.toList());
+
+            AccountManagerTableDataResponseDto accountManagerTableDataResponseDto = new AccountManagerTableDataResponseDto();
+            accountManagerTableDataResponseDto.setDraw(accountManagerTableRequestDto.getDraw());
+            accountManagerTableDataResponseDto.setRecordsTotal(page.getTotalElements());
+            accountManagerTableDataResponseDto.setRecordsFiltered(page.getTotalElements());
+            accountManagerTableDataResponseDto.setData(accountManagerTableDataDtos);
+            return accountManagerTableDataResponseDto;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForAccountManagerTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

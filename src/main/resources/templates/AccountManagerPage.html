@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Manager Page</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/accountManager.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/accountManager.js}"></script>
+
+
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="main-container-account-manager">
+    <div id="head-container">
+        <div id="start-string">
+            <div style="width: 40%; font-weight: bold">Операционист</div>
+            <div style="width: 60%; font-weight: bold">Страница операциониста</div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
+            <div id="left-container-head">
+                <div id="first-row-information-head">
+                    <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
+                        <input id="head-brend" type="text" readonly placeholder="Бренд"
+                               class="input-border-style"
+                               style="text-align: center; font-weight: bold; width: 100%">
+                    </label>
+                    <label style="width: 69%">
+                        <input id="head-date-create" type="text" readonly placeholder="Дата производства"
+                               class="input-border-style" style="text-align: center; font-weight: bold; width: 98%">
+                    </label>
+                </div>
+                <div id="second-row-information-head">
+                    <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
+                        <input id="head-name-prod" type="text" readonly class="input-border-style"
+                               style="text-align: center; font-weight: bold" placeholder="Название продукта">
+                    </label>
+                </div>
+            </div>
+            <div id="middle-container-head" style="display: flex; flex-wrap: wrap">
+                <div id="first-row-right-information-head" style="width: 50%">
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">min</span><br>
+                        <input readonly id="temp-min" value="20.0" type="number" min="20" max="45" step="0.1"
+                               placeholder="Мин. темпр"
+                               class="input-border-style" style="width: 100%; text-align: center; font-weight: bold">
+                    </label>
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">max</span><br>
+                        <input readonly id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1"
+                               style="width: 100%; text-align: center; font-weight: bold"
+                               placeholder="Макс. темпр" class="input-border-style">
+                    </label>
+                </div>
+                <div id="second-row-right-information-head"
+                     style="width: 100%; display: flex; flex-wrap: nowrap">
+                    <div style="width: 50%">
+                        <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
+                            <input readonly id="common-weight" type="number" step="1" class="input-border-style"
+                                   style="text-align: center; width: 100%; font-weight: bold">
+                        </label>
+                        <label style="font-weight: bold; width: 49%; text-align: center">Контроль,%<br>
+                            <input readonly id="control" type="text" class="input-border-style"
+                                   style="width: 100%; font-weight: bold; text-align: center">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="right-container-head" style="width: 30%; display: flex; justify-content: right">
+                <div style="width: 60%">
+                    <a th:href="@{/logout}" id="logout"
+                       class="btn btn-outline-secondary btn-sm" type="button" style="width: 100%; margin-bottom: 10px">Выход
+                    </a>
+                    <button id="directory-editor"
+                            class="btn btn-outline-secondary btn-sm" type="button" style="width: 100%">Редактор
+                        справочника
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <div style="display: flex; flex-wrap: nowrap">
+            <div id="left-head-button" style="width: 50%">
+                <div style="height: 50%;display: flex; flex-wrap: nowrap; margin-bottom: 10px">
+                    <div style="width: 100%; display: flex; flex-wrap: nowrap">
+                        <div style="width: 40%">
+                            <input type="text" placeholder="Название продукта" class="input-border-style btn-sm"
+                                   id="name-prod" style="width: 100%">
+                        </div>
+                        <div style="width: 10%; margin-left: 10px">
+                            <button style="width: 90%" class="input-border-style btn btn-outline-secondary btn-sm"
+                                    id="search-prod">Найти
+                            </button>
+                        </div>
+                        <div style="width: 25%">
+                            <button id="resetSearch" class="input-border-style btn btn-outline-secondary btn-sm"
+                                    style="width: 95%">
+                                Сбросить фильтр
+                            </button>
+                        </div>
+                        <div style="width: 25%;">
+                            <button id="update-table" class="input-border-style btn btn-outline-secondary btn-sm"
+                                    style="width: 95%">
+                                Обновить данные
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="right-head-button" style="width: 50%">
+                <div style="display: flex; flex-wrap: nowrap; justify-content: right">
+                        <div style="width: 36%; margin-top: 15px">
+                            <button id="check-recipe" class="input-border-style btn btn-outline-secondary btn-sm"
+                                    style="width: 100%; margin-right: 15px">
+                                Проверить рецепт
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="table-account-manager-container">
+            <div id="start-string-account-manager-table">Список продуктов для производства</div>
+            <table id="account-manager-table" style="width: 100%; font-size: 0.8rem">
+                <thead>
+                <tr>
+                    <th>idpr</th>
+                    <th>datecr</th>
+                    <th>brend</th>
+                    <th>nameprod</th>
+                    <th>percent</th>
+                    <th>mass</th>
+                    <th>tempprodmin</th>
+                    <th>tempprodmax</th>
+                    <th>comment</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

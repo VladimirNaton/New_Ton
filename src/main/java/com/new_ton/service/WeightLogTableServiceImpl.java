@@ -1,16 +1,14 @@
 package com.new_ton.service;
 
 import com.new_ton.dao.CalibrationTableDao;
-import com.new_ton.domain.dto.CalibrationTableDto;
-import com.new_ton.domain.dto.CalibrationTableEntityDto;
-import com.new_ton.domain.dto.WeighingLogRequestDto;
-import com.new_ton.domain.dto.WeightLogTableResponseDto;
+import com.new_ton.domain.dto.productionpage.CalibrationTableDto;
+import com.new_ton.domain.dto.productionpage.CalibrationTableEntityDto;
+import com.new_ton.domain.dto.productionpage.WeighingLogRequestDto;
+import com.new_ton.domain.dto.productionpage.WeightLogTableResponseDto;
 import com.new_ton.domain.entities.CalibrationEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;

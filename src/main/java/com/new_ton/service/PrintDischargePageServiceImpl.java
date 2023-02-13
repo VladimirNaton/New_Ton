@@ -5,7 +5,7 @@ package com.new_ton.service;
 import com.new_ton.dao.LabProtDao;
 import com.new_ton.dao.MainTableDao;
 import com.new_ton.dao.UploadTableDao;
-import com.new_ton.domain.dto.CreateResponsibleSemiFinishedProductDto;
+import com.new_ton.domain.dto.productionpage.CreateResponsibleSemiFinishedProductDto;
 import com.new_ton.domain.entities.LabprotEntity;
 import com.new_ton.domain.entities.MainEntity;
 import com.new_ton.domain.entities.UnloadEntity;

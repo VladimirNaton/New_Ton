@@ -1,6 +1,5 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.SaveRecipeDto;
 import com.new_ton.domain.entities.CatalogEntity;
 import com.new_ton.domain.entities.CatrecEntity;
 import com.new_ton.domain.entities.MainEntity;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
