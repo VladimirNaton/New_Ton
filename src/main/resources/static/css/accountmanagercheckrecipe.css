@@ -1,0 +1,71 @@
+#start-string-edite-recipe {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#main-container-edite-recipe {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#edite-recipe-head-brend {
+    width: 30%;
+}
+
+#edite-recipe-head-date-create {
+    width: 65%;
+}
+
+#edite-recipe-head-name-prod {
+    width: 98.5%;
+}
+
+#left-container-head-edite-recipe {
+    width: 35%;
+}
+
+#table-recipe-container {
+    width: 100%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+    margin-bottom: 15px;
+    padding-right: 10px;
+}
+
+#start-string-recipe-table {
+    width: 100%;
+    background-color: #10a9f2;
+    margin-left: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#edite-recipe-table_wrapper{
+    width: 100%;
+    margin-left: 10px;
+}
+
+#body-container-edite-recipe{
+    margin-top: 15px;
+}
+
+#edite-recipe-table{
+    width: 100%;
+}
+#return-to-technologist{
+    height: 51%;
+    width: 30%;
+}
+

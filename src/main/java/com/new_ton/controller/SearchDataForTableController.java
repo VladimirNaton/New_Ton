@@ -35,7 +35,7 @@ public class SearchDataForTableController {
         return searchDataForTablesService.searchDataFromSelectedCatalogRow(idProd);
     }
 
-    @Secured("ROLE_TECHNOLOGIST")
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
     @PostMapping("/data-for-edite-recipe-table")
     public EditeRecipeResponseDto searchDataForEditeRecipeTable(EditeRecipeTableRequestDto editeRecipeTableRequestDto) {
         return searchDataForTablesService.searchDataForEditeRecipeTable(editeRecipeTableRequestDto);

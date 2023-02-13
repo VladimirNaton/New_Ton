@@ -24,7 +24,7 @@ public interface RawRepository extends JpaRepository<RawEntity, Integer> {
     @Query("delete from RawEntity r where r.idMain = ?1")
     void deleteAllByIdMain(Integer idMain);
 
-    @Query("select new com.new_ton.domain.dto.technologistdto.EditeRecipeTableDto(r.id ,r.n, r.stage, r.code, r.nameraw, r.percent, r.mass, r.devper, r.devmass) from RawEntity r where r.idMain = ?1 order by r.n asc ")
+    @Query("select new com.new_ton.domain.dto.technologistdto.EditeRecipeTableDto(r.id ,r.n, r.stage, r.code, r.nameraw, r.percent, r.mass, r.devper, r.devmass, r.turnmix, r.timemix, r.pastpart, r.pastdate) from RawEntity r where r.idMain = ?1 order by r.n asc ")
     List<EditeRecipeTableDto> findAllIdMain(Integer idMain);
 
 

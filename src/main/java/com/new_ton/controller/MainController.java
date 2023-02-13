@@ -99,6 +99,13 @@ public class MainController {
     }
 
 
+    @GetMapping("/get-account-manager-check-recipe-page")
+    public String getAccountManagerCheckRecipePage(@RequestParam String idProd, Model model) {
+        model.addAttribute("idProd", idProd);
+        return "AccountManagerCheckRecipePage";
+    }
+
+
     private String redirectRole(String userRole) {
         if (userRole.equals("ROLE_TECHNOLOGIST")) {
             return "redirect:technologist-page";

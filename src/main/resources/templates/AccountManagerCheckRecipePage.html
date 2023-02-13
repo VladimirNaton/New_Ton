@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Recipe</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/accountmanagercheckrecipe.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/accountManagerCheckRecipe.js}"></script>
+
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="id-edite-recipe" style="display: none" th:text="${idProd}"></div>
+<div id="main-container-edite-recipe">
+    <div id="head_container-edite-recipe">
+        <div id="start-string-edite-recipe">
+            <div style="width: 40%; font-weight: bold">Операционист</div>
+            <div style="width: 60%; font-weight: bold">Страница проверки рецепта</div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
+            <div id="left-container-head-edite-recipe">
+                <div id="first-row-information-head-edite-recipe">
+                    <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
+                        <input id="edite-recipe-head-brend" type="text" readonly placeholder="Бренд"
+                               class="input-border-style"
+                               style="text-align: center; font-weight: bold; width: 100%">
+                    </label>
+                    <label style="width: 69%">
+                        <input id="edite-recipe-head-date-create" type="text" readonly placeholder="Дата производства"
+                               class="input-border-style" style="text-align: center; font-weight: bold; width: 98%">
+                    </label>
+                </div>
+                <div id="second-row-information-head-edite-recipe">
+                    <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
+                        <input id="edite-recipe-head-name-prod" type="text" readonly class="input-border-style"
+                               style="text-align: center; font-weight: bold" placeholder="Название продукта">
+                    </label>
+                </div>
+            </div>
+            <div id="middle-container-head-edite-recipe" style="display: flex; flex-wrap: wrap">
+                <div id="first-row-right-information-head-edite-recipe" style="width: 50%">
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">min</span><br>
+                        <input id="temp-min" value="20.0" type="number" min="20" max="45" step="0.1"
+                               placeholder="Мин. темпр"
+                               class="input-border-style" style="width: 100%; text-align: center; font-weight: bold">
+                    </label>
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">max</span><br>
+                        <input id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1"
+                               style="width: 100%; text-align: center; font-weight: bold"
+                               placeholder="Макс. темпр" class="input-border-style">
+                    </label>
+                </div>
+                <div id="second-row-right-information-head-edite-recipe"
+                     style="width: 100%; display: flex; flex-wrap: nowrap">
+                    <div style="width: 50%">
+                        <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
+                            <input id="common-weight-edite-recipe" type="number" step="1" class="input-border-style"
+                                   style="text-align: center; width: 100%; font-weight: bold">
+                        </label>
+                        <label style="font-weight: bold; width: 49%; text-align: center">Контроль,%<br>
+                            <input readonly id="control" type="text" class="input-border-style"
+                                   style="width: 100%; font-weight: bold; text-align: center">
+                        </label>
+                    </div>
+                    <div style="width: 50%; display: flex; align-items: end">
+                        <button id="send-to-production" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px; height: 53%">Отправить в производство</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="middle-container-edite-recipe">
+        <div id="second-row-middle-edite-recipe" style="margin-top: 15px; display: flex; flex-wrap: nowrap">
+            <label style="font-weight: bold; text-align: center; width: 60%">Комментарий технологу
+                <input id="comment-account-manager" type="text" placeholder="Комментарий технологу"
+                       class="input-border-style" style="width: 100%">
+            </label>
+            <div style="display: flex; flex-wrap: wrap; width: 40%">
+                <div style="visibility: hidden; width: 100%">Веннуть технологу</div>
+                <button id="return-to-technologist" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px; margin-top: -2px">Вернуть технологу</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="body-container-edite-recipe">
+        <div id="table-recipe-container" style="display: flex; flex-wrap: wrap">
+            <div id="start-string-recipe-table">Рецепт для производства</div>
+            <table id="edite-recipe-table" style="font-size: 0.9rem">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>n</th>
+                    <th>stage</th>
+                    <th>code</th>
+                    <th>nameraw</th>
+                    <th>percent</th>
+                    <th>mass</th>
+                    <th>devper</th>
+                    <th>devmass</th>
+                    <th>turnmix</th>
+                    <th>timemix</th>
+                    <th>pastpart</th>
+                    <th>pastdate</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>

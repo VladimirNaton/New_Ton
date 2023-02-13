@@ -110,6 +110,11 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         try {
             List<EditeRecipeTableDto> editeRecipeTableDtoList = searchDataForTablesDao.searchDataForEditeRecipeTable(editeRecipeTableRequestDto.getIdMain());
             EditeRecipeResponseDto editeRecipeResponseDto = new EditeRecipeResponseDto();
+            editeRecipeTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String strDate = dateFormat.format(elem.getPastdate());
+                elem.setStrDate(strDate);
+            }).collect(Collectors.toList());
             editeRecipeResponseDto.setData(editeRecipeTableDtoList);
             editeRecipeResponseDto.setDraw(editeRecipeTableRequestDto.getDraw());
             return editeRecipeResponseDto;

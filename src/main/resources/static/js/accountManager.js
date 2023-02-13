@@ -83,13 +83,13 @@ $(document).ready(function () {
             accountManagerTable.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
             let elem = $(this);
-            let idMain = elem.find("td:first").html();
-            getDataForHeaderInformationString(idMain);
+            idMain = elem.find("td:first").html();
+            getDataForHeaderInformationString();
         }
     });
 
 
-    function getDataForHeaderInformationString(idMain) {
+    function getDataForHeaderInformationString() {
         if (idMain !== '') {
             $.ajax({
                 url: '/search/get-data-for-head-string-edite-recipe/' + idMain,
@@ -141,6 +141,16 @@ $(document).ready(function () {
     function deleteErrorColorByControl() {
         $('#control').css('background-color', 'white');
     }
+
+    $('#check-recipe').click(function () {
+        console.log(idMain)
+        if (idMain !== '') {
+            let url = './get-account-manager-check-recipe-page?idProd=' + idMain;
+            window.open(url, '_blank');
+        } else {
+            alert("Вы не выбрали ни одной записи !!!");
+        }
+    })
 
 
 })

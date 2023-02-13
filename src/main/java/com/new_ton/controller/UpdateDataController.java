@@ -1,5 +1,6 @@
 package com.new_ton.controller;
 
+import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
 import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
 import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
@@ -63,6 +64,16 @@ public class UpdateDataController {
     @PutMapping("/update-data-by-catalog-from-main/{id}")
     public boolean updateDataByCatalogFromMain(@PathVariable(name = "id") Integer idMain) {
         return updateDataService.updateDataByCatalogFromMain(idMain);
+    }
+
+    @PutMapping("/return-recipe-to-technologist")
+    public boolean returnRecipeToTechnologist(@RequestBody ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
+        return updateDataService.returnRecipeToTechnologist(returnRecipeToTechnologistRequestDto);
+    }
+
+    @PutMapping("/send-to-production")
+    public boolean sentToProductionRecipe(@RequestBody ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
+        return updateDataService.sendToProduction(returnRecipeToTechnologistRequestDto);
     }
 
 

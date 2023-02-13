@@ -2,6 +2,7 @@ package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
+import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
 import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
 import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
@@ -366,6 +367,40 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl updateDataByCatalogFromMain : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean returnRecipeToTechnologist(ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
+        try {
+            searchDataForTablesDao.getMainEntityById(returnRecipeToTechnologistRequestDto.getIdMain())
+                    .ifPresent(elem -> {
+                        elem.setComment(returnRecipeToTechnologistRequestDto.getComment());
+                        elem.setState(1);
+                        updateDataDao.updateMainEntity(elem);
+                    });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl returnRecipeToTechnologist : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean sendToProduction(ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
+        try {
+            searchDataForTablesDao.getMainEntityById(returnRecipeToTechnologistRequestDto.getIdMain())
+                    .ifPresent(elem -> {
+                        elem.setComment(returnRecipeToTechnologistRequestDto.getComment());
+                        elem.setState(3);
+                        updateDataDao.updateMainEntity(elem);
+                    });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl returnRecipeToTechnologist : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }
