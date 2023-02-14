@@ -7,7 +7,7 @@ public class SaveRecipeDto {
     private String comment;
     private Double tempMin;
     private Double tempMax;
-    private Integer commonWeight;
+    private Double commonWeight;
     private Integer idMain;
     private Double control;
 }

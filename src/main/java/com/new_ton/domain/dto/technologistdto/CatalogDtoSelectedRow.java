@@ -10,9 +10,9 @@ public class CatalogDtoSelectedRow {
     private String dataCreate;
     private String brend;
     private String nameprod;
-    private Integer mass;
+    private Double mass;
 
-    public CatalogDtoSelectedRow(Date datecr, String brend, String nameprod, Integer mass) {
+    public CatalogDtoSelectedRow(Date datecr, String brend, String nameprod, Double mass) {
         this.datecr = datecr;
         this.brend = brend;
         this.nameprod = nameprod;

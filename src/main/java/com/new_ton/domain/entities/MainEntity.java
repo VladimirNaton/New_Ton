@@ -38,7 +38,7 @@ public class MainEntity {
     @Column(name = "percent")
     private Double percent;
     @Column(name = "mass")
-    private Integer mass;
+    private Double mass;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datestart")
     private Date datestart;

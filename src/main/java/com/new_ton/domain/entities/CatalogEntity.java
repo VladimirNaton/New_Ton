@@ -33,7 +33,7 @@ public class CatalogEntity {
     private Double percent;
 
     @Column(name = "mass")
-    private Integer mass;
+    private Double mass;
 
     @Column(name = "tempprodmin")
     private Double tempprodmin;

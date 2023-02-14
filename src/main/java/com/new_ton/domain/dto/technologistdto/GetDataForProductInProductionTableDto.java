@@ -12,7 +12,7 @@ public class GetDataForProductInProductionTableDto {
     private String brend;
     private String nameprod;
     private Double percent;
-    private Integer mass;
+    private Double mass;
     private Double tempprodmin;
     private Double tempprodmax;
     private String comment;
@@ -20,7 +20,7 @@ public class GetDataForProductInProductionTableDto {
     private String dateplStr;
 
 
-    public GetDataForProductInProductionTableDto(Integer idpr, Date datecr, Date datepl, String brend, String nameprod, Double percent, Integer mass, Double tempprodmin, Double tempprodmax, String comment) {
+    public GetDataForProductInProductionTableDto(Integer idpr, Date datecr, Date datepl, String brend, String nameprod, Double percent, Double mass, Double tempprodmin, Double tempprodmax, String comment) {
         this.idpr = idpr;
         this.datecr = datecr;
         this.datepl = datepl;
