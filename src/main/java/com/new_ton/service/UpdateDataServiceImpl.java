@@ -3,10 +3,7 @@ package com.new_ton.service;
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
-import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
-import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
-import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
-import com.new_ton.domain.dto.technologistdto.UpdateSelectedRowOfRecipeDto;
+import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -401,6 +398,85 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl returnRecipeToTechnologist : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean updateSelectedCatalogRow(CatalogDtoSelectedRow catalogDtoSelectedRow) {
+        try {
+            searchDataForTablesDao.getCatalogEntityById(catalogDtoSelectedRow.getId())
+                    .ifPresent(elem -> {
+                        elem.setDatecr(catalogDtoSelectedRow.getDatecr());
+                        elem.setBrend(catalogDtoSelectedRow.getBrend());
+                        elem.setNameprod(catalogDtoSelectedRow.getNameprod());
+                        elem.setPercent(catalogDtoSelectedRow.getPercent());
+                        elem.setMass(catalogDtoSelectedRow.getMass());
+                        elem.setTempprodmin(catalogDtoSelectedRow.getTempprodmin());
+                        elem.setTempprodmax(catalogDtoSelectedRow.getTempprodmax());
+                        updateDataDao.updateCatalogEntity(elem);
+                    });
+            return true;
+
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateSelectedCatalogRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteSelectedCatalogRow(Integer id) {
+        try {
+            updateDataDao.deleteSelectedCatalogRow(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl deleteSelectedCatalogRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean addNewRecipe(CatalogDtoSelectedRow catalogDtoSelectedRow) {
+        try {
+            CatalogEntity catalogEntity = new CatalogEntity();
+            if (catalogDtoSelectedRow.getDataCreate() != null) {
+                catalogEntity.setDatecr(catalogDtoSelectedRow.getDatecr());
+            } else {
+                catalogEntity.setDatecr(new Date());
+            }
+            catalogEntity.setBrend(catalogDtoSelectedRow.getBrend());
+            catalogEntity.setNameprod(catalogDtoSelectedRow.getNameprod());
+            if (catalogDtoSelectedRow.getPercent() != null) {
+                catalogEntity.setPercent(catalogDtoSelectedRow.getPercent());
+            } else {
+                catalogEntity.setPercent(0D);
+            }
+
+            if (catalogDtoSelectedRow.getMass() != null) {
+                catalogEntity.setMass(catalogDtoSelectedRow.getMass());
+            } else {
+                catalogEntity.setMass(0D);
+            }
+
+            if (catalogDtoSelectedRow.getTempprodmin() != null) {
+                catalogEntity.setTempprodmin(catalogDtoSelectedRow.getTempprodmin());
+            } else {
+                catalogEntity.setTempprodmin(0D);
+            }
+
+            if (catalogDtoSelectedRow.getTempprodmax() != null) {
+                catalogEntity.setTempprodmax(catalogDtoSelectedRow.getTempprodmax());
+            } else {
+                catalogEntity.setTempprodmax(0D);
+            }
+            updateDataDao.saveNewCatalogRow(catalogEntity);
+            return true;
+
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl addNewRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

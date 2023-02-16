@@ -29,4 +29,8 @@ public interface UpdateDataDao {
     boolean saveCatrecEntity(List<CatrecEntity> catrecEntityList);
 
     boolean updateCatalogEntity(CatalogEntity catalogEntity);
+
+    boolean deleteSelectedCatalogRow(Integer id);
+
+    boolean saveNewCatalogRow(CatalogEntity catalogEntity);
 }

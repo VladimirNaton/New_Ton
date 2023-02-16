@@ -143,13 +143,17 @@ $(document).ready(function () {
     }
 
     $('#check-recipe').click(function () {
-        console.log(idMain)
         if (idMain !== '') {
             let url = './get-account-manager-check-recipe-page?idProd=' + idMain;
             window.open(url, '_blank');
         } else {
             alert("Вы не выбрали ни одной записи !!!");
         }
+    })
+
+    $('#directory-editor').click(function () {
+        let url = './edite-catalog-page';
+        window.open(url, '_blank');
     })
 
 

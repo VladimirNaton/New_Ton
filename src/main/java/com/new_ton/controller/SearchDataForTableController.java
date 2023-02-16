@@ -17,7 +17,7 @@ public class SearchDataForTableController {
 
     private final SearchDataForTablesService searchDataForTablesService;
 
-    @Secured("ROLE_TECHNOLOGIST")
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
     @PostMapping("/data-for-technologist-left-table")
     public TechnologistPageLeftTableResponseDto getDataForLeftProductTableTechnologistPage(RequestTechnologistPageLeftTableDto requestTechnologistPageLeftTableDto) {
         return searchDataForTablesService.getDataForTechnologistLeftTable(requestTechnologistPageLeftTableDto);
@@ -29,7 +29,7 @@ public class SearchDataForTableController {
         return searchDataForTablesService.getDataForTechnologistRightTable(requestTechnologistPageRightTableDto);
     }
 
-    @Secured("ROLE_TECHNOLOGIST")
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
     @GetMapping("/get-data-by-selected-catalog-row")
     public CatalogDtoSelectedRow getDataBySelectedCatalogRow(@RequestParam Integer idProd) {
         return searchDataForTablesService.searchDataFromSelectedCatalogRow(idProd);

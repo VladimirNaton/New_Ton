@@ -50,7 +50,16 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             TechnologistPageLeftTableResponseDto responseDto = new TechnologistPageLeftTableResponseDto();
             responseDto.setDraw(requestTechnologistPageLeftTableDto.getDraw());
             responseDto.setRecordsTotal(page.getTotalElements());
-            responseDto.setData(page.getContent());
+            List<CatalogDtoByLeftTable> catalogDtoByLeftTableList = page.getContent()
+                    .stream()
+                    .peek(elem -> {
+                        if (elem.getDatecr() != null) {
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            String strDate = dateFormat.format(elem.getDatecr());
+                            elem.setStrDate(strDate);
+                        }
+                    }).collect(Collectors.toList());
+            responseDto.setData(catalogDtoByLeftTableList);
             responseDto.setRecordsFiltered(page.getTotalElements());
             return responseDto;
         } catch (Exception e) {

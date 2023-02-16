@@ -21,5 +21,12 @@ public interface UpdateDataService {
     boolean updateDataByCatalogFromMain(Integer idMain);
 
     boolean returnRecipeToTechnologist(ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto);
+
     boolean sendToProduction(ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto);
+
+    boolean updateSelectedCatalogRow(CatalogDtoSelectedRow catalogDtoSelectedRow);
+
+    boolean deleteSelectedCatalogRow(Integer id);
+
+    boolean addNewRecipe(CatalogDtoSelectedRow catalogDtoSelectedRow);
 }

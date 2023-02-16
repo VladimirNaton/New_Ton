@@ -1,0 +1,109 @@
+#main-container-technologist-page {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#product-catalog-body {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+}
+
+#product-catalog-left {
+    width: 100%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#left-product-table_info {
+    margin-left: 10px;
+}
+
+#left-product-table_length {
+    margin-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#product-catalog-start-string-left {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#left-product-table {
+    border: 1px solid black;
+    margin-left: 10px;
+}
+
+#left-head-button {
+    padding-bottom: 15px;
+}
+
+#delete-recipe-modal {
+    width: 20%;
+    min-height: 15%;
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    background-color: wheat;
+    z-index: 1;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-bottom: 10px;
+}
+
+#left-product-table_wrapper {
+    width: 99%;
+    margin-right: 10px;
+}
+
+#start-string-edite-recipe {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#edite-recipe-head-brend {
+    width: 30%;
+}
+
+#edite-recipe-head-date-create {
+    width: 65%;
+}
+
+#edite-recipe-head-name-prod {
+    width: 98.5%;
+}
+
+#left-container-head-edite-recipe {
+    width: 35%;
+}
+
+#middle-container-head-edite-recipe {
+    width: 35%;
+}
+
+#right-container-head-edite-recipe {
+    width: 20%;
+}
+
+#product-catalog-head{
+    margin-top: 15px;
+}
+
+

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -147,6 +148,27 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl updateCatalogEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteSelectedCatalogRow(Integer id) {
+        try {
+            catalogRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl deleteSelectedCatalogRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveNewCatalogRow(CatalogEntity catalogEntity) {
+        try {
+            catalogRepository.save(catalogEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl saveNewCatalogRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

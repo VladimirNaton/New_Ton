@@ -99,10 +99,17 @@ public class MainController {
     }
 
 
+    @Secured("ROLE_ACCOUNTMANAGER")
     @GetMapping("/get-account-manager-check-recipe-page")
     public String getAccountManagerCheckRecipePage(@RequestParam String idProd, Model model) {
         model.addAttribute("idProd", idProd);
         return "AccountManagerCheckRecipePage";
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @GetMapping("/edite-catalog-page")
+    public String getEditeCatalogPage() {
+        return "EditeCatalogPage";
     }
 
 

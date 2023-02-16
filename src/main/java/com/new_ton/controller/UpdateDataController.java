@@ -1,10 +1,7 @@
 package com.new_ton.controller;
 
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
-import com.new_ton.domain.dto.technologistdto.AddOrReplaceComponentToRecipeRequestDto;
-import com.new_ton.domain.dto.technologistdto.SaveRecipeDto;
-import com.new_ton.domain.dto.technologistdto.SendProductToAccountManagerDto;
-import com.new_ton.domain.dto.technologistdto.UpdateSelectedRowOfRecipeDto;
+import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -66,14 +63,34 @@ public class UpdateDataController {
         return updateDataService.updateDataByCatalogFromMain(idMain);
     }
 
+    @Secured("ROLE_ACCOUNTMANAGER")
     @PutMapping("/return-recipe-to-technologist")
     public boolean returnRecipeToTechnologist(@RequestBody ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
         return updateDataService.returnRecipeToTechnologist(returnRecipeToTechnologistRequestDto);
     }
 
+    @Secured("ROLE_ACCOUNTMANAGER")
     @PutMapping("/send-to-production")
     public boolean sentToProductionRecipe(@RequestBody ReturnRecipeToTechnologistRequestDto returnRecipeToTechnologistRequestDto) {
         return updateDataService.sendToProduction(returnRecipeToTechnologistRequestDto);
+    }
+
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @PutMapping("/update-selected-catalog-row")
+    public boolean updateSelectedCatalogRow(@RequestBody CatalogDtoSelectedRow catalogDtoSelectedRow) {
+        return updateDataService.updateSelectedCatalogRow(catalogDtoSelectedRow);
+    }
+
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @PutMapping("/delete-selected-catalog-row/{id}")
+    public boolean deleteSelectedCatalogRow(@PathVariable(name = "id") Integer id) {
+        return updateDataService.deleteSelectedCatalogRow(id);
+    }
+
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @PutMapping("/add-new-recipe")
+    public boolean addNewRecipe(@RequestBody CatalogDtoSelectedRow catalogDtoSelectedRow) {
+        return updateDataService.addNewRecipe(catalogDtoSelectedRow);
     }
 
 

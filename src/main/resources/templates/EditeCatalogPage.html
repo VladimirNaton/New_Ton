@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edite Catalog Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editecatalog.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editecatalog.js}"></script>
+
+
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="delete-recipe-modal" style="display: none">
+    <div class="modal-body">
+        Вы точно хотите удалить выбранную строку из таблицы ?
+    </div>
+    <div style="display: flex; justify-content: space-evenly">
+        <button id="delete-recipe-modal-button" type="button" class="btn btn-secondary btn-sm">Удалить</button>
+        <button id="close-delete-recipe-modal" type="button" class="btn btn-secondary btn-sm">Закрыть</button>
+    </div>
+</div>
+
+
+<div id="main-container-technologist-page">
+    <div id="head_container-edite-recipe">
+        <div id="start-string-edite-recipe">
+            <div style="width: 40%; font-weight: bold">Операционист</div>
+            <div style="width: 60%; font-weight: bold">Страница редактирования справочника</div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
+            <div id="left-container-head-edite-recipe">
+                <div id="first-row-information-head-edite-recipe">
+                    <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
+                        <input id="edite-recipe-head-brend" type="text" placeholder="Бренд"
+                               class="input-border-style"
+                               style="text-align: center; font-weight: bold; width: 100%">
+                    </label>
+                    <label style="width: 69%">
+                        <input id="edite-recipe-head-date-create" type="datetime-local" placeholder="Дата производства"
+                               class="input-border-style" style="text-align: center; font-weight: bold; width: 98%">
+                    </label>
+                </div>
+                <div id="second-row-information-head-edite-recipe">
+                    <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
+                        <input id="edite-recipe-head-name-prod" type="text" class="input-border-style"
+                               style="text-align: center; font-weight: bold" placeholder="Название продукта">
+                    </label>
+                </div>
+            </div>
+            <div id="middle-container-head-edite-recipe" style="display: flex; flex-wrap: wrap">
+                <div id="first-row-right-information-head-edite-recipe" style="width: 50%">
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">min</span><br>
+                        <input id="temp-min" value="20.0" type="number" min="20" max="45" step="0.1"
+                               placeholder="Мин. темпр"
+                               class="input-border-style" style="width: 100%; text-align: center; font-weight: bold">
+                    </label>
+                    <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                            style="font-size: small; font-weight: bold">max</span><br>
+                        <input id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1"
+                               style="width: 100%; text-align: center; font-weight: bold"
+                               placeholder="Макс. темпр" class="input-border-style">
+                    </label>
+                </div>
+                <div id="second-row-right-information-head-edite-recipe"
+                     style="width: 100%; display: flex; flex-wrap: nowrap">
+                    <div style="width: 50%">
+                        <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
+                            <input id="common-weight-edite-recipe" type="number" step="1" class="input-border-style"
+                                   style="text-align: center; width: 100%; font-weight: bold">
+                        </label>
+                        <label style="font-weight: bold; width: 49%; text-align: center">Контроль,%<br>
+                            <input id="control" type="number" class="input-border-style"
+                                   style="width: 100%; font-weight: bold; text-align: center" min="0" max="100">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="product-catalog-head" style="display: flex; flex-wrap: nowrap">
+            <div id="left-head-button" style="width: 100%">
+                <div style="display: flex; flex-wrap: nowrap; margin-bottom: 10px">
+                    <div style="width: 100%; display: flex; flex-wrap: nowrap">
+                        <div style="width: 20%"><input type="text" placeholder="Название продукта"
+                                                       class="input-border-style btn-sm" id="name-prod"
+                                                       style="width: 100%"></div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="search-prod">Найти
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button id="resetSearch" class="input-border-style btn btn-outline-secondary btn-sm">
+                                Сбросить фильтр
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="save-recipe">
+                                Сохранить
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="add-recipe">
+                                Добавить
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="delete-recipe">
+                                Удалить
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="in-workshop">Об. в
+                                цеху
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="edit-recipe">
+                                Редактировать рецепт
+                            </button>
+                        </div>
+                        <div style="margin-left: 10px">
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="edit-component">
+                                Компоненты
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="product-catalog-body">
+            <div id="product-catalog-left">
+                <div id="product-catalog-start-string-left">Отобразить каталог</div>
+                <div id="left-table-container">
+                    <table id="left-product-table">
+                        <thead>
+                        <tr>
+                            <th>idpr</th>
+                            <th>date</th>
+                            <th>brend</th>
+                            <th>nameprod</th>
+                            <th>percent</th>
+                            <th>mass</th>
+                            <th>tempprodmin</th>
+                            <th>tempprodmax</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
