@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Edite Catalog Page</title>
@@ -79,6 +79,11 @@
                     </div>
                 </div>
             </div>
+            <div sec:authorize="hasRole('ROLE_TECHNOLOGIST')" style="width: 35%">
+                <div style="width: 100%; display: flex; justify-content: right ;margin-right: 15px">
+                    <a th:href="@{/}" class="btn btn-outline-secondary btn-sm" style="width: 36%">На главную</a>
+                </div>
+            </div>
         </div>
     </div>
     <div id="body-container">
@@ -114,13 +119,13 @@
                             </button>
                         </div>
                         <div style="margin-left: 10px">
-                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="in-workshop">Об. в
-                                цеху
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="edit-recipe">
+                                Редактировать рецепт
                             </button>
                         </div>
                         <div style="margin-left: 10px">
-                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="edit-recipe">
-                                Редактировать рецепт
+                            <button class="input-border-style btn btn-outline-secondary btn-sm" id="in-workshop">Об. в
+                                цеху
                             </button>
                         </div>
                         <div style="margin-left: 10px">

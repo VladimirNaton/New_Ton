@@ -1,7 +1,6 @@
 package com.new_ton.service;
 
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataResponseDto;
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableRequestDto;
+import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 
@@ -24,4 +23,8 @@ public interface SearchDataForTablesService {
     GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable();
 
     AccountManagerTableDataResponseDto getDataForAccountManagerTable(AccountManagerTableRequestDto accountManagerTableRequestDto);
+
+    EditeCatalogRecipeResponseDto getDataForEditeCatalogRecipe(EditeRecipeCatalogTableRequestDto editeRecipeCatalogTableRequestDto);
+
+    GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id);
 }

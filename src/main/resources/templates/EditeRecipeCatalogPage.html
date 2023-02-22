@@ -2,23 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Recipe In Production Page</title>
+    <title>Edite Catalog Recipe</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
     <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/editeRecipeInProduction.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editeCatalogRecipe.css}">
     <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
     <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/editeRecipeInProduction.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editeCatalogRecipe.js}"></script>
 
 </head>
 <body style="background-color: rgb(229, 230, 250)">
-<div id="id-edite-recipe" style="display: none" th:text="${idProd}"></div>
+<div id="id-edite-recipe" style="display: none" th:text="${idCat}"></div>
 <div id="main-container-edite-recipe">
     <div id="head_container-edite-recipe">
         <div id="start-string-edite-recipe">
-            <div style="width: 40%; font-weight: bold">Технолог</div>
-            <div style="width: 60%; font-weight: bold">Страница редактирования рецепта в производстве</div>
+            <div style="width: 40%; font-weight: bold">Операционист</div>
+            <div style="width: 60%; font-weight: bold">Страница редактирования рецепта</div>
         </div>
         <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
             <div id="left-container-head-edite-recipe">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div id="middle-container-head-edite-recipe" style="display: flex; flex-wrap: wrap">
-                <div id="first-row-right-information-head-edite-recipe" style="width: 50%">
+                <div id="first-row-right-information-head-edite-recipe" style="width: 100%">
                     <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
                             style="font-size: small; font-weight: bold">min</span><br>
                         <input id="temp-min" value="20.0" type="number" min="20" max="45" step="0.1"
@@ -57,9 +57,9 @@
                 </div>
                 <div id="second-row-right-information-head-edite-recipe"
                      style="width: 100%; display: flex; flex-wrap: nowrap">
-                    <div style="width: 50%">
+                    <div style="width: 100%">
                         <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
-                            <input readonly id="common-weight-edite-recipe" type="number" step="1" class="input-border-style"
+                            <input id="common-weight-edite-recipe" type="number" step="1" class="input-border-style"
                                    style="text-align: center; width: 100%; font-weight: bold">
                         </label>
                         <label style="font-weight: bold; width: 49%; text-align: center">Контроль,%<br>
@@ -68,6 +68,12 @@
                         </label>
                     </div>
                 </div>
+            </div>
+            <div id="right-container-head-edite-recipe" style="display: flex; align-items: end">
+                <button id="save-recipe" class="btn btn-outline-secondary btn-sm"
+                        style="margin-left: 10px; height: 27%">Сохранить
+                    рецепт
+                </button>
             </div>
         </div>
     </div>
@@ -125,7 +131,7 @@
             </label>
             <label id="part-label" style="width: 4%; text-align: center; margin-left: 10px; display: none"><span
                     style="font-weight: bold">Партия</span><br>
-                <input id="part" class="input-border-style input-selected-row-information" min="0" type="number">
+                <input id="part" min="0" class="input-border-style input-selected-row-information" type="number">
             </label>
             <label id="part-date-label" style="width: 9%; text-align: center; margin-left: 10px; display: none"><span
                     style="font-weight: bold">Дата</span><br>
@@ -136,48 +142,10 @@
                         class="btn btn-outline-secondary btn-sm" type="button">Сохранить изменения
                 </button>
             </div>
-        </div>
 
-        <div id="second-row-middle-edite-recipe-in-production" style="display: flex; flex-wrap: nowrap">
-            <label style="width: 3.5%; text-align: center"></label>
-            <label style="width: 3%; text-align: center; margin-left: 10px"> </label>
-            <label id="name-prod-label-product-in-production"
-                   style="width: 35%; text-align: center; margin-left: 10px"></label>
-            <label id="percent-product-in-production"
-                   style="text-align: center; width: 7%;display: none; margin-left: 10px; text-align: center; font-weight: bold"></label>
-            <label id="mass-product-in-production"
-                   style="text-align: center; width: 6%; display: none; margin-left: 10px">
-                <span style="font-weight: bold;">Факт. кг</span><br>
-                <input id="mass-input-product-in-production" type="number" step="0.001" min="0"
-                       class="input-border-style input-selected-row-information" readonly>
-            </label>
-            <label id="mixing-product-in-production"
-                   style="text-align: center; width: 9%; display: none; margin-left: 10px"></label>
-            <label id="mixing-time-product-in-production"
-                   style="text-align: center; width: 7%; display: none; margin-left: 10px"></label>
-            <label id="filter-product-in-production"
-                   style="text-align: center; width: 9%; display: none; margin-left: 10px"></label>
-            <label id="infelicity-percent-product-in-production"
-                   style="text-align: center; width: 6%; display: none; margin-left: 10px"></label>
-            <label id="infelicity-mass-product-in-production"
-                   style="width: 6%; text-align: center; display: none; margin-left: 10px">
-                <span style="font-weight: bold;">Факт. кг</span><br>
-                <input id="infelicity-mass-input-product-in-production" type="number" step="0.001" min="0"
-                       class="input-border-style input-selected-row-information" readonly>
-            </label>
-            <label id="part-label-product-in-production"
-                   style="width: 4%; text-align: center; margin-left: 10px; display: none"></label>
-            <label id="part-date-label-product-in-production"
-                   style="width: 9%; text-align: center; margin-left: 10px; display: none"></label>
         </div>
         <div id="error-message" style="text-align: left; color: #a52834; display: none; margin-left: 0.5%"></div>
-        <div id="second-row-middle-edite-recipe" style="margin-top: 15px; display: flex; flex-wrap: nowrap">
-            <input id="comment-technologist" type="text" placeholder="Комментарий оператору в цех"
-                   class="input-border-style" style="width: 60%">
-            <button id="save-recipe" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px">Сохранить
-                рецепт
-            </button>
-        </div>
+        <div id="second-row-middle-edite-recipe" style="margin-top: 15px; display: flex; flex-wrap: nowrap"></div>
     </div>
     <div id="body-container-edite-recipe">
         <div style="display: flex; flex-wrap: nowrap">
@@ -192,8 +160,7 @@
             <div id="right-head-button-edite-recipe" style="width: 50%">
                 <div style="display: flex; flex-wrap: nowrap; margin-top: 10px">
                     <div style="width: 25%; margin-left: 10px">
-                        <button id="add-component" class="btn btn-outline-secondary btn-sm" style="width: 100%">
-                            Добавить
+                        <button id="add-component" class="btn btn-outline-secondary btn-sm" style="width: 100%">Добавить
                             компонент
                         </button>
                     </div>
@@ -221,13 +188,11 @@
                         <input id="find-component-input" class="input-border-style" type="text" style="width: 100%">
                     </label>
                     <div style="margin-left: 10px; margin-bottom: 10px">
-                        <button id="find-component" class="btn btn-outline-secondary btn-sm" style="height: 90%">
-                            Найти
+                        <button id="find-component" class="btn btn-outline-secondary btn-sm" style="height: 90%">Найти
                         </button>
                     </div>
                     <div style="margin-left: 10px; margin-bottom: 10px">
-                        <button id="reset-find-component" class="btn btn-outline-secondary btn-sm"
-                                style="height: 90%">
+                        <button id="reset-find-component" class="btn btn-outline-secondary btn-sm" style="height: 90%">
                             Сбросить фильтр
                         </button>
                     </div>

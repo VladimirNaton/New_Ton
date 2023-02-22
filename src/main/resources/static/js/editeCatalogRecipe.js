@@ -6,13 +6,13 @@ $(document).ready(function () {
     let codeSelectedElemRecipeTable;
     let idSelectedElemRecipeTable = '';
     let idSelectedElemComponentTable = '';
-    let idMain = '';
+    let idCat = '';
     let nameComponent = '';
     let sequenceNumberFirstValue = '';
     let errorMessageShow = false;
     let outPast = false;
 
-    idMain = $('#id-edite-recipe').text();
+    idCat = $('#id-edite-recipe').text();
     nameComponent = $("#component-select option:selected").text();
 
 
@@ -23,10 +23,10 @@ $(document).ready(function () {
         "paging": false,
         "info": false,
         "ajax": {
-            "url": "/search/data-for-edite-recipe-table",
+            "url": "/search/data-for-edite-recipe-catalog-table",
             "type": "POST",
             data: function (data) {
-                data.idMain = $('#id-edite-recipe').text();
+                data.idCat = $('#id-edite-recipe').text();
             }
         },
         "columns": [
@@ -102,19 +102,17 @@ $(document).ready(function () {
     });
 
     function getDataForHeaderInformationString() {
-        let idProd = $('#id-edite-recipe').text();
-        if (idProd !== '') {
+        if (idCat !== '') {
             $.ajax({
-                url: '/search/get-data-for-head-string-edite-recipe/' + idProd,
+                url: '/search/get-data-by-selected-catalog-row?idProd=' + idCat,
                 method: 'get',
                 success: function (data) {
                     $('#edite-recipe-head-brend').val(data.brend);
-                    $('#edite-recipe-head-date-create').val(data.dateString);
-                    $('#edite-recipe-head-name-prod').val(data.nameProd);
-                    $('#temp-min').val(data.tempMin);
-                    $('#temp-max').val(data.tempMax);
+                    $('#edite-recipe-head-date-create').val(data.dataCreate);
+                    $('#edite-recipe-head-name-prod').val(data.nameprod);
+                    $('#temp-min').val(data.tempprodmin);
+                    $('#temp-max').val(data.tempprodmax);
                     $('#common-weight-edite-recipe').val(data.mass);
-                    $('#comment-technologist').val(data.comment);
                     checkCommonPercents();
                 },
                 beforeSend: function () {
@@ -236,12 +234,12 @@ $(document).ready(function () {
                 $('#container-past-edite').hide();
                 break;
             case '9':
-                if (!columnVisible) {
-                    showFirstColumn();
-                    columnVisible = true;
+                if (columnVisible) {
+                    hideFirstColumn();
+                    columnVisible = false;
                 }
                 outPast = true;
-                $('#container-past-edite').show();
+                $('#container-past-edite').hide();
                 break;
         }
         $('#find-component-input').val('');
@@ -319,10 +317,6 @@ $(document).ready(function () {
         $('#mass').show();
         $('#infelicity-percent').show();
         $('#infelicity-mass').show();
-        $('#percent-product-in-production').show();
-        $('#mass-product-in-production').show();
-        $('#infelicity-percent-product-in-production').show();
-        $('#infelicity-mass-product-in-production').show();
     }
 
     function showCodeParameterPast() {
@@ -332,12 +326,6 @@ $(document).ready(function () {
         $('#infelicity-mass').show();
         $('#part-label').show();
         $('#part-date-label').show();
-        $('#percent-product-in-production').show();
-        $('#mass-product-in-production').show();
-        $('#infelicity-percent-product-in-production').show();
-        $('#infelicity-mass-product-in-production').show();
-        $('#part-label-product-in-production').show();
-        $('#part-date-label-product-in-production').show();
     }
 
     function hideAllParameter() {
@@ -350,40 +338,25 @@ $(document).ready(function () {
         $('#infelicity-mass').hide();
         $('#part-label').hide();
         $('#part-date-label').hide();
-
-        $('#percent-product-in-production').hide();
-        $('#mass-product-in-production').hide();
-        $('#mixing-product-in-production').hide();
-        $('#mixing-time-product-in-production').hide();
-        $('#filter-product-in-production').hide();
-        $('#infelicity-percent-product-in-production').hide();
-        $('#infelicity-mass-product-in-production').hide();
-        $('#part-label-product-in-production').hide();
-        $('#part-date-label-product-in-production').hide();
     }
 
     function showFilterParameter() {
         $('#filter').show();
-        $('#filter-product-in-production').show();
     }
 
     function showSolventParameter() {
         $('#mass').show();
-        $('#mass-product-in-production').show();
     }
 
     function showMixParameter() {
         $('#mixing').show();
         $('#mixing-time').show();
-
-        $('#mixing-product-in-production').show();
-        $('#mixing-time-product-in-production').show();
     }
 
     $('#remove-component-from-recipe').click(function () {
         if (idSelectedElemRecipeTable !== '') {
             $.ajax({
-                url: '/update/delete-selected-row-from-recipe-table/' + idSelectedElemRecipeTable,
+                url: '/update/delete-selected-row-from-recipe-catalog-table/' + idSelectedElemRecipeTable,
                 method: 'delete',
                 success: function (data) {
                     if (data) {
@@ -407,7 +380,7 @@ $(document).ready(function () {
 
     function getDataForSelectedRowEditeRecipeTable(id) {
         $.ajax({
-            url: '/search/get-data-for-selected-row-edite-recipe-table/' + id,
+            url: '/search/get-data-for-selected-row-edite-catalog-recipe-table/' + id,
             method: 'get',
             success: function (data) {
                 if (codeSelectedElemRecipeTable === '1') {
@@ -449,13 +422,6 @@ $(document).ready(function () {
         $('#mass-input').val(data.mass);
         $('#infelicity-percent-input').val(data.devper);
         $('#infelicity-mass-input').val(data.devmass);
-        $('#mass-input-product-in-production').val(data.factMass);
-        $('#infelicity-mass-input-product-in-production').val(data.factMassDev);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyCode1();
-        } else {
-            addPropertyReadOnlyCode1();
-        }
     }
 
     function complitePastRowInformation(data) {
@@ -468,13 +434,6 @@ $(document).ready(function () {
         $('#infelicity-mass-input').val(data.devmass);
         $('#part').val(data.pastpart);
         $('#past-date').val(data.dateString);
-        $('#mass-input-product-in-production').val(data.factMass);
-        $('#infelicity-mass-input-product-in-production').val(data.factMassDev);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyCode2();
-        } else {
-            addPropertyReadOnlyCode2();
-        }
     }
 
     function compliteSolventRowInformation(data) {
@@ -482,11 +441,6 @@ $(document).ready(function () {
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
         $('#mass-input').val(data.mass);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyCode6();
-        } else {
-            addPropertyReadOnlyCode6();
-        }
     }
 
     function compliteMixingRowInformation(data) {
@@ -495,11 +449,6 @@ $(document).ready(function () {
         $('#name-prod-input').val(data.nameraw);
         $('#mixing-input').val(data.turnmix);
         $('#mixing-time-input').val(data.timemix);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyCode8();
-        } else {
-            addPropertyReadOnlyCode8();
-        }
     }
 
     function compliteFilterRowInformation(data) {
@@ -507,23 +456,39 @@ $(document).ready(function () {
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
         $('#filter-input').val(data.filter);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyCode4();
-        } else {
-            addPropertyReadOnlyCode4();
-        }
     }
 
     function compliteAnotherRowInformation(data) {
         $('#sequence-number-input').val(data.n);
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
-        if (data.componentLoaded === 0) {
-            removePropertyReadOnlyAnotherCode();
-        } else {
-            addPropertyReadOnlyAnotherCode();
-        }
     }
+
+    $('#common-weight-edite-recipe').change(function () {
+        let commonWeight = Math.round(Number($('#common-weight-edite-recipe').val()));
+        if (commonWeight !== 0) {
+            let percent = Number($('#percent-input').val());
+            if (percent !== 0) {
+                let result = (commonWeight / 100) * percent;
+                $('#mass-input').val(result.toFixed(2));
+            }
+
+            let infelicityPercent = Number($('#infelicity-percent-input').val());
+            if (infelicityPercent !== 0) {
+                let result = (commonWeight / 100) * infelicityPercent;
+                $('#infelicity-mass-input').val(result.toFixed(2))
+            }
+        }
+        let tableData = getTableData();
+        let mass = Math.round(Number(calculateMassElements(tableData)));
+
+        if (mass !== commonWeight) {
+            $('#control').css('background-color', 'crimson');
+        } else {
+            $('#control').css('background-color', 'white');
+        }
+        checkCommonPercents();
+    })
 
     $('#percent-input').change(function () {
         let percent = Number($('#percent-input').val());
@@ -639,6 +604,15 @@ $(document).ready(function () {
         return (mass / commonWeight).toFixed(2);
     }
 
+    function calculateMassElements(data) {
+        let mass = 0;
+        $.each(data, function (key, value) {
+            mass += value.mass;
+        });
+        return mass;
+
+    }
+
     function checkCommonPercents() {
         let tableData = getTableData();
         let percents = calculatePercents(tableData);
@@ -655,13 +629,13 @@ $(document).ready(function () {
     }
 
     $('#add-component').click(function () {
-        if (idSelectedElemComponentTable !== '' && idMain !== '') {
-            addNewComponentToRecipe(idSelectedElemComponentTable, idMain, '', '')
+        if (idSelectedElemComponentTable !== '' && idCat !== '') {
+            addNewComponentToRecipe(idSelectedElemComponentTable, idCat, '', '')
             clearInputData();
             hideAllParameter();
         } else {
             if (selectedComponents > 2 && selectedComponents < 9) {
-                addNewComponentToRecipe(idSelectedElemComponentTable, idMain, nameComponent, selectedComponents);
+                addNewComponentToRecipe(idSelectedElemComponentTable, idCat, nameComponent, selectedComponents);
                 clearInputData();
                 hideAllParameter();
             } else {
@@ -670,16 +644,16 @@ $(document).ready(function () {
         }
     })
 
-    function addNewComponentToRecipe(idSelectedElemComponentTable, idMain, nameComponent, code) {
+    function addNewComponentToRecipe(idSelectedElemComponentTable, idCat, nameComponent, code) {
         let data = {
             "idComponentTable": idSelectedElemComponentTable,
-            "idMain": idMain,
+            "idCat": idCat,
             "nameSelectedComponent": nameComponent,
             "code": code,
             "outPast": outPast
         }
         $.ajax({
-            url: '/update/add-component-to-recipe',
+            url: '/update/add-component-to-catalog-recipe',
             method: 'post',
             contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(data),
@@ -708,14 +682,14 @@ $(document).ready(function () {
     function replaceAjax() {
         let data = {
             "idComponentTable": idSelectedElemComponentTable,
-            "idMain": idMain,
+            "idCat": idCat,
             "nameSelectedComponent": nameComponent,
             "code": selectedComponents,
             "idSelectedElemRecipeTable": idSelectedElemRecipeTable,
             "outPast": outPast
         }
         $.ajax({
-            url: '/update/replace-selected-recipe-element',
+            url: '/update/replace-selected-catalog-recipe-element',
             method: 'put',
             contentType: 'application/json;charset=utf-8',
             data: JSON.stringify(data),
@@ -771,7 +745,7 @@ $(document).ready(function () {
                     "selectedComponentId": idSelectedElemRecipeTable
                 }
                 $.ajax({
-                    url: '/update/selected-row-of-recipe',
+                    url: '/update/selected-catalog-row-of-recipe',
                     method: 'put',
                     contentType: 'application/json;charset=utf-8',
                     data: JSON.stringify(data),
@@ -809,8 +783,6 @@ $(document).ready(function () {
         $('#part').val('');
         $('#past-date').val('');
         $('#name-prod-input').val('');
-        $('#mass-input-product-in-production').val('');
-        $('#infelicity-mass-input-product-in-production').val('');
     }
 
     $('#save-recipe').click(function () {
@@ -818,36 +790,40 @@ $(document).ready(function () {
         let tempMin = $('#temp-min').val();
         let tempMax = $('#temp-max').val();
         let commonWeight = $('#common-weight-edite-recipe').val();
-        let idMain = $('#id-edite-recipe').text();
-        let control = $('#control').val();
-        let data = {
-            "comment": comment,
-            "tempMin": tempMin,
-            "tempMax": tempMax,
-            "commonWeight": commonWeight,
-            "idMain": idMain,
-            "control": control
-        }
-        $.ajax({
-            url: '/update/save-recipe',
-            method: 'put',
-            contentType: 'application/json;charset=utf-8',
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data) {
-                    alert("Данные успешно обновленны !!!");
-                } else {
+        let control = Number($('#control').val());
+        console.log(control)
+        if (control === 100) {
+            let data = {
+                "comment": comment,
+                "tempMin": tempMin,
+                "tempMax": tempMax,
+                "commonWeight": commonWeight,
+                "idCat": idCat,
+                "control": control
+            }
+            $.ajax({
+                url: '/update/save-catalog-recipe',
+                method: 'put',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data) {
+                        alert("Данные успешно обновленны !!!");
+                    } else {
+                        alert("Возникла ошибка при обновлении данных !!!");
+                    }
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                error: function (xhr, status, error) {
                     alert("Возникла ошибка при обновлении данных !!!");
                 }
-            },
-            beforeSend: function () {
-            },
-            complete: function () {
-            },
-            error: function (xhr, status, error) {
-                alert("Возникла ошибка при обновлении данных !!!");
-            }
-        });
+            });
+        } else {
+            alert("Контроль должен быть равен 100 % !!!");
+        }
     })
 
     function checkSequenceNumber(data, sequenceNumber) {
@@ -890,94 +866,4 @@ $(document).ready(function () {
         $('#error-message').text("Этап не может быть равен 0  !!!");
         $('#error-message').show();
     }
-
-    function addPropertyReadOnlyCode1() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-        $('#percent-input').attr('readonly', true);
-        $('#mass-input').attr('readonly', true);
-        $('#infelicity-percent-input').attr('readonly', true);
-        $('#infelicity-mass-input').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyCode1() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-        $('#percent-input').attr('readonly', false);
-        $('#mass-input').attr('readonly', false);
-        $('#infelicity-percent-input').attr('readonly', false);
-        $('#infelicity-mass-input').attr('readonly', false);
-    }
-
-    function addPropertyReadOnlyCode2() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-        $('#percent-input').attr('readonly', true);
-        $('#mass-input').attr('readonly', true);
-        $('#infelicity-percent-input').attr('readonly', true);
-        $('#infelicity-mass-input').attr('readonly', true);
-        $('#part').attr('readonly', true);
-        $('#past-date').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyCode2() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-        $('#percent-input').attr('readonly', false);
-        $('#mass-input').attr('readonly', false);
-        $('#infelicity-percent-input').attr('readonly', false);
-        $('#infelicity-mass-input').attr('readonly', false);
-        $('#part').attr('readonly', false);
-        $('#past-date').attr('readonly', false);
-    }
-
-    function addPropertyReadOnlyCode6() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-        $('#mass-input').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyCode6() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-        $('#mass-input').attr('readonly', false);
-    }
-
-    function addPropertyReadOnlyCode4() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-        $('#filter-input').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyCode4() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-        $('#filter-input').attr('readonly', false);
-    }
-
-    function addPropertyReadOnlyCode8() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-        $('#mixing-input').attr('readonly', true);
-        $('#mixing-time-input').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyCode8() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-        $('#mixing-input').attr('readonly', true);
-        $('#mixing-time-input').attr('readonly', true);
-    }
-
-    function addPropertyReadOnlyAnotherCode() {
-        $('#sequence-number-input').attr('readonly', true);
-        $('#stage-input').attr('readonly', true);
-    }
-
-    function removePropertyReadOnlyAnotherCode() {
-        $('#sequence-number-input').attr('readonly', false);
-        $('#stage-input').attr('readonly', false);
-    }
-
-
 })

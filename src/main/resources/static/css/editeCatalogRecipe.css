@@ -1,0 +1,128 @@
+#start-string-edite-recipe {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#main-container-edite-recipe {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#edite-recipe-head-brend {
+    width: 30%;
+}
+
+#edite-recipe-head-date-create {
+    width: 65%;
+}
+
+#edite-recipe-head-name-prod {
+    width: 98.5%;
+}
+
+#left-container-head-edite-recipe {
+    width: 35%;
+}
+
+#middle-container-head-edite-recipe {
+    width: 20%;
+}
+
+#right-container-head-edite-recipe {
+    width: 20%;
+}
+
+#middle-container-edite-recipe {
+    margin-top: 15px;
+}
+
+#table-recipe-container {
+    width: 50%;
+}
+
+#table-component-container {
+    width: 50%;
+}
+
+#table-recipe-container {
+    width: 50%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+
+#start-string-recipe-table {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#remove-component-from-recipe {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#table-component-container {
+    width: 50%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+
+#start-string-component-table {
+    background-color: #10a9f2;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#component-table_length {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#component-table_info {
+    margin-left: 10px;
+}
+
+.input-selected-row-information {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+#edite-recipe-table_wrapper {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#component-table_wrapper {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#second-row-middle-edite-recipe {
+    border-width: 0 0 2px 0;
+    background-color: #666666;
+    border-style: solid;
+}
+

@@ -223,16 +223,14 @@ $(document).ready(function () {
         if (idSelectedCatalogTable === '') {
             if (brend !== '' && nameProd !== '' && weight !== '') {
                 let data = {
-                    "brend" : brend,
-                    "nameprod" : nameProd,
-                    "mass" : weight,
-                    "datecr" : dateCreate,
-                    "percent" : percent,
-                    "tempprodmin" : tempprodmin,
-                    "tempprodmax" : tempprodmax
+                    "brend": brend,
+                    "nameprod": nameProd,
+                    "mass": weight,
+                    "datecr": dateCreate,
+                    "percent": percent,
+                    "tempprodmin": tempprodmin,
+                    "tempprodmax": tempprodmax
                 }
-
-                console.log(data)
                 $.ajax({
                     url: '/update/add-new-recipe',
                     method: 'put',
@@ -262,7 +260,20 @@ $(document).ready(function () {
         } else {
             alert("Для редактирования продукта нажмите кнопку 'Сохранить' !!!");
         }
+    })
 
+    $('#directory-editor').click(function () {
+        let url = './edite-recipe-catalog-page';
+        window.open(url, '_blank');
+    })
+
+    $('#edit-recipe').click(function () {
+        if (idSelectedCatalogTable !== '') {
+            let url = './edite-recipe-catalog-page?idCat=' + idSelectedCatalogTable;
+            window.open(url, '_blank');
+        } else {
+            alert("Вы не выбрали ни одной записи !!!");
+        }
     })
 
 

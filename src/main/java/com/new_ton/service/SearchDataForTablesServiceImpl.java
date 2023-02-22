@@ -1,11 +1,10 @@
 package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataResponseDto;
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableRequestDto;
+import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.entities.CatpastEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -155,15 +154,44 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             EditeRecipeCatalogTableResponseDto editeRecipeCatalogTableResponseDto = new EditeRecipeCatalogTableResponseDto();
             Pageable pageable = PageRequest.of(editeRecipeComponentTableRequestDto.getStart() / editeRecipeComponentTableRequestDto.getLength(), editeRecipeComponentTableRequestDto.getLength(), Sort.by("id").ascending());
 
-            Page<EditeRecipeComponentTableDto> editeRecipeComponentTableDtoPage;
+            Page<EditeRecipeComponentTableDto> editeRecipeComponentTableDtoPage = null;
 
-            if (editeRecipeComponentTableRequestDto.getFindComponent().equals("")) {
+            Page<CatpastEntity> catpastEntityPage = null;
+
+            if (editeRecipeComponentTableRequestDto.getFindComponent().equals("") && editeRecipeComponentTableRequestDto.getCodeSearch() != 9) {
                 editeRecipeComponentTableDtoPage = searchDataForTablesDao.getDataForEditeRecipeComponentTable(editeRecipeComponentTableRequestDto.getCodeSearch(), pageable);
-            } else {
+                editeRecipeCatalogTableResponseDto.setRecordsTotal(editeRecipeComponentTableDtoPage.getTotalElements());
+                editeRecipeCatalogTableResponseDto.setRecordsFiltered(editeRecipeComponentTableDtoPage.getTotalElements());
+            }
+            if (!editeRecipeComponentTableRequestDto.getFindComponent().equals("") && editeRecipeComponentTableRequestDto.getCodeSearch() != 9) {
                 editeRecipeComponentTableDtoPage = searchDataForTablesDao.getDataForEditeRecipeComponentTableWithSearch(editeRecipeComponentTableRequestDto.getCodeSearch(), editeRecipeComponentTableRequestDto.getFindComponent(), pageable);
+                editeRecipeCatalogTableResponseDto.setRecordsTotal(editeRecipeComponentTableDtoPage.getTotalElements());
+                editeRecipeCatalogTableResponseDto.setRecordsFiltered(editeRecipeComponentTableDtoPage.getTotalElements());
             }
 
-            List<EditeRecipeComponentTableDto> editeRecipeComponentTableDtoList = editeRecipeComponentTableDtoPage.toList();
+            if (editeRecipeComponentTableRequestDto.getFindComponent().equals("") && editeRecipeComponentTableRequestDto.getCodeSearch() == 9) {
+                catpastEntityPage = searchDataForTablesDao.getDataForEditeRecipeComponentTablePast(pageable);
+                editeRecipeCatalogTableResponseDto.setRecordsTotal(catpastEntityPage.getTotalElements());
+                editeRecipeCatalogTableResponseDto.setRecordsFiltered(catpastEntityPage.getTotalElements());
+            }
+
+            if (!editeRecipeComponentTableRequestDto.getFindComponent().equals("") && editeRecipeComponentTableRequestDto.getCodeSearch() == 9) {
+                catpastEntityPage = searchDataForTablesDao.getDataForEditeRecipeComponentTableWithSearchPastName(editeRecipeComponentTableRequestDto.getFindComponent(), pageable);
+                editeRecipeCatalogTableResponseDto.setRecordsTotal(catpastEntityPage.getTotalElements());
+                editeRecipeCatalogTableResponseDto.setRecordsFiltered(catpastEntityPage.getTotalElements());
+            }
+
+
+            List<EditeRecipeComponentTableDto> editeRecipeComponentTableDtoList;
+
+            if (editeRecipeComponentTableRequestDto.getCodeSearch() != 9) {
+                editeRecipeComponentTableDtoList = editeRecipeComponentTableDtoPage.toList();
+            } else {
+                editeRecipeComponentTableDtoList = catpastEntityPage.toList().stream().map(elem -> {
+                    return new EditeRecipeComponentTableDto(elem.getId(), elem.getDate(), elem.getNamepast());
+                }).collect(Collectors.toList());
+            }
+
             editeRecipeComponentTableDtoList.stream().peek(elem -> {
                 if (elem.getDate() != null) {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -172,10 +200,9 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
                 }
             }).collect(Collectors.toList());
 
+
             editeRecipeCatalogTableResponseDto.setData(editeRecipeComponentTableDtoList);
             editeRecipeCatalogTableResponseDto.setDraw(editeRecipeComponentTableRequestDto.getDraw());
-            editeRecipeCatalogTableResponseDto.setRecordsTotal(editeRecipeComponentTableDtoPage.getTotalElements());
-            editeRecipeCatalogTableResponseDto.setRecordsFiltered(editeRecipeComponentTableDtoPage.getTotalElements());
             return editeRecipeCatalogTableResponseDto;
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataForEditeRecipeComponentTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
@@ -250,6 +277,38 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             return accountManagerTableDataResponseDto;
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataForAccountManagerTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public EditeCatalogRecipeResponseDto getDataForEditeCatalogRecipe(EditeRecipeCatalogTableRequestDto editeRecipeCatalogTableRequestDto) {
+        try {
+            List<EditeCatalogRecipeTableDto> editeCatalogRecipeTableDtos = searchDataForTablesDao.getDataForEditeCatalogTable(editeRecipeCatalogTableRequestDto.getIdCat());
+            EditeCatalogRecipeResponseDto editeCatalogRecipeResponseDto = new EditeCatalogRecipeResponseDto();
+            editeCatalogRecipeResponseDto.setDraw(editeRecipeCatalogTableRequestDto.getDraw());
+            editeCatalogRecipeResponseDto.setData(editeCatalogRecipeTableDtos);
+            return editeCatalogRecipeResponseDto;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForEditeCatalogRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id) {
+        try {
+            GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeTableResponseDto = searchDataForTablesDao.getDataForSelectedRowEditeRecipeCatalogTable(id);
+            if (getDataForSelectedRowEditeRecipeTableResponseDto.getPastdate() != null) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat timeFormat = new SimpleDateFormat("hh:mm");
+                String strDate = dateFormat.format(getDataForSelectedRowEditeRecipeTableResponseDto.getPastdate());
+                String strTime = timeFormat.format(getDataForSelectedRowEditeRecipeTableResponseDto.getPastdate());
+                getDataForSelectedRowEditeRecipeTableResponseDto.setDateString(strDate + "T" + strTime);
+            }
+            return getDataForSelectedRowEditeRecipeTableResponseDto;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForSelectedRowEditeRecipeCatalogTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

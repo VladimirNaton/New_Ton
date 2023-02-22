@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -40,4 +41,11 @@ public class CatrecEntity {
     private Integer turnmix;
     @Column(name = "timemix")
     private Integer timemix;
+    @Column(name = "filter")
+    private Integer filter;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "pastdate")
+    private Date pastdate;
+    @Column(name = "pastpart")
+    private Integer pastpart;
 }

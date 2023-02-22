@@ -1,6 +1,8 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
+import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -30,6 +33,8 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     private final CatrecRepository catrecRepository;
 
     private final CatrawRepository catrawRepository;
+
+    private final CatpastRepository catpastRepository;
 
     @Override
     public Page<CatalogDtoByLeftTable> getDataForTechnologistLeftTable(Pageable pageable) {
@@ -229,5 +234,91 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
             log.error("Error searchDataForTablesDaoImpl getDataForAccountManagerTableWithParam : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return Page.empty();
+    }
+
+    @Override
+    public List<EditeCatalogRecipeTableDto> getDataForEditeCatalogTable(Integer idCat) {
+        try {
+            List<EditeCatalogRecipeTableDto> catalogRecipeTableDtos = catrecRepository.findAllByIdCat(idCat)
+                    .stream()
+                    .map(elem -> {
+                        EditeCatalogRecipeTableDto editeCatalogRecipeTableDto = new EditeCatalogRecipeTableDto(elem.getId(), elem.getN(), elem.getStage(), elem.getCode(), elem.getNameraw(), elem.getPercent(), elem.getMass(), elem.getDevper(), elem.getDevmass());
+                        return editeCatalogRecipeTableDto;
+                    }).collect(Collectors.toList());
+            return catalogRecipeTableDtos;
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForEditeCatalogTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Page<CatpastEntity> getDataForEditeRecipeComponentTablePast(Pageable pageable) {
+        try {
+            return catpastRepository.findAllBy(CatpastEntity.class, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForEditeRecipeComponentTablePast : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
+
+    @Override
+    public Page<CatpastEntity> getDataForEditeRecipeComponentTableWithSearchPastName(String findComponent, Pageable pageable) {
+        try {
+            return catpastRepository.findAllByNamepastIgnoreCase(findComponent, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForEditeRecipeComponentTableWithSearchPastName : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
+
+    @Override
+    public Optional<CatpastEntity> getCatpastEntityById(Integer id) {
+        try {
+            return catpastRepository.findById(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getCatpastEntityById : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Integer selectMaxSequenceNumberForCatalog(Integer idCat) {
+        try {
+            return catrecRepository.getMaxSequenceNumber(idCat);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl selectMaxSequenceNumberForCatalog : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<CatrecEntity> getAllByIdAndSequenceNumberCatalog(Integer idCat, Integer sequenceNumber) {
+        try {
+            return catrecRepository.selectAllByIdAndSequenceNumber(idCat, sequenceNumber);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getAllByIdAndSequenceNumberCatalog : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<CatrecEntity> getCatrecEntityById(Integer id) {
+        try {
+            return catrecRepository.findById(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getCatrecEntityById : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id) {
+        try {
+            return catrecRepository.getDataForSelectedRowEditeCatalogRecipeTable(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForSelectedRowEditeRecipeTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
     }
 }

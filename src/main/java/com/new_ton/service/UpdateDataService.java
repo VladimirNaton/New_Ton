@@ -1,7 +1,9 @@
 package com.new_ton.service;
 
+import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecipeDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
 
 public interface UpdateDataService {
     boolean moveCatalogRowToMain(Integer id);
@@ -29,4 +31,14 @@ public interface UpdateDataService {
     boolean deleteSelectedCatalogRow(Integer id);
 
     boolean addNewRecipe(CatalogDtoSelectedRow catalogDtoSelectedRow);
+
+    boolean addComponentToCatalogRecipe(AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToCatalogRecipeDto);
+
+    boolean deleteSelectedRowFromRecipeCatalogTable(Integer id);
+
+    boolean replaceSelectedCatalogRecipeElement(AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToCatalogRecipeDto);
+
+    boolean updateSelectedCatalogRowOfRecipe(UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto);
+
+    boolean saveCatalogRecipe(SaveCatalogRecipeDto saveCatalogRecipeDto);
 }

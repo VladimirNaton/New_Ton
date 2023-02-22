@@ -1,6 +1,8 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
+import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import org.springframework.data.domain.Page;
@@ -50,4 +52,20 @@ public interface SearchDataForTablesDao {
     Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithoutParam(Pageable pageable);
 
     Page<AccountManagerTableDataDto> getDataForAccountManagerTableWithParam(Pageable pageable, String searchValue);
+
+    List<EditeCatalogRecipeTableDto> getDataForEditeCatalogTable(Integer idCat);
+
+    Page<CatpastEntity> getDataForEditeRecipeComponentTablePast(Pageable pageable);
+
+    Page<CatpastEntity> getDataForEditeRecipeComponentTableWithSearchPastName(String findComponent, Pageable pageable);
+
+    Optional<CatpastEntity> getCatpastEntityById(Integer id);
+
+    Integer selectMaxSequenceNumberForCatalog(Integer idCat);
+
+    List<CatrecEntity> getAllByIdAndSequenceNumberCatalog(Integer idCat, Integer sequenceNumber);
+
+    Optional<CatrecEntity> getCatrecEntityById(Integer id);
+
+    GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id);
 }

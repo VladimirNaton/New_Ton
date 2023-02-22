@@ -14,5 +14,4 @@ public interface CatrawRepository extends JpaRepository<CatrawEntity, Integer> {
     @Query("select new com.new_ton.domain.dto.technologistdto.EditeRecipeComponentTableDto(cat.id , cat.date, cat.nameraw) from CatrawEntity cat where cat.code =?1 and LOWER(cat.nameraw) LIKE LOWER(CONCAT('%', ?2,'%') )")
     Page<EditeRecipeComponentTableDto> getDataForEditeRecipeComponentTableWithSearch(Integer code, String searchComponent, Pageable pageable);
 
-
 }

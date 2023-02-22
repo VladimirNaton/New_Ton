@@ -1,7 +1,9 @@
 package com.new_ton.controller;
 
+import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecipeDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
 import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -91,6 +93,36 @@ public class UpdateDataController {
     @PutMapping("/add-new-recipe")
     public boolean addNewRecipe(@RequestBody CatalogDtoSelectedRow catalogDtoSelectedRow) {
         return updateDataService.addNewRecipe(catalogDtoSelectedRow);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @PostMapping("/add-component-to-catalog-recipe")
+    public boolean addComponentToCatalogRecipe(@RequestBody AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToRecipeRequestDto) {
+        return updateDataService.addComponentToCatalogRecipe(addOrReplaceComponentToRecipeRequestDto);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @DeleteMapping("/delete-selected-row-from-recipe-catalog-table/{id}")
+    public boolean deleteSelectedRowFromRecipeCatalogTable(@PathVariable(name = "id") Integer id) {
+        return updateDataService.deleteSelectedRowFromRecipeCatalogTable(id);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @PutMapping("/replace-selected-catalog-recipe-element")
+    public boolean replaceSelectedRecipeCatalogElement(@RequestBody AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToRecipeRequestDto) {
+        return updateDataService.replaceSelectedCatalogRecipeElement(addOrReplaceComponentToRecipeRequestDto);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @PutMapping("/selected-catalog-row-of-recipe")
+    public boolean updateSelectedCatalogRowOfRecipe(@RequestBody UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto) {
+        return updateDataService.updateSelectedCatalogRowOfRecipe(updateSelectedRowOfRecipeDto);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @PutMapping("/save-catalog-recipe")
+    public boolean saveCatalogRecipe(@RequestBody SaveCatalogRecipeDto catalogRecipeDto) {
+        return updateDataService.saveCatalogRecipe(catalogRecipeDto);
     }
 
 

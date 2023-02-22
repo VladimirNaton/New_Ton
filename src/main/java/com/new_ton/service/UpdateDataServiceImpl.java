@@ -2,7 +2,9 @@ package com.new_ton.service;
 
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
+import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecipeDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
+import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import lombok.RequiredArgsConstructor;
@@ -152,7 +154,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
                 rawEntity.setN(1);
             }
 
-            rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date);
+            rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date, addOrReplaceComponentToRecipeRequestDto.isOutPast());
 
             rawEntity.setIdMain(addOrReplaceComponentToRecipeRequestDto.getIdMain());
             rawEntity.setStage(0);
@@ -192,7 +194,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             if (rawEntityOptional.isPresent()) {
                 RawEntity rawEntity = rawEntityOptional.get();
 
-                rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date);
+                rawEntity = addSomeParameter(addOrReplaceComponentToRecipeRequestDto.getCode(), addOrReplaceComponentToRecipeRequestDto.getIdComponentTable(), rawEntity, addOrReplaceComponentToRecipeRequestDto.getNameSelectedComponent(), date, addOrReplaceComponentToRecipeRequestDto.isOutPast());
 
                 rawEntity.setIdMain(addOrReplaceComponentToRecipeRequestDto.getIdMain());
                 rawEntity.setStage(0);
@@ -224,16 +226,27 @@ public class UpdateDataServiceImpl implements UpdateDataService {
         return false;
     }
 
-    private RawEntity addSomeParameter(Integer code, Integer idComponentTable, RawEntity rawEntity, String nameSelectedComponent, Date date) {
-        if (code == null || code < 3) {
-            Optional<CatrawEntity> catrawEntityOptional = searchDataForTablesDao.getCatrawEntityById(idComponentTable);
-            if (catrawEntityOptional.isPresent()) {
-                CatrawEntity catrawEntity = catrawEntityOptional.get();
-                rawEntity.setNameraw(catrawEntity.getNameraw());
-                rawEntity.setCode(catrawEntity.getCode());
-                rawEntity.setPastpart(catrawEntity.getPart());
-                rawEntity.setPastdate(catrawEntity.getDate());
+    private RawEntity addSomeParameter(Integer code, Integer idComponentTable, RawEntity rawEntity, String nameSelectedComponent, Date date, boolean outerPast) {
+        if (code == null || code < 3 || code == 9) {
+            if (!outerPast) {
+                Optional<CatrawEntity> catrawEntityOptional = searchDataForTablesDao.getCatrawEntityById(idComponentTable);
+                if (catrawEntityOptional.isPresent()) {
+                    CatrawEntity catrawEntity = catrawEntityOptional.get();
+                    rawEntity.setNameraw(catrawEntity.getNameraw());
+                    rawEntity.setCode(catrawEntity.getCode());
+                    rawEntity.setPastpart(catrawEntity.getPart());
+                    rawEntity.setPastdate(catrawEntity.getDate());
+                }
+            } else {
+                searchDataForTablesDao.getCatpastEntityById(idComponentTable)
+                        .ifPresent(elem -> {
+                            rawEntity.setNameraw(elem.getNamepast());
+                            rawEntity.setCode(2);
+                            rawEntity.setPastpart(elem.getPart());
+                            rawEntity.setPastdate(elem.getDate());
+                        });
             }
+
         } else {
             rawEntity.setNameraw(nameSelectedComponent);
             rawEntity.setCode(code);
@@ -480,4 +493,191 @@ public class UpdateDataServiceImpl implements UpdateDataService {
         }
         return false;
     }
+
+
+    @Transactional
+    @Override
+    public boolean addComponentToCatalogRecipe(AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToCatalogRecipeDto) {
+        try {
+            Calendar calendar = new GregorianCalendar(1111, 10, 11, 11, 11, 11);
+            Date date = calendar.getTime();
+            Integer maxSequenceNumber = null;
+            maxSequenceNumber = searchDataForTablesDao.selectMaxSequenceNumberForCatalog(addOrReplaceComponentToCatalogRecipeDto.getIdCat());
+            CatrecEntity recEntity = new CatrecEntity();
+            if (maxSequenceNumber != null) {
+                recEntity.setN(++maxSequenceNumber);
+            } else {
+                recEntity.setN(1);
+            }
+
+            recEntity = addSomeCatalogParameter(addOrReplaceComponentToCatalogRecipeDto.getCode(), addOrReplaceComponentToCatalogRecipeDto.getIdComponentTable(), recEntity, addOrReplaceComponentToCatalogRecipeDto.getNameSelectedComponent(), date, addOrReplaceComponentToCatalogRecipeDto.isOutPast());
+
+            recEntity.setIdCat(addOrReplaceComponentToCatalogRecipeDto.getIdCat());
+            recEntity.setStage(0);
+            recEntity.setPercent(0.0);
+            recEntity.setMass(0.0);
+            recEntity.setDevper(0.0);
+            recEntity.setDevmass(0.0);
+            recEntity.setTurnmix(0);
+            recEntity.setTimemix(0);
+            recEntity.setFilter(0);
+            return updateDataDao.saveNewRowToCatrecTable(recEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl addComponentToCatalogRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    private CatrecEntity addSomeCatalogParameter(Integer code, Integer idComponentTable, CatrecEntity recEntity, String nameSelectedComponent, Date date, boolean outerPast) {
+        if (code == null || code < 3 || code == 9) {
+            if (!outerPast) {
+                Optional<CatrawEntity> catrawEntityOptional = searchDataForTablesDao.getCatrawEntityById(idComponentTable);
+                if (catrawEntityOptional.isPresent()) {
+                    CatrawEntity catrawEntity = catrawEntityOptional.get();
+                    recEntity.setNameraw(catrawEntity.getNameraw());
+                    recEntity.setCode(catrawEntity.getCode());
+                    recEntity.setPastpart(catrawEntity.getPart());
+                    recEntity.setPastdate(catrawEntity.getDate());
+                }
+            } else {
+                searchDataForTablesDao.getCatpastEntityById(idComponentTable)
+                        .ifPresent(elem -> {
+                            recEntity.setNameraw(elem.getNamepast());
+                            recEntity.setCode(2);
+                            recEntity.setPastpart(elem.getPart());
+                            recEntity.setPastdate(elem.getDate());
+                        });
+            }
+
+        } else {
+            recEntity.setNameraw(nameSelectedComponent);
+            recEntity.setCode(code);
+            recEntity.setPastpart(0);
+            recEntity.setPastdate(date);
+        }
+        return recEntity;
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteSelectedRowFromRecipeCatalogTable(Integer id) {
+        try {
+            CatrecEntity catrecEntity = updateDataDao.deleteSelectedRowFromCatalogRecipeTable(id);
+            List<CatrecEntity> recEntityList = searchDataForTablesDao.getAllByIdAndSequenceNumberCatalog(catrecEntity.getIdCat(), catrecEntity.getN());
+            recEntityList.stream().peek(elem -> {
+                Integer sequenceNumber = elem.getN();
+                elem.setN(--sequenceNumber);
+            }).collect(Collectors.toList());
+            return updateDataDao.updateCatrecEntityList(recEntityList);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl deleteSelectedRowFromRecipeCatalogTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean replaceSelectedCatalogRecipeElement(AddOrReplaceComponentToCatalogRecipeDto addOrReplaceComponentToCatalogRecipeDto) {
+        try {
+            Calendar calendar = new GregorianCalendar(1111, 10, 11, 11, 11, 11);
+            Date date = calendar.getTime();
+            Optional<CatrecEntity> recEntityOptional = searchDataForTablesDao.getCatrecEntityById(addOrReplaceComponentToCatalogRecipeDto.getIdSelectedElemRecipeTable());
+            if (recEntityOptional.isPresent()) {
+                CatrecEntity catrecEntity = recEntityOptional.get();
+
+                catrecEntity = addSomeCatalogParameter(addOrReplaceComponentToCatalogRecipeDto.getCode(), addOrReplaceComponentToCatalogRecipeDto.getIdComponentTable(), catrecEntity, addOrReplaceComponentToCatalogRecipeDto.getNameSelectedComponent(), date, addOrReplaceComponentToCatalogRecipeDto.isOutPast());
+
+                catrecEntity.setIdCat(addOrReplaceComponentToCatalogRecipeDto.getIdCat());
+                catrecEntity.setStage(0);
+                catrecEntity.setPercent(0.0);
+                catrecEntity.setMass(0.0);
+                catrecEntity.setDevper(0.0);
+                catrecEntity.setDevmass(0.0);
+                catrecEntity.setTurnmix(0);
+                catrecEntity.setTimemix(0);
+                catrecEntity.setFilter(0);
+                return updateDataDao.updateCatrecEntity(catrecEntity);
+            }
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl replaceSelectedCatalogRecipeElement : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean updateSelectedCatalogRowOfRecipe(UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto) {
+        try {
+            searchDataForTablesDao.getCatrecEntityById(updateSelectedRowOfRecipeDto.getSelectedComponentId()).ifPresent(elem -> {
+                if (updateSelectedRowOfRecipeDto.getSequenceNumber() != null) {
+                    elem.setN(updateSelectedRowOfRecipeDto.getSequenceNumber());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getStage() != null) {
+                    elem.setStage(updateSelectedRowOfRecipeDto.getStage());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPercent() != null) {
+                    elem.setPercent(updateSelectedRowOfRecipeDto.getPercent());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMass() != null) {
+                    elem.setMass(updateSelectedRowOfRecipeDto.getMass());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getInfelicityPercent() != null) {
+                    elem.setDevper(updateSelectedRowOfRecipeDto.getInfelicityPercent());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getInfelicityMass() != null) {
+                    elem.setDevmass(updateSelectedRowOfRecipeDto.getInfelicityMass());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMixing() != null) {
+                    elem.setTurnmix(updateSelectedRowOfRecipeDto.getMixing());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getMixingTime() != null) {
+                    elem.setTimemix(updateSelectedRowOfRecipeDto.getMixingTime());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPart() != null) {
+                    elem.setPastpart(updateSelectedRowOfRecipeDto.getPart());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getPastDate() != null) {
+                    elem.setPastdate(updateSelectedRowOfRecipeDto.getPastDate());
+                }
+
+                if (updateSelectedRowOfRecipeDto.getFilter() != null) {
+                    elem.setFilter(updateSelectedRowOfRecipeDto.getFilter());
+                }
+                updateDataDao.updateCatrecEntity(elem);
+            });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateSelectedCatalogRowOfRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean saveCatalogRecipe(SaveCatalogRecipeDto catalogRecipeDto) {
+        try {
+            searchDataForTablesDao.getCatalogEntityById(catalogRecipeDto.getIdCat())
+                    .ifPresent(elem -> {
+                        elem.setTempprodmin(catalogRecipeDto.getTempMin());
+                        elem.setTempprodmax(catalogRecipeDto.getTempMax());
+                        elem.setMass(catalogRecipeDto.getCommonWeight());
+                        elem.setPercent(catalogRecipeDto.getControl());
+                        elem.setDatecr(new Date());
+                        updateDataDao.updateCatalogEntity(elem);
+                    });
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl saveCatalogRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
 }

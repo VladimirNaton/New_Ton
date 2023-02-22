@@ -1,8 +1,7 @@
 package com.new_ton.controller;
 
 
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataResponseDto;
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableRequestDto;
+import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.service.SearchDataForTablesService;
@@ -47,7 +46,7 @@ public class SearchDataForTableController {
         return searchDataForTablesService.getDataForInformationStringEditeRecipe(idProd);
     }
 
-    @Secured("ROLE_TECHNOLOGIST")
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
     @PostMapping("/data-for-edite-recipe-component-table")
     public EditeRecipeCatalogTableResponseDto searchDataForEditeRecipeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto) {
         return searchDataForTablesService.getDataForEditeRecipeComponentTable(editeRecipeTableRequestDto);
@@ -69,6 +68,18 @@ public class SearchDataForTableController {
     @PostMapping("/account-manager-table-data")
     public AccountManagerTableDataResponseDto getDataForAccountManagerTable(AccountManagerTableRequestDto accountManagerTableRequestDto) {
         return searchDataForTablesService.getDataForAccountManagerTable(accountManagerTableRequestDto);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @PostMapping("/data-for-edite-recipe-catalog-table")
+    public EditeCatalogRecipeResponseDto searchDataForEditeRecipeCatalogTable(EditeRecipeCatalogTableRequestDto editeRecipeTableRequestDto) {
+        return searchDataForTablesService.getDataForEditeCatalogRecipe(editeRecipeTableRequestDto);
+    }
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @GetMapping("/get-data-for-selected-row-edite-catalog-recipe-table/{id}")
+    public GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(@PathVariable(name = "id") Integer id) {
+        return searchDataForTablesService.getDataForSelectedRowEditeRecipeCatalogTable(id);
     }
 
 }

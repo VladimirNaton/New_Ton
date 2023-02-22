@@ -1,9 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.entities.CatalogEntity;
-import com.new_ton.domain.entities.CatrecEntity;
-import com.new_ton.domain.entities.MainEntity;
-import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.entities.*;
 import com.new_ton.repository.CatalogRepository;
 import com.new_ton.repository.CatrecRepository;
 import com.new_ton.repository.MainRepository;
@@ -169,6 +166,54 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             catalogRepository.save(catalogEntity);
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl saveNewCatalogRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveNewRowToCatrecTable(CatrecEntity catrecEntity) {
+        try {
+            catrecRepository.save(catrecEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl saveNewRowToRawTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public CatrecEntity deleteSelectedRowFromCatalogRecipeTable(Integer id) {
+        try {
+            Optional<CatrecEntity> catrecEntityOptional = catrecRepository.findById(id);
+            if (catrecEntityOptional.isPresent()) {
+                CatrecEntity catrecEntity = catrecEntityOptional.get();
+                catrecRepository.delete(catrecEntity);
+                return catrecEntity;
+            }
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl deleteSelectedRowFromCatalogRecipeTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateCatrecEntityList(List<CatrecEntity> catrecEntityList) {
+        try {
+            catrecRepository.saveAllAndFlush(catrecEntityList);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateCatrecEntityList : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateCatrecEntity(CatrecEntity catrecEntity) {
+        try {
+            catrecRepository.saveAndFlush(catrecEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateCatrecEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

@@ -106,10 +106,17 @@ public class MainController {
         return "AccountManagerCheckRecipePage";
     }
 
-    @Secured("ROLE_ACCOUNTMANAGER")
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
     @GetMapping("/edite-catalog-page")
     public String getEditeCatalogPage() {
         return "EditeCatalogPage";
+    }
+
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @GetMapping("/edite-recipe-catalog-page")
+    public String getEditeRecipeCatalogPage(@RequestParam String idCat, Model model) {
+        model.addAttribute("idCat", idCat);
+        return "EditeRecipeCatalogPage";
     }
 
 

@@ -10,6 +10,7 @@ $(document).ready(function () {
     let nameComponent = '';
     let sequenceNumberFirstValue = '';
     let errorMessageShow = false;
+    let outPast = false;
 
     idMain = $('#id-edite-recipe').text();
     nameComponent = $("#component-select option:selected").text();
@@ -175,6 +176,7 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '2':
@@ -182,6 +184,7 @@ $(document).ready(function () {
                     showFirstColumn();
                     columnVisible = true;
                 }
+                outPast = false;
                 $('#container-past-edite').show();
                 break;
             case '3':
@@ -189,6 +192,7 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '4':
@@ -196,6 +200,7 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '5':
@@ -203,6 +208,7 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '6':
@@ -210,13 +216,16 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '7':
                 if (columnVisible) {
                     hideFirstColumn();
                     columnVisible = false;
+                    outPast = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
                 break;
             case '8':
@@ -224,7 +233,16 @@ $(document).ready(function () {
                     hideFirstColumn();
                     columnVisible = false;
                 }
+                outPast = false;
                 $('#container-past-edite').hide();
+                break;
+            case '9':
+                if (!columnVisible) {
+                    showFirstColumn();
+                    columnVisible = true;
+                }
+                outPast = true;
+                $('#container-past-edite').show();
                 break;
         }
         $('#find-component-input').val('');
@@ -346,7 +364,7 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data) {
                         editeRecipeTable.ajax.reload();
-                        idSelectedElemComponentTable = '';
+                        idSelectedElemRecipeTable = '';
                         clearInputData();
                         hideAllParameter();
                     }
@@ -634,7 +652,8 @@ $(document).ready(function () {
             "idComponentTable": idSelectedElemComponentTable,
             "idMain": idMain,
             "nameSelectedComponent": nameComponent,
-            "code": code
+            "code": code,
+            "outPast": outPast
         }
         $.ajax({
             url: '/update/add-component-to-recipe',
@@ -669,7 +688,8 @@ $(document).ready(function () {
             "idMain": idMain,
             "nameSelectedComponent": nameComponent,
             "code": selectedComponents,
-            "idSelectedElemRecipeTable": idSelectedElemRecipeTable
+            "idSelectedElemRecipeTable": idSelectedElemRecipeTable,
+            "outPast": outPast
         }
         $.ajax({
             url: '/update/replace-selected-recipe-element',
@@ -678,6 +698,7 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             success: function (data) {
                 if (data) {
+                    idSelectedElemRecipeTable = '';
                     editeRecipeTable.ajax.reload(checkCommonPercents());
                     clearInputData();
                     hideAllParameter();
