@@ -82,4 +82,15 @@ public class SearchDataForTableController {
         return searchDataForTablesService.getDataForSelectedRowEditeRecipeCatalogTable(id);
     }
 
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PostMapping("/data-for-dissolvers-table")
+    public EditeDissolversResponceDto getDataForDissolversTable(EditeDissolversTableRequestDto editeDissolversTableRequestDto) {
+        return searchDataForTablesService.getDataForDissolversTable(editeDissolversTableRequestDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @GetMapping ("/get-data-for-selected-row-dissolvers-table/{id}")
+    public CateqDto getDataForSelectedRowDissolversTable(@PathVariable(name = "id") Integer id) {
+        return searchDataForTablesService.getDataForSelectedRowDissolversTable(id);
+    }
 }

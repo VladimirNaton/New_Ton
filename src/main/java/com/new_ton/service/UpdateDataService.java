@@ -4,6 +4,9 @@ import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecip
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
+import com.new_ton.domain.entities.CreateCateqDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UpdateDataService {
     boolean moveCatalogRowToMain(Integer id);
@@ -41,4 +44,10 @@ public interface UpdateDataService {
     boolean updateSelectedCatalogRowOfRecipe(UpdateSelectedRowOfRecipeDto updateSelectedRowOfRecipeDto);
 
     boolean saveCatalogRecipe(SaveCatalogRecipeDto saveCatalogRecipeDto);
+
+    boolean deleteSelectedDissolverRow(Integer id);
+
+    boolean createNewCateqRow(CreateCateqDto cateqDto);
+
+    boolean updateCateqRow(CreateCateqDto cateqDto);
 }

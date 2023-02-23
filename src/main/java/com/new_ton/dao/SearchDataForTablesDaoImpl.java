@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.accountmanager.CateqDto;
 import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
 import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
 import com.new_ton.domain.dto.technologistdto.*;
@@ -35,6 +36,8 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     private final CatrawRepository catrawRepository;
 
     private final CatpastRepository catpastRepository;
+
+    private final CateqRepository cateqRepository;
 
     @Override
     public Page<CatalogDtoByLeftTable> getDataForTechnologistLeftTable(Pageable pageable) {
@@ -318,6 +321,26 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
             return catrecRepository.getDataForSelectedRowEditeCatalogRecipeTable(id);
         } catch (Exception e) {
             log.error("Error searchDataForTablesDaoImpl getDataForSelectedRowEditeRecipeTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<CateqDto> getDataForDissolversTable() {
+        try {
+            return cateqRepository.findAllBy();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public Optional<CateqEntity> getDataForSelectedRowDissolversTable(Integer id) {
+        try{
+            return cateqRepository.findById(id);
+        } catch (Exception e){
+            log.error("Error searchDataForTablesDaoImpl getDataForSelectedRowDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

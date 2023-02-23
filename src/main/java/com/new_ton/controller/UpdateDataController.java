@@ -4,6 +4,7 @@ import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecip
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
+import com.new_ton.domain.entities.CreateCateqDto;
 import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -123,6 +124,24 @@ public class UpdateDataController {
     @PutMapping("/save-catalog-recipe")
     public boolean saveCatalogRecipe(@RequestBody SaveCatalogRecipeDto catalogRecipeDto) {
         return updateDataService.saveCatalogRecipe(catalogRecipeDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @DeleteMapping("/delete-selected-dissolver-row/{id}")
+    public boolean deleteSelectedDissolverRow(@PathVariable(name = "id") Integer id) {
+        return updateDataService.deleteSelectedDissolverRow(id);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PostMapping("/create-new-cateq-row")
+    public boolean createNewCateqRow(@RequestBody CreateCateqDto cateqDto) {
+        return updateDataService.createNewCateqRow(cateqDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PutMapping("/update-cateq-row")
+    public boolean updateCateqRow(@RequestBody CreateCateqDto cateqDto) {
+        return updateDataService.updateCateqRow(cateqDto);
     }
 
 

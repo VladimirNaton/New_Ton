@@ -680,4 +680,40 @@ public class UpdateDataServiceImpl implements UpdateDataService {
         return false;
     }
 
+    @Override
+    public boolean deleteSelectedDissolverRow(Integer id) {
+        try {
+            return updateDataDao.deleteSelectedDissolverRow(id);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl deleteSelectedDissolverRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createNewCateqRow(CreateCateqDto cateqDto) {
+        try {
+            CateqEntity cateqEntity = new CateqEntity();
+            cateqEntity.setEq(cateqDto.getEq());
+            cateqEntity.setCode(cateqDto.getCode());
+            return updateDataDao.createNewCateqRow(cateqEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl createNewCateqRow ; {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateCateqRow(CreateCateqDto cateqDto) {
+        try {
+            CateqEntity cateqEntity = new CateqEntity();
+            cateqEntity.setEq(cateqDto.getEq());
+            cateqEntity.setCode(cateqDto.getCode());
+            cateqEntity.setId(cateqDto.getId());
+            return updateDataDao.updateCateqRow(cateqEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateCateqRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
 }

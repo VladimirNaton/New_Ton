@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Dissolvers Page</title>
+    <title>Edite Catalog Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editdissolvers.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editdissolvers.js}"></script>
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="head-dissolvers-page">
+    <div id="start-string-dissolvers-page">
+        <div style="width: 40%; font-weight: bold">Операционист</div>
+        <div style="width: 60%; font-weight: bold">Страница редактирования справочника</div>
+    </div>
+    <div id="information-row-container" style="width: 44.5%; display: flex; flex-wrap: nowrap">
+        <input type="text" id="information-row-name" class="input-border-style" style="width: 45%"
+               placeholder="Название">
+        <input type="text" id="information-row-code" class="input-border-style" style="width: 10%; margin-left: 10px"
+               placeholder="Код">
+        <button id="save-item" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px">Сохранить</button>
+        <button id="add-item" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px">Добавить</button>
+        <button id="delete-item" class="btn btn-outline-secondary btn-sm" style="margin-left: 10px">Удалить</button>
+    </div>
+</div>
+<div id="body-container-dissolvers-page">
+    <div id="start-string-dissolvers-table">Оборудование</div>
+    <div id="container-table">
+        <table id="dissolvers-table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>nameraw</th>
+                <th>code</th>
+            </thead>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

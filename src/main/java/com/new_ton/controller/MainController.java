@@ -119,6 +119,15 @@ public class MainController {
         return "EditeRecipeCatalogPage";
     }
 
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @GetMapping("/edite-dissolvers")
+    public String getDissolvers() {
+        return "EditeDissolversPage";
+    }
+
+
+
+
 
     private String redirectRole(String userRole) {
         if (userRole.equals("ROLE_TECHNOLOGIST")) {

@@ -27,4 +27,8 @@ public interface SearchDataForTablesService {
     EditeCatalogRecipeResponseDto getDataForEditeCatalogRecipe(EditeRecipeCatalogTableRequestDto editeRecipeCatalogTableRequestDto);
 
     GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id);
+
+    EditeDissolversResponceDto getDataForDissolversTable(EditeDissolversTableRequestDto editeDissolversTableRequestDto);
+
+    CateqDto getDataForSelectedRowDissolversTable(Integer id);
 }

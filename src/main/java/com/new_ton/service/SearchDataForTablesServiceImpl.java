@@ -1,9 +1,11 @@
 package com.new_ton.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.entities.CateqEntity;
 import com.new_ton.domain.entities.CatpastEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 
@@ -309,6 +313,35 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             return getDataForSelectedRowEditeRecipeTableResponseDto;
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataForSelectedRowEditeRecipeCatalogTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public EditeDissolversResponceDto getDataForDissolversTable(EditeDissolversTableRequestDto editeDissolversTableRequestDto) {
+        try {
+            List<CateqDto> cateqDtos = searchDataForTablesDao.getDataForDissolversTable();
+            EditeDissolversResponceDto editeDissolversResponceDto = new EditeDissolversResponceDto();
+            editeDissolversResponceDto.setData(cateqDtos);
+            editeDissolversResponceDto.setDraw(editeDissolversTableRequestDto.getDraw());
+            return editeDissolversResponceDto;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public CateqDto getDataForSelectedRowDissolversTable(Integer id) {
+        try {
+            Optional<CateqEntity> cateqEntityOptional = searchDataForTablesDao.getDataForSelectedRowDissolversTable(id);
+            if (cateqEntityOptional.isPresent()) {
+                CateqEntity cateqEntity = cateqEntityOptional.get();
+                return new CateqDto(cateqEntity.getId(), cateqEntity.getEq(), cateqEntity.getCode());
+            }
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForSelectedRowDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

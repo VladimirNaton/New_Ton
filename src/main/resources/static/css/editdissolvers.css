@@ -1,0 +1,43 @@
+#start-string-dissolvers-page {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-left: 10px;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#information-row-container {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+#body-container-dissolvers-page {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px 0 0 0;
+
+}
+
+#container-table{
+    text-align: left;
+    width: 45%;
+}
+
+#start-string-dissolvers-table {
+    background-color: #10a9f2;
+    margin-right: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+    width: 45%;
+}

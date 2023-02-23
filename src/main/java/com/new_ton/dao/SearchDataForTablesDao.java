@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
+import com.new_ton.domain.dto.accountmanager.CateqDto;
 import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
 import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
 import com.new_ton.domain.dto.technologistdto.*;
@@ -68,4 +69,8 @@ public interface SearchDataForTablesDao {
     Optional<CatrecEntity> getCatrecEntityById(Integer id);
 
     GetDataForSelectedRowEditeCatalogRecipeTableResponseDto getDataForSelectedRowEditeRecipeCatalogTable(Integer id);
+
+    List<CateqDto> getDataForDissolversTable();
+
+    Optional<CateqEntity> getDataForSelectedRowDissolversTable(Integer id);
 }

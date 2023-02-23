@@ -1,9 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.entities.CatalogEntity;
-import com.new_ton.domain.entities.CatrecEntity;
-import com.new_ton.domain.entities.MainEntity;
-import com.new_ton.domain.entities.RawEntity;
+import com.new_ton.domain.entities.*;
 
 import java.util.List;
 
@@ -41,4 +38,10 @@ public interface UpdateDataDao {
     boolean updateCatrecEntityList(List<CatrecEntity> catrecEntityList);
 
     boolean updateCatrecEntity(CatrecEntity catrecEntity);
+
+    boolean deleteSelectedDissolverRow(Integer id);
+
+    boolean createNewCateqRow(CateqEntity cateqEntity);
+
+    boolean updateCateqRow(CateqEntity cateqEntity);
 }

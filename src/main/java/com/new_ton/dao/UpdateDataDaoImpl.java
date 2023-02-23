@@ -1,10 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.entities.*;
-import com.new_ton.repository.CatalogRepository;
-import com.new_ton.repository.CatrecRepository;
-import com.new_ton.repository.MainRepository;
-import com.new_ton.repository.RawRepository;
+import com.new_ton.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -23,6 +20,7 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
     private final MainRepository mainRepository;
     private final CatrecRepository catrecRepository;
     public final CatalogRepository catalogRepository;
+    private final CateqRepository cateqRepository;
 
     @Override
     public Integer saveNewMainRow(MainEntity mainEntity) {
@@ -214,6 +212,40 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl updateCatrecEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteSelectedDissolverRow(Integer id) {
+        try {
+            cateqRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl deleteSelectedDissolverRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createNewCateqRow(CateqEntity cateqEntity) {
+        try {
+            cateqRepository.save(cateqEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl createNewCateqRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateCateqRow(CateqEntity cateqEntity) {
+        try {
+            cateqRepository.saveAndFlush(cateqEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateCateqRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }
