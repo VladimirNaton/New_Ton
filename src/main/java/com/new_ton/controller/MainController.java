@@ -126,7 +126,11 @@ public class MainController {
     }
 
 
-
+    @Secured({"ROLE_ACCOUNTMANAGER", "ROLE_TECHNOLOGIST"})
+    @GetMapping("/edite-component-page")
+    public String getEditeComponentPage() {
+        return "EditeComponentPage";
+    }
 
 
     private String redirectRole(String userRole) {

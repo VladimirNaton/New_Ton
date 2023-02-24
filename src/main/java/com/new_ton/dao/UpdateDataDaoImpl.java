@@ -1,5 +1,6 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
     private final CatrecRepository catrecRepository;
     public final CatalogRepository catalogRepository;
     private final CateqRepository cateqRepository;
+    private final CatrawRepository catrawRepository;
 
     @Override
     public Integer saveNewMainRow(MainEntity mainEntity) {
@@ -246,6 +248,39 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             return true;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl updateCateqRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addComponent(CatrawEntity catrawEntity) {
+        try {
+            catrawRepository.save(catrawEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl addComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateComponent(CatrawEntity catrawEntity) {
+        try {
+            catrawRepository.saveAndFlush(catrawEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteComponent(Integer id) {
+        try {
+            catrawRepository.deleteById(id);
+            return false;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl deleteComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

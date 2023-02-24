@@ -1,9 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
-import com.new_ton.domain.dto.accountmanager.CateqDto;
-import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
-import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
+import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
@@ -337,10 +334,40 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
 
     @Override
     public Optional<CateqEntity> getDataForSelectedRowDissolversTable(Integer id) {
-        try{
+        try {
             return cateqRepository.findById(id);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error searchDataForTablesDaoImpl getDataForSelectedRowDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public Page<ComponentTableDto> getDataForEditeComponentTable(Integer idSearch, Pageable pageable) {
+        try {
+            return catrawRepository.getDataForEditeComponentTable(idSearch, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForEditeComponentTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
+
+    @Override
+    public Page<ComponentTableDto> getDataForEditeComponentTableWithSearch(Integer idSearch, String findComponent, Pageable pageable) {
+        try {
+            return catrawRepository.getDataForEditeComponentTableWithSearch(idSearch, findComponent, pageable);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForEditeComponentTableWithSearch : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Page.empty();
+    }
+
+    @Override
+    public ComponentTableDto getDataSelectedComponent(Integer id) {
+        try {
+            return catrawRepository.findComponentById(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataSelectedComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

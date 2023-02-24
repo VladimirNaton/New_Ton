@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edite Component Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/editecomponent.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editecomponent.js}"></script>
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="main-container-edite-component">
+    <div id="head-container-edite-component">
+        <div id="start-string-edite-component">
+            <div style="width: 40%; font-weight: bold">Операционист</div>
+            <div style="width: 60%; font-weight: bold">Страница редактирования Компонентов и Паст</div>
+        </div>
+        <div id="edite-component-container">
+                <label style="text-align: center"><span style="font-weight: bold; font-size: small">Код 1С</span><br>
+                    <input min="1" type="number" placeholder="код 1с" class="input-border-style" id="code1c"
+                           style="text-align: center">
+                </label>
+                <label style="width: 30%"><span style="visibility: hidden">Nameraw</span><br>
+                    <input type="text" placeholder="Название" class="input-border-style" id="nameraw"
+                           style="text-align: center; width: 100%">
+                </label>
+                <label><span style="visibility: hidden">Code</span><br>
+                    <input name="code" min="1" max="2" type="number" placeholder="Код" class="input-border-style" id="code" style="text-align: center">
+                </label>
+                <label><span style="visibility: hidden">Part</span><br>
+                    <input type="number" placeholder="Партия" class="input-border-style" id="part"
+                           style="text-align: center">
+                </label>
+                <label><span style="visibility: hidden">Date</span><br>
+                    <input type="datetime-local" placeholder="Дата" class="input-border-style" id="date"
+                           style="text-align: center">
+                </label>
+                <label style="height: 0.3%"><span style="visibility: hidden">Select</span><br>
+                    <select class="btn btn-outline-secondary btn-sm" id="select-component">
+                        <option value="1" selected>Компоненты</option>
+                        <option value="2">Пасты</option>
+                    </select>
+                </label>
+        </div>
+        <div id="search-button-container">
+            <label style="width: 20%">
+                <input type="text" class="input-border-style" id="search-component" style="width: 100%">
+            </label>
+            <button id="search-button" class="btn btn-outline-secondary btn-sm">Найти</button>
+            <button id="clean-filter-button" class="btn btn-outline-secondary btn-sm">Сбросить фильтр</button>
+            <button id="update-button" class="btn btn-outline-secondary btn-sm">Обновить</button>
+            <button id="add-button" class="btn btn-outline-secondary btn-sm">Добавить</button>
+            <button id="delete-button" class="btn btn-outline-secondary btn-sm ">Удалить</button>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="table-container">
+            <div id="start-string-component-table">Компоненты и Пасты</div>
+            <table id="component-table" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>code 1c</th>
+                    <th>nameraw</th>
+                    <th>code</th>
+                    <th>part</th>
+                    <th>date</th>
+                </tr>
+                </thead>
+
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

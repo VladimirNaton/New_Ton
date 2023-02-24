@@ -1,12 +1,12 @@
 package com.new_ton.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.CateqEntity;
 import com.new_ton.domain.entities.CatpastEntity;
+import com.new_ton.domain.dto.accountmanager.DrawDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 
@@ -233,7 +233,7 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
     }
 
     @Override
-    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable() {
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable(DrawDto drawDto) {
         try {
             List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForProductInProductionTable();
             getDataForProductInProductionTableDtoList.stream().peek(elem -> {
@@ -245,6 +245,7 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             }).collect(Collectors.toList());
 
             GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setDraw(drawDto.getDraw());
             getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
             return getDataForProductInProductionTable;
 
@@ -342,6 +343,60 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
 
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataForSelectedRowDissolversTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public EditeCatalogTableResponseDto searchDataForEditeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto) {
+        try {
+            EditeCatalogTableResponseDto editeCatalogTableResponseDto = new EditeCatalogTableResponseDto();
+            Pageable pageable = PageRequest.of(editeRecipeTableRequestDto.getStart() / editeRecipeTableRequestDto.getLength(), editeRecipeTableRequestDto.getLength(), Sort.by("id").ascending());
+
+            Page<ComponentTableDto> editeComponentTableDtoPage = null;
+
+            if (editeRecipeTableRequestDto.getFindComponent().equals("")) {
+                editeComponentTableDtoPage = searchDataForTablesDao.getDataForEditeComponentTable(editeRecipeTableRequestDto.getCodeSearch(), pageable);
+                editeCatalogTableResponseDto.setRecordsTotal(editeComponentTableDtoPage.getTotalElements());
+                editeCatalogTableResponseDto.setRecordsFiltered(editeComponentTableDtoPage.getTotalElements());
+            }
+            if (!editeRecipeTableRequestDto.getFindComponent().equals("")) {
+                editeComponentTableDtoPage = searchDataForTablesDao.getDataForEditeComponentTableWithSearch(editeRecipeTableRequestDto.getCodeSearch(), editeRecipeTableRequestDto.getFindComponent(), pageable);
+                editeCatalogTableResponseDto.setRecordsTotal(editeComponentTableDtoPage.getTotalElements());
+                editeCatalogTableResponseDto.setRecordsFiltered(editeComponentTableDtoPage.getTotalElements());
+            }
+
+            List<ComponentTableDto> componentTableDtoList = editeComponentTableDtoPage.toList().stream()
+                    .peek(elem -> {
+                        if (elem.getDate() != null) {
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            String strDate = dateFormat.format(elem.getDate());
+                            elem.setDateStr(strDate);
+                        }
+
+                    }).collect(Collectors.toList());
+            editeCatalogTableResponseDto.setData(componentTableDtoList);
+            editeCatalogTableResponseDto.setDraw(editeRecipeTableRequestDto.getDraw());
+            return editeCatalogTableResponseDto;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl searchDataForEditeComponentTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public ComponentTableDto getDataSelectedComponent(Integer id) {
+        try {
+            ComponentTableDto componentTableDto = searchDataForTablesDao.getDataSelectedComponent(id);
+            if (componentTableDto.getDate() != null) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String strDate = dateFormat.format(componentTableDto.getDate());
+                componentTableDto.setDateStr(strDate);
+            }
+            return componentTableDto;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataSelectedComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

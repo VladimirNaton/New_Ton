@@ -4,6 +4,7 @@ package com.new_ton.controller;
 import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.dto.accountmanager.DrawDto;
 import com.new_ton.service.SearchDataForTablesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -59,9 +60,9 @@ public class SearchDataForTableController {
     }
 
     @Secured("ROLE_TECHNOLOGIST")
-    @GetMapping("/get-data-for-product-in-production-table")
-    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable() {
-        return searchDataForTablesService.getDataForProductInProductionTable();
+    @PostMapping("/get-data-for-product-in-production-table")
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable(DrawDto drawDto) {
+        return searchDataForTablesService.getDataForProductInProductionTable(drawDto);
     }
 
     @Secured("ROLE_ACCOUNTMANAGER")
@@ -89,8 +90,20 @@ public class SearchDataForTableController {
     }
 
     @Secured("ROLE_ACCOUNTMANAGER")
-    @GetMapping ("/get-data-for-selected-row-dissolvers-table/{id}")
+    @GetMapping("/get-data-for-selected-row-dissolvers-table/{id}")
     public CateqDto getDataForSelectedRowDissolversTable(@PathVariable(name = "id") Integer id) {
         return searchDataForTablesService.getDataForSelectedRowDissolversTable(id);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PostMapping("/data-for-edite-component-table")
+    public EditeCatalogTableResponseDto searchDataForEditeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto) {
+        return searchDataForTablesService.searchDataForEditeComponentTable(editeRecipeTableRequestDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @GetMapping("/data-selected-component/{id}")
+    public ComponentTableDto getDataSelectedComponent(@PathVariable(name = "id") Integer id) {
+        return searchDataForTablesService.getDataSelectedComponent(id);
     }
 }

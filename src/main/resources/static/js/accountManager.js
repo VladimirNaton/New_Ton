@@ -66,17 +66,21 @@ $(document).ready(function () {
         ]
     });
 
+    function clearData() {
+        $('#head-brend').val('');
+        $('#head-date-create').val('');
+        $('#head-name-prod').val('');
+        $('#temp-min').val('');
+        $('#temp-max').val('');
+        $('#common-weight').val('');
+        $('#control').val('');
+        idMain = '';
+    }
+
     $('#account-manager-table tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
-            $('#head-brend').val('');
-            $('#head-date-create').val('');
-            $('#head-name-prod').val('');
-            $('#temp-min').val('');
-            $('#temp-max').val('');
-            $('#common-weight').val('');
-            $('#control').val('');
-            idMain = '';
+            clearData();
             deleteErrorColorByControl();
 
         } else {
@@ -155,6 +159,22 @@ $(document).ready(function () {
         let url = './edite-catalog-page';
         window.open(url, '_blank');
     })
+
+    let countDownTimer = new Date();
+    countDownTimer.setMinutes(countDownTimer.getMinutes() + 5);
+
+    let timer = setInterval(function () {
+        let now = new Date().getTime();
+        let distance = countDownTimer - now;
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+        if (distance < 1000) {
+            clearData();
+            accountManagerTable.ajax.reload();
+            countDownTimer.setMinutes(countDownTimer.getMinutes() + 5);
+        }
+    }, 1000);
 
 
 })

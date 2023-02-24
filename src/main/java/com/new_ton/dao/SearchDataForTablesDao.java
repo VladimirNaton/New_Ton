@@ -1,9 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.accountmanager.AccountManagerTableDataDto;
-import com.new_ton.domain.dto.accountmanager.CateqDto;
-import com.new_ton.domain.dto.accountmanager.EditeCatalogRecipeTableDto;
-import com.new_ton.domain.dto.accountmanager.GetDataForSelectedRowEditeCatalogRecipeTableResponseDto;
+import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.entities.*;
 import org.springframework.data.domain.Page;
@@ -73,4 +70,10 @@ public interface SearchDataForTablesDao {
     List<CateqDto> getDataForDissolversTable();
 
     Optional<CateqEntity> getDataForSelectedRowDissolversTable(Integer id);
+
+    Page<ComponentTableDto> getDataForEditeComponentTable(Integer idSearch, Pageable pageable);
+
+    Page<ComponentTableDto> getDataForEditeComponentTableWithSearch(Integer idSearch, String findComponent, Pageable pageable);
+
+    ComponentTableDto getDataSelectedComponent(Integer id);
 }

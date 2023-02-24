@@ -28,7 +28,8 @@
                         <label style="width: 67.8%">
                             <input id="product-in-production-head-date-create" type="text" readonly
                                    placeholder="Дата производства"
-                                   class="input-border-style" style="text-align: center; font-weight: bold; width: 100%">
+                                   class="input-border-style"
+                                   style="text-align: center; font-weight: bold; width: 100%">
                         </label>
                     </div>
                     <div id="second-row-information-head-product-in-production">
@@ -68,7 +69,16 @@
                 </div>
                 <div id="right-container-product-in-production">
                     <div style="width: 100%">
-                        <a th:href="@{/}" class="btn btn-outline-secondary btn-sm" style="width: 36%">На главную</a>
+                        <div style="display: flex; flex-wrap: nowrap">
+                            <div style="width: 50%; text-align: center">
+                                <div style="font-weight: bold">Обновление страницы</div>
+                                <div id="timer"></div>
+                            </div>
+                            <div style="width: 50%">
+                                <a th:href="@{/}" class="btn btn-outline-secondary btn-sm" style="width: 72%">На
+                                    главную</a>
+                            </div>
+                        </div>
                     </div>
                     <div style="width: 100%">
                         <a th:href="@{/logout}" class="btn btn-outline-secondary btn-sm" style="width: 36%">Выход</a>

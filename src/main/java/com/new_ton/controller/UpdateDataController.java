@@ -1,6 +1,7 @@
 package com.new_ton.controller;
 
 import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecipeDto;
+import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
@@ -9,6 +10,8 @@ import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.TimeZone;
 
 @RequiredArgsConstructor
 @RequestMapping("/update")
@@ -144,5 +147,23 @@ public class UpdateDataController {
         return updateDataService.updateCateqRow(cateqDto);
     }
 
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PostMapping("/add-component")
+    public boolean addComponent(ComponentTableDto componentTableDto) {
+        return updateDataService.addComponent(componentTableDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @PutMapping("/update-component")
+    public boolean updateComponent(ComponentTableDto componentTableDto) {
+        return updateDataService.updateComponent(componentTableDto);
+    }
+
+    @Secured("ROLE_ACCOUNTMANAGER")
+    @DeleteMapping("/delete-component/{id}")
+    public boolean deleteComponent(@PathVariable(name = "id") Integer id) {
+        return updateDataService.deleteComponent(id);
+    }
 
 }
+

@@ -3,6 +3,7 @@ package com.new_ton.service;
 import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.dto.accountmanager.DrawDto;
 
 public interface SearchDataForTablesService {
 
@@ -20,7 +21,7 @@ public interface SearchDataForTablesService {
 
     GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowEditeRecipeTable(Integer id);
 
-    GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable();
+    GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable(DrawDto drawDto);
 
     AccountManagerTableDataResponseDto getDataForAccountManagerTable(AccountManagerTableRequestDto accountManagerTableRequestDto);
 
@@ -31,4 +32,8 @@ public interface SearchDataForTablesService {
     EditeDissolversResponceDto getDataForDissolversTable(EditeDissolversTableRequestDto editeDissolversTableRequestDto);
 
     CateqDto getDataForSelectedRowDissolversTable(Integer id);
+
+    EditeCatalogTableResponseDto searchDataForEditeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto);
+
+    ComponentTableDto getDataSelectedComponent(Integer id);
 }

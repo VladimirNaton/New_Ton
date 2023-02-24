@@ -3,6 +3,7 @@ package com.new_ton.service;
 import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.dao.UpdateDataDao;
 import com.new_ton.domain.dto.accountmanager.AddOrReplaceComponentToCatalogRecipeDto;
+import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
 import com.new_ton.domain.dto.technologistdto.*;
@@ -713,6 +714,81 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             return updateDataDao.updateCateqRow(cateqEntity);
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl updateCateqRow : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addComponent(ComponentTableDto componentTableDto) {
+        try {
+            CatrawEntity catrawEntity = new CatrawEntity();
+            if (componentTableDto.getCode1c() != null) {
+                catrawEntity.setCode1C(componentTableDto.getCode1c());
+            } else {
+                catrawEntity.setCode1C(0);
+            }
+            catrawEntity.setNameraw(componentTableDto.getNameraw());
+            catrawEntity.setCode(componentTableDto.getCode());
+            if (componentTableDto.getPart() != null) {
+                catrawEntity.setPart(componentTableDto.getPart());
+            } else {
+                catrawEntity.setPart(0);
+            }
+
+
+            if (componentTableDto.getDate() != null) {
+                catrawEntity.setDate(componentTableDto.getDate());
+            } else {
+                catrawEntity.setDate(new Date());
+            }
+            return updateDataDao.addComponent(catrawEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl addComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateComponent(ComponentTableDto componentTableDto) {
+        try {
+            CatrawEntity catrawEntity = new CatrawEntity();
+
+            catrawEntity.setId(componentTableDto.getId());
+
+            if (componentTableDto.getCode1c() != null) {
+                catrawEntity.setCode1C(componentTableDto.getCode1c());
+            } else {
+                catrawEntity.setCode1C(0);
+            }
+
+            catrawEntity.setNameraw(componentTableDto.getNameraw());
+            catrawEntity.setCode(componentTableDto.getCode());
+
+            if (componentTableDto.getPart() != null) {
+                catrawEntity.setPart(componentTableDto.getPart());
+            } else {
+                catrawEntity.setPart(0);
+            }
+
+            if (componentTableDto.getDate() != null) {
+                catrawEntity.setDate(componentTableDto.getDate());
+            } else {
+                catrawEntity.setDate(new Date());
+            }
+            return updateDataDao.updateComponent(catrawEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl updateComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteComponent(Integer id) {
+        try {
+            updateDataDao.deleteComponent(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl deleteComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.new_ton.dao;
 
+import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.entities.*;
 
 import java.util.List;
@@ -44,4 +45,10 @@ public interface UpdateDataDao {
     boolean createNewCateqRow(CateqEntity cateqEntity);
 
     boolean updateCateqRow(CateqEntity cateqEntity);
+
+    boolean addComponent(CatrawEntity catrawEntity);
+
+    boolean updateComponent(CatrawEntity catrawEntity);
+
+    boolean deleteComponent(Integer id);
 }

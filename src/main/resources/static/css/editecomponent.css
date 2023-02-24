@@ -1,0 +1,97 @@
+#main-container-edite-component {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#start-string-edite-component {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#edite-component-container {
+    margin-top: 15px;
+}
+
+#select-component {
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+#date {
+    height: 1.8rem;
+}
+
+#search-button-container {
+    margin-top: 15px;
+}
+
+#search-button {
+    width: 8%;
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+#update-button {
+    width: 8%;
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+#add-button {
+    width: 8%;
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+#delete-button {
+    width: 8%;
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+#clean-filter-button {
+    width: 10%;
+    height: 1.8rem;
+    margin-bottom: 3px;
+}
+
+
+#start-string-component-table {
+    width: 100%;
+    background-color: #10a9f2;
+    margin-left: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+#table-container {
+    width: 100%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-right: 5px;
+    margin-bottom: 15px;
+    padding-right: 10px;
+    display: flex;
+    flex-wrap: wrap
+}
+
+#body-container {
+    margin-top: 15px;
+}
+
+#component-table_wrapper{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 100%;
+}

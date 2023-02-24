@@ -277,8 +277,13 @@ $(document).ready(function () {
     })
 
     $('#in-workshop').click(function () {
-            let url = './edite-dissolvers'
-            window.open(url, '_blank');
+        let url = './edite-dissolvers'
+        window.open(url, '_blank');
+    })
+
+    $('#edit-component').click(function () {
+        let url = './edite-component-page';
+        window.open(url, '_blank');
     })
 
 

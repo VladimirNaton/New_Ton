@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class GetDataForProductInProductionTableRequestDto {
     private List<GetDataForProductInProductionTableDto> data;
-    private Integer draw = 1;
+    private Integer draw;
 
 }

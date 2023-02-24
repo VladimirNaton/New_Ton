@@ -10,7 +10,7 @@ $(document).ready(function () {
         "info": false,
         "ajax": {
             "url": "/search/get-data-for-product-in-production-table",
-            "type": "get",
+            "type": "post",
             data: function (data) {
             }
         },
@@ -71,16 +71,22 @@ $(document).ready(function () {
         ]
     });
 
+
+    function clearData() {
+        idSelectedElement = '';
+        $('#product-in-production-head-brend').val('');
+        $('#product-in-production-head-date-create').val('');
+        $('#product-in-production-head-name-prod').val('');
+        $('#temp-min').val('');
+        $('#temp-max').val('');
+        $('#common-weight-product-in-production').val('');
+
+    }
+
     $('#product-in-production-table tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
-            idSelectedElement = '';
-            $('#product-in-production-head-brend').val('');
-            $('#product-in-production-head-date-create').val('');
-            $('#product-in-production-head-name-prod').val('');
-            $('#temp-min').val('');
-            $('#temp-max').val('');
-            $('#common-weight-product-in-production').val('');
+            clearData();
         } else {
             productInProductionTable.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
@@ -121,6 +127,22 @@ $(document).ready(function () {
             alert("Вы не выбрали ни одной записи !!!");
         }
     })
+
+    let countDownTimer = new Date();
+    countDownTimer.setMinutes(countDownTimer.getMinutes() + 5);
+
+    let timer = setInterval(function () {
+        let now = new Date().getTime();
+        let distance = countDownTimer - now;
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+        if (distance < 1000) {
+            clearData();
+            productInProductionTable.ajax.reload();
+            countDownTimer.setMinutes(countDownTimer.getMinutes() + 5);
+        }
+    }, 1000);
 
 
 })
