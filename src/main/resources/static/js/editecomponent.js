@@ -54,13 +54,13 @@ $(document).ready(function () {
             {
                 "targets": 4, "width": "15%",
                 "orderable": false,
-                "visible": false
+                "visible": true
             }
             ,
             {
                 "targets": 5, "width": "25%",
                 "orderable": false,
-                "visible": false
+                "visible": true
             }
         ]
     });
