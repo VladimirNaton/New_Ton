@@ -1,0 +1,41 @@
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#label-container{
+    width: 10%;
+}
+
+#protocol-container{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.head-parametr-width{
+    width: 20%;
+}
+
+#parametr-table{
+    margin-top: 10px;
+}
+
+table, th, td {
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(96,186,240);
+    border-collapse: separate;
+    text-align: center;
+    font-weight: bold;
+}
+
+th {
+    height: 45px;
+}
+
+#protocol-footer{
+    margin-top: 10px;
+}

@@ -4,6 +4,10 @@ import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.DrawDto;
+import com.new_ton.domain.dto.testerdto.CheckTakeTemplateDto;
+import com.new_ton.domain.dto.testerdto.ProtocolDto;
+
+import java.util.Date;
 
 public interface SearchDataForTablesService {
 
@@ -36,4 +40,12 @@ public interface SearchDataForTablesService {
     EditeCatalogTableResponseDto searchDataForEditeComponentTable(EditeRecipeComponentTableRequestDto editeRecipeTableRequestDto);
 
     ComponentTableDto getDataSelectedComponent(Integer id);
+
+    GetDataForProductInProductionTableRequestDto getDataForTesterTable(DrawDto drawDto);
+
+    CommentToStageDto getCommentToStage(CommentToStageDto commentToStageDto);
+
+    CheckTakeTemplateDto checkTakeTemplate(Integer id);
+
+    ProtocolDto getDataForProtocol(Integer id);
 }

@@ -4,8 +4,9 @@ import com.new_ton.dao.SearchDataForTablesDao;
 import com.new_ton.domain.dto.accountmanager.*;
 import com.new_ton.domain.dto.technologistdto.EditeRecipeTableRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
-import com.new_ton.domain.entities.CateqEntity;
-import com.new_ton.domain.entities.CatpastEntity;
+import com.new_ton.domain.dto.testerdto.CheckTakeTemplateDto;
+import com.new_ton.domain.dto.testerdto.ProtocolDto;
+import com.new_ton.domain.entities.*;
 import com.new_ton.domain.dto.accountmanager.DrawDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +15,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -30,6 +35,7 @@ import java.util.stream.Collectors;
 public class SearchDataForTablesServiceImpl implements SearchDataForTablesService {
     private final SearchDataForTablesDao searchDataForTablesDao;
     private final ColumnNameService columnNameService;
+    private final HttpServletRequest request;
 
 
     @Override
@@ -242,6 +248,8 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
                 String dateplStr = dateFormat.format(elem.getDatepl());
                 elem.setDatecrStr(datecrStr);
                 elem.setDateplStr(dateplStr);
+                String state = searchDataForTablesDao.getState(elem.getState());
+                elem.setStateStr(state);
             }).collect(Collectors.toList());
 
             GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
@@ -397,6 +405,110 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
             return componentTableDto;
         } catch (Exception e) {
             log.error("Error SearchDataForTablesServiceImpl getDataSelectedComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public GetDataForProductInProductionTableRequestDto getDataForTesterTable(DrawDto drawDto) {
+        try {
+            List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForTesterTable();
+            getDataForProductInProductionTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String datecrStr = dateFormat.format(elem.getDatecr());
+                String dateplStr = dateFormat.format(elem.getDatepl());
+                elem.setDatecrStr(datecrStr);
+                elem.setDateplStr(dateplStr);
+                String state = searchDataForTablesDao.getState(elem.getState());
+                elem.setStateStr(state);
+            }).collect(Collectors.toList());
+
+            GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setDraw(drawDto.getDraw());
+            getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
+            return getDataForProductInProductionTable;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForTesterTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public CommentToStageDto getCommentToStage(CommentToStageDto commentToStageDto) {
+        try {
+            CommentToStageDto comment = new CommentToStageDto();
+            Optional<CommentToStageEntity> commentToStageEntityOptional = searchDataForTablesDao.getCommentToStage(commentToStageDto);
+            if (commentToStageEntityOptional.isPresent()) {
+                CommentToStageEntity commentToStageEntity = commentToStageEntityOptional.get();
+                comment.setComment(commentToStageEntity.getComment());
+                comment.setId(commentToStageEntity.getId());
+                comment.setIdStage(commentToStageEntity.getIdStage());
+                comment.setIdMain(commentToStageEntity.getIdMain());
+            }
+            return comment;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getCommentToStage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public CheckTakeTemplateDto checkTakeTemplate(Integer id) {
+        try {
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(id);
+            if (mainEntityOptional.isPresent()) {
+                MainEntity mainEntity = mainEntityOptional.get();
+                if (mainEntity.getState() == 6) {
+                    Optional<RawEntity> rawEntityOptional = searchDataForTablesDao.checkTakeTemplate(id);
+                    if (rawEntityOptional.isPresent()) {
+                        RawEntity rawEntity = rawEntityOptional.get();
+                        Calendar calendar = Calendar.getInstance();
+                        int monthNow = calendar.get(Calendar.MONTH) + 1;
+                        int yearNow = calendar.get(Calendar.YEAR);
+                        int dateNow = calendar.get(Calendar.DATE) - 1;
+                        String strDate = String.valueOf(dateNow) + "." + String.valueOf(monthNow) + "." + String.valueOf(yearNow);
+                        Date date = new SimpleDateFormat("dd.MM.yyyy").parse(strDate);
+                        Date dateStart = rawEntity.getDatestart();
+                        if (dateStart.after(date) && rawEntity.getFacttimemix() == 0) {
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            CheckTakeTemplateDto checkTakeTemplateDto = new CheckTakeTemplateDto();
+                            checkTakeTemplateDto.setTime(dateFormat.format(dateStart));
+                            checkTakeTemplateDto.setId(rawEntity.getId());
+                            return checkTakeTemplateDto;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl checkTakeTemplate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public ProtocolDto getDataForProtocol(Integer id) {
+        try {
+            SecurityContextImpl ct = (SecurityContextImpl) request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(id);
+            if (mainEntityOptional.isPresent()) {
+                MainEntity mainEntity = mainEntityOptional.get();
+                ProtocolDto protocolDto = new ProtocolDto();
+                protocolDto.setBrend(mainEntity.getBrend());
+                protocolDto.setNameprod(mainEntity.getNameprod());
+                String userFio = searchDataForTablesDao.getUserFio(ct.getAuthentication().getName());
+                protocolDto.setLabFio(userFio);
+                LocalDate localDate = LocalDate.now().plusMonths(6);
+                Date futureDate = java.util.Date.from(localDate.atStartOfDay()
+                        .atZone(ZoneId.systemDefault())
+                        .toInstant());
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                protocolDto.setFutureDate(dateFormat.format(futureDate));
+                return protocolDto;
+            }
+            return null;
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForProtocol : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

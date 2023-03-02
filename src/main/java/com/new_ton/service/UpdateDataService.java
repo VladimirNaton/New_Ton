@@ -5,6 +5,9 @@ import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
+import com.new_ton.domain.dto.testerdto.CommentDto;
+import com.new_ton.domain.dto.testerdto.SaveProtocolDto;
+import com.new_ton.domain.dto.testerdto.TimeDto;
 import com.new_ton.domain.entities.CreateCateqDto;
 
 public interface UpdateDataService {
@@ -55,4 +58,18 @@ public interface UpdateDataService {
     boolean updateComponent(ComponentTableDto ComponentTableDto);
 
     boolean deleteComponent(Integer id);
+
+    boolean returnToWork(Integer id);
+
+    boolean sendToReject(Integer id);
+
+    boolean sendPutAside(Integer id);
+
+    boolean sendComment(CommentDto commentDto);
+
+    Integer saveCommentToStage(CommentToStageDto commentToStageDto);
+
+    boolean saveTimeTemplate(TimeDto timeDto);
+
+    boolean saveProtocol(SaveProtocolDto saveProtocolDto);
 }

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface LabprotRepository extends JpaRepository<LabprotEntity, Integer> {
     List<LabprotEntity> findAllByIdpr(int id);
+
+    void deleteAllByIdpr(Integer idProd);
 }

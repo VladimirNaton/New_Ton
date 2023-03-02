@@ -24,7 +24,8 @@ $(document).ready(function () {
             {"data": "mass"},
             {"data": "tempprodmin"},
             {"data": "tempprodmax"},
-            {"data": "comment"}
+            {"data": "comment"},
+            {"data": "stateStr"}
         ],
         "columnDefs": [
             {
@@ -65,6 +66,10 @@ $(document).ready(function () {
             },
             {
                 "targets": 9,
+                "orderable": false
+            },
+            {
+                "targets": 10,
                 "orderable": false
             }
 

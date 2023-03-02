@@ -23,18 +23,15 @@ import java.util.stream.Collectors;
 public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
 
     private final CatalogRepository catalogRepository;
-
     private final MainRepository mainRepository;
-
     private final RawRepository rawRepository;
-
     private final CatrecRepository catrecRepository;
-
     private final CatrawRepository catrawRepository;
-
     private final CatpastRepository catpastRepository;
-
     private final CateqRepository cateqRepository;
+    private final CatstateRepository catstateRepository;
+    private final CommentToStageRepository commentToStageRepository;
+    private final UserFioRepository userFioRepository;
 
     @Override
     public Page<CatalogDtoByLeftTable> getDataForTechnologistLeftTable(Pageable pageable) {
@@ -368,6 +365,56 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
             return catrawRepository.findComponentById(id);
         } catch (Exception e) {
             log.error("Error searchDataForTablesDaoImpl getDataSelectedComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<GetDataForProductInProductionTableDto> getDataForTesterTable() {
+        try {
+            return mainRepository.getDataForTesterTable();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForTesterTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public String getState(Integer code) {
+        try {
+            return catstateRepository.getState(code);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getState : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public Optional<CommentToStageEntity> getCommentToStage(CommentToStageDto commentToStageDto) {
+        try {
+            return commentToStageRepository.findByIdMainAndIdStage(commentToStageDto.getIdMain(), commentToStageDto.getIdStage());
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getCommentToStage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public Optional<RawEntity> checkTakeTemplate(Integer id) {
+        try {
+            return rawRepository.findSendTemplate(id);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl checkTakeTemplate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public String getUserFio(String userLogin) {
+        try {
+           return userFioRepository.getUserFio(userLogin);
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getUserFio : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

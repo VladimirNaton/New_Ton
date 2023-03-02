@@ -1,6 +1,7 @@
 package com.new_ton.dao;
 
 import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
+import com.new_ton.domain.dto.testerdto.CommentDto;
 import com.new_ton.domain.entities.*;
 
 import java.util.List;
@@ -51,4 +52,15 @@ public interface UpdateDataDao {
     boolean updateComponent(CatrawEntity catrawEntity);
 
     boolean deleteComponent(Integer id);
+
+    boolean returnToWork(Integer id);
+
+    boolean sendToReject(Integer id);
+
+    boolean sendPutAside(Integer id);
+
+    boolean sendComment(CommentDto commentDto);
+    Integer saveCommentToStage(CommentToStageEntity commentToStageEntity);
+
+    boolean updateLabprotEntity(List<LabprotEntity> labprotEntityList, Integer idMain);
 }

@@ -1,6 +1,6 @@
 package com.new_ton.dao;
 
-import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
+import com.new_ton.domain.dto.testerdto.CommentDto;
 import com.new_ton.domain.entities.*;
 import com.new_ton.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,8 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
     public final CatalogRepository catalogRepository;
     private final CateqRepository cateqRepository;
     private final CatrawRepository catrawRepository;
+    private final CommentToStageRepository commentToStageRepository;
+    private final LabprotRepository labprotRepository;
 
     @Override
     public Integer saveNewMainRow(MainEntity mainEntity) {
@@ -281,6 +283,79 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
             return false;
         } catch (Exception e) {
             log.error("Error UpdateDataDaoImpl deleteComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean returnToWork(Integer id) {
+        try {
+            mainRepository.returnToWork(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl returnToWork : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean sendToReject(Integer id) {
+        try {
+            mainRepository.sendToReject(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl sendToReject : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+
+    @Transactional
+    @Override
+    public boolean sendPutAside(Integer id) {
+        try {
+            mainRepository.sendPutAside(id);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl sendPutAside : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean sendComment(CommentDto commentDto) {
+        try {
+            mainRepository.sendComment(commentDto.getComment(), commentDto.getId());
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl sendComment : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public Integer saveCommentToStage(CommentToStageEntity commentToStageEntity) {
+        try {
+            CommentToStageEntity commentSaved = commentToStageRepository.saveAndFlush(commentToStageEntity);
+            return commentSaved.getId();
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl saveCommentToStage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+
+    @Override
+    public boolean updateLabprotEntity(List<LabprotEntity> labprotEntityList, Integer idMain) {
+        try {
+            labprotRepository.deleteAllByIdpr(idMain);
+            labprotRepository.saveAll(labprotEntityList);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateLabprotEntity : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
     }

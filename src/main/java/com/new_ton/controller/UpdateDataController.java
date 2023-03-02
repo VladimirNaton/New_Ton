@@ -5,9 +5,14 @@ import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.technologistdto.*;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
+import com.new_ton.domain.dto.testerdto.CommentDto;
+import com.new_ton.domain.dto.testerdto.SaveProtocolDto;
+import com.new_ton.domain.dto.testerdto.TimeDto;
+import com.new_ton.domain.entities.CommentToStageEntity;
 import com.new_ton.domain.entities.CreateCateqDto;
 import com.new_ton.service.UpdateDataServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -163,6 +168,49 @@ public class UpdateDataController {
     @DeleteMapping("/delete-component/{id}")
     public boolean deleteComponent(@PathVariable(name = "id") Integer id) {
         return updateDataService.deleteComponent(id);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PutMapping("/return-to-work/{id}")
+    public boolean returnToWork(@PathVariable(name = "id") Integer id) {
+        return updateDataService.returnToWork(id);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PutMapping("/send-in-reject/{id}")
+    public boolean sendToReject(@PathVariable(name = "id") Integer id) {
+        return updateDataService.sendToReject(id);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PutMapping("/send-put-aside/{id}")
+    public boolean sendPutAside(@PathVariable(name = "id") Integer id) {
+        return updateDataService.sendPutAside(id);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PutMapping("/send-comment")
+    public boolean sendComment(@RequestBody CommentDto commentDto) {
+        return updateDataService.sendComment(commentDto);
+    }
+
+
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_TESTER"})
+    @PutMapping("/save-comment-to-stage")
+    public Integer saveCommentToStage(@RequestBody CommentToStageDto commentToStageDto) {
+        return updateDataService.saveCommentToStage(commentToStageDto);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PutMapping("/save-time")
+    public boolean saveTime(@RequestBody TimeDto timeDto) {
+        return updateDataService.saveTimeTemplate(timeDto);
+    }
+
+    @Secured("ROLE_TESTER")
+    @PostMapping(path = "/save-protocol")
+    public boolean saveProtocol(@RequestBody SaveProtocolDto saveProtocolDto) {
+        return updateDataService.saveProtocol(saveProtocolDto);
     }
 
 }

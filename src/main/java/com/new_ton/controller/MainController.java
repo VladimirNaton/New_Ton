@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -133,11 +134,41 @@ public class MainController {
     }
 
 
+    @Secured("ROLE_TESTER")
+    @GetMapping("/get-tester-page")
+    public String getTesterPage() {
+        return "TesterPage";
+    }
+
+    @Secured("ROLE_TESTER")
+    @GetMapping("/recipe-in-production-tester")
+    public String recipeInProductionTester(@RequestParam String idProd, Model model) {
+        model.addAttribute("idProd", idProd);
+        return "ViewRecipePage";
+    }
+
+    @Secured("ROLE_TESTER")
+    @GetMapping("/get-product-protocol/{id}")
+    public String getProductProtocol(@PathVariable String id, Model model) {
+        model.addAttribute("id", id);
+        return "ProductProtocolPage";
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @GetMapping("/get-supervisor-page")
+    public String getSupervisorPage() {
+        return "SupervisorPage";
+    }
+
     private String redirectRole(String userRole) {
         if (userRole.equals("ROLE_TECHNOLOGIST")) {
             return "redirect:technologist-page";
         } else if (userRole.equals("ROLE_ACCOUNTMANAGER")) {
             return "redirect:account-manager-page";
+        } else if (userRole.equals("ROLE_TESTER")) {
+            return "redirect:get-tester-page";
+        } else if (userRole.equals("ROLE_SUPERVISOR")) {
+            return "redirect:get-supervisor-page";
         }
         return null;
     }

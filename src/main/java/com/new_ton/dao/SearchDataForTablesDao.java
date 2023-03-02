@@ -76,4 +76,14 @@ public interface SearchDataForTablesDao {
     Page<ComponentTableDto> getDataForEditeComponentTableWithSearch(Integer idSearch, String findComponent, Pageable pageable);
 
     ComponentTableDto getDataSelectedComponent(Integer id);
+
+    List<GetDataForProductInProductionTableDto> getDataForTesterTable();
+
+    String getState(Integer code);
+
+    Optional<CommentToStageEntity> getCommentToStage(CommentToStageDto commentToStageDto);
+
+    Optional<RawEntity> checkTakeTemplate(Integer id);
+
+    String getUserFio(String userLogin);
 }

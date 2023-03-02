@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Protocol Page</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/productProtocol.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/productProtocol.js}"></script>
+
+</head>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="idMain" style="display: none" th:text="${id}"></div>
+<div style="font-weight: bold; text-decoration: underline; text-align: center; margin-top: 10px">Протокол випробувать
+    (аналізів)
+</div>
+<div id="protocol-container">
+    <div id="protocol-head">
+        <div id="first-head-row" style="display: flex; flex-wrap: nowrap; align-items: center">
+            <div id="label-container">
+                <img id="label-img"
+                     th:src="@{/image/new_ton.png}"
+                     alt="" style="width: 100%">
+            </div>
+            <div id="number-protocol-container" style="margin-left: 28%">
+                <label><span style="font-weight: bold">№</span>
+                    <input type="number" min="0" id="number-protocol" class="input-border-style" style="margin-left: 5px">
+                </label>
+            </div>
+            <div id="date-protocol-container" style="margin-left: 15px">
+                <label><span style="font-weight: bold">від</span>
+                    <input id="date-create-protocol" type="datetime-local" class="input-border-style"
+                           style="margin-left: 5px">
+                </label>
+            </div>
+        </div>
+
+        <div id="second-head-row" style="margin-top: 10px; display: flex; flex-wrap: nowrap">
+            <div class="head-parametr-width">
+                <span style="font-weight: bold">Торгова марка</span>
+            </div>
+            <input readonly id="brend" type="text" class="input-border-style">
+        </div>
+        <div id="third-head-row" style="margin-top: 10px; display: flex; flex-wrap: nowrap">
+            <div class="head-parametr-width">
+                <span style="font-weight: bold">Найменування продукції</span>
+            </div>
+            <input readonly id="name-prod" type="text" class="input-border-style" style="width: 30%">
+        </div>
+        <div id="fourth-head-row" style="margin-top: 10px; display: flex; flex-wrap: nowrap">
+            <div class="head-parametr-width">
+                <span style="font-weight: bold">Дата виготовлення</span>
+            </div>
+            <input id="date-create" type="datetime-local" class="input-border-style" style="width: 15%">
+        </div>
+        <div id="fifth-head-row" style="margin-top: 10px; display: flex; flex-wrap: nowrap">
+            <div class="head-parametr-width">
+                <span style="font-weight: bold">Партія №</span>
+            </div>
+            <input type='number' min="0" id="part" class="input-border-style">
+        </div>
+        <div id="sixth-head-row"
+             style="margin-top: 10px; display: flex; flex-wrap: nowrap; justify-content: space-between">
+            <div style="width: 50%; display: flex; flex-wrap: wrap">
+                <div style="width: 40.4%">
+                    <span style="font-weight: bold">Кінцевій термін придатності</span>
+                </div>
+                <input id="best-before-date" type="datetime-local" class="input-border-style" style="width: 31%">
+            </div>
+            <div style="width: 50%; display: flex; justify-content: end; margin-right: 25px">
+                <select id="kind-prod" class="btn btn-outline-secondary btn-sm" style="width: 30%">
+                    <option value="1">Протокол краски</option>
+                    <option value="2">Протокол пасты</option>
+                    <option value="3">Протокол раствор</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="protocol-body">
+        <table id="parametr-table" style="width: 100%">
+            <thead style="height: 40%">
+            <tr id="row1">
+                <th style="width: 20%; text-align: left;"><span style="margin-left: 10px">Показники</span></th>
+                <th style="width: 20%">НД</th>
+                <th style="width: 20%">Допустимі значення</th>
+                <th style="width: 20%">Похибка</th>
+                <th style="width: 20%">Результат</th>
+            </tr>
+            </thead>
+            <tr id="row2">
+                <td style="text-align: left;"><span style="margin-left: 10px">Зовнішній вигляд</span></td>
+                <td><input id="row2col2" type="text" style="width: 100%"></td>
+                <td><input id="row2col3" type="text" style="width: 100%"></td>
+                <td><input id="row2col4" type="text" style="width: 100%"></td>
+                <td><input id="row2col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row3" style="display: none">
+                <td style="text-align: left;"><span style="margin-left: 10px">Активація</span></td>
+                <td><input id="row3col2" type="text" style="width: 100%"></td>
+                <td><input id="row3col3" type="text" style="width: 100%"></td>
+                <td><input id="row3col4" type="text" style="width: 100%"></td>
+                <td><input id="row3col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row5">
+                <td style="text-align: left;"><span style="margin-left: 10px"></span>В'язкість, с</td>
+                <td><input id="row5col2" type="text" style="width: 100%"></td>
+                <td><input id="row5col3" type="text" style="width: 100%"></td>
+                <td><input id="row5col4" type="text" style="width: 100%"></td>
+                <td><input id="row5col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row4" style="display: none">
+                <td style="text-align: left;"><span style="margin-left: 10px">Ступінь перетирання, мкм</span></td>
+                <td><input id="row4col2" type="text" style="width: 100%"></td>
+                <td><input id="row4col3" type="text" style="width: 100%"></td>
+                <td><input id="row4col4" type="text" style="width: 100%"></td>
+                <td><input id="row4col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row6">
+                <td style="text-align: left;"><span style="margin-left: 10px">Щільність г/см³</span></td>
+                <td><input id="row6col2" type="text" style="width: 100%"></td>
+                <td><input id="row6col3" type="text" style="width: 100%"></td>
+                <td><input id="row6col4" type="text" style="width: 100%"></td>
+                <td><input id="row6col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row7">
+                <td style="text-align: left;"><span style="margin-left: 10px">Розведення, л</span></td>
+                <td><input id="row7col2" type="text" style="width: 100%"></td>
+                <td><input id="row7col3" type="text" style="width: 100%"></td>
+                <td><input id="row7col4" type="text" style="width: 100%"></td>
+                <td><div style="display: flex; flex-wrap: nowrap"><input id="row7col5-1" type="number" min="0" style="width: 40%"><span>-</span><input id="row7col5-2" type="number" min="0" style="width: 40%"><span style="width: 7%">МА</span></div></td>
+            </tr>
+            <tr id="row8">
+                <td style="text-align: left;"><span style="margin-left: 10px">Кількість газу, </span>г</td>
+                <td><input id="row8col2" type="text" style="width: 100%"></td>
+                <td><input id="row8col3" type="text" style="width: 100%"></td>
+                <td><input id="row8col4" type="text" style="width: 100%"></td>
+                <td><input id="row8col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row9">
+                <td style="text-align: left;"><span style="margin-left: 10px">Тип клапану</span></td>
+                <td><input id="row9col2" type="text" style="width: 100%"></td>
+                <td><input id="row9col3" type="text" style="width: 100%"></td>
+                <td><input id="row9col4" type="text" style="width: 100%"></td>
+                <td><input id="row9col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row10">
+                <td style="text-align: left;"><span style="margin-left: 10px">Тип розпилювальної голівки</span></td>
+                <td><input id="row10col2" type="text" style="width: 100%"></td>
+                <td><input id="row10col3" type="text" style="width: 100%"></td>
+                <td><input id="row10col4" type="text" style="width: 100%"></td>
+                <td><input id="row10col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row11">
+                <td style="text-align: left;"><span style="margin-left: 10px">Ступінь глянцю</span></td>
+                <td><input id="row11col2" type="text" style="width: 100%"></td>
+                <td><input id="row11col3" type="text" style="width: 100%"></td>
+                <td><input id="row11col4" type="text" style="width: 100%"></td>
+                <td><input id="row11col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row12" style="display: none">
+                <td style="text-align: left;"><span style="margin-left: 10px">Розчинність смоли</span></td>
+                <td><input id="row12col2" type="text" style="width: 100%"></td>
+                <td><input id="row12col3" type="text" style="width: 100%"></td>
+                <td><input id="row12col4" type="text" style="width: 100%"></td>
+                <td><input id="row12col5" type="text" style="width: 100%"></td>
+            </tr>
+            <tr id="row13">
+                <td style="text-align: left;"><span style="margin-left: 10px">Колір</span></td>
+                <td><input id="row13col2" type="text" style="width: 100%"></td>
+                <td><input id="row13col3" type="text" style="width: 100%"></td>
+                <td><input id="row13col4" type="text" style="width: 100%"></td>
+                <td><input id="row13col5" type="text" style="width: 100%"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="protocol-footer" style="display: flex; flex-wrap: nowrap">
+        <div style="width: 33%; display: flex; flex-wrap: wrap">
+            <div style="width: 100%; font-weight: bold; margin-top: 5px">Висновок</div>
+            <input readonly id="name-prod-result" type="text" class="input-border-style" style=" width: 100%; margin-top: 5px">
+            <input readonly id="lab-fio" type="text" class="input-border-style" style="width: 100%; margin-top: 5px">
+        </div>
+        <div style="width: 33%; margin-left: 15px">
+            <div style="display: flex; flex-wrap: wrap">
+                <div style="width: 100%; font-weight: bold; margin-top: 5px">Допущена до зливі</div>
+                <select id="filter-select" class="btn btn-outline-secondary btn-sm" style="margin-top: 5px; width: 55%">
+                    <option value="Мішочний фільтр NMO-100-P02S-60L">Мішочний фільтр NMO-100-P02S-60L</option>
+                    <option value="Мішочний фільтр NMO-150-P02S-60L">Мішочний фільтр NMO-150-P02S-60L</option>
+                    <option value="Мішочний фільтр NMO-200-P02S-60L">Мішочний фільтр NMO-200-P02S-60L</option>
+                    <option value="Мішочний фільтр NMO-250-P02S-60L">Мішочний фільтр NMO-250-P02S-60L</option>
+                    <option value="Мішочний фільтр PE-100-P02S-40L">Мішочний фільтр PE-100-P02S-40L</option>
+                    <option value="Мішочний фільтр PE-10-P02S-40L">Мішочний фільтр PE-10-P02S-40L</option>
+                    <option value="Мішочний фільтр PE-200-P02S">Мішочний фільтр PE-200-P02S</option>
+                    <option value="Мішочний фільтр PE-25-P02S-10L">Мішочний фільтр PE-25-P02S-10L</option>
+                    <option value="Мішочний фільтр PE-25-P02S-40L">Мішочний фільтр PE-25-P02S-40L</option>
+                    <option value="Мішочний фільтр PE-50-P02S-40L">Мішочний фільтр PE-50-P02S-40L</option>
+                </select>
+                <input readonly id="date-footer" type="datetime-local" class="input-border-style" style="width: 55%; margin-top: 5px">
+            </div>
+        </div>
+        <div style="width: 33%; display: flex; justify-content: right; align-items: end">
+            <button id="save-protocol" class="btn btn-outline-secondary btn-sm" style="width: 35%">Сохранить</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

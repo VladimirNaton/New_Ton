@@ -39,5 +39,8 @@ public interface RawRepository extends JpaRepository<RawEntity, Integer> {
     Integer getMaxSequenceNumber(Integer idMain);
 
     List<RawEntity> findAllByIdMain(Integer idMain);
+
+    @Query("select r from RawEntity r where r.idMain = ?1 and r.code = 3 ")
+    Optional<RawEntity> findSendTemplate(Integer idMain);
 }
 

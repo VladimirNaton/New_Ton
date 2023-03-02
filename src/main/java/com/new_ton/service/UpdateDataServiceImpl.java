@@ -7,13 +7,20 @@ import com.new_ton.domain.dto.accountmanager.ComponentTableDto;
 import com.new_ton.domain.dto.accountmanager.ReturnRecipeToTechnologistRequestDto;
 import com.new_ton.domain.dto.accountmanager.SaveCatalogRecipeDto;
 import com.new_ton.domain.dto.technologistdto.*;
+import com.new_ton.domain.dto.testerdto.CommentDto;
+import com.new_ton.domain.dto.testerdto.SaveProtocolDto;
+import com.new_ton.domain.dto.testerdto.TimeDto;
 import com.new_ton.domain.entities.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,8 +30,8 @@ import java.util.stream.Collectors;
 public class UpdateDataServiceImpl implements UpdateDataService {
 
     private final SearchDataForTablesDao searchDataForTablesDao;
-
     private final UpdateDataDao updateDataDao;
+    private final HttpServletRequest request;
 
     @Transactional
     @Override
@@ -785,11 +792,302 @@ public class UpdateDataServiceImpl implements UpdateDataService {
     @Override
     public boolean deleteComponent(Integer id) {
         try {
-            updateDataDao.deleteComponent(id);
-            return true;
+            return updateDataDao.deleteComponent(id);
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl deleteComponent : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return false;
+    }
+
+    @Override
+    public boolean returnToWork(Integer id) {
+        try {
+            return updateDataDao.returnToWork(id);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl returnToWork : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendToReject(Integer id) {
+        try {
+            return updateDataDao.sendToReject(id);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  sendToReject : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendPutAside(Integer id) {
+        try {
+            return updateDataDao.sendPutAside(id);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  sendPutAside : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendComment(CommentDto commentDto) {
+        try {
+            return updateDataDao.sendComment(commentDto);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  sendComment : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public Integer saveCommentToStage(CommentToStageDto commentToStageDto) {
+        try {
+            CommentToStageEntity commentToStageEntity = new CommentToStageEntity();
+
+            if (commentToStageDto.getId() != null) {
+                commentToStageEntity.setId(commentToStageDto.getId());
+            }
+
+            commentToStageEntity.setIdMain(commentToStageDto.getIdMain());
+            commentToStageEntity.setIdStage(commentToStageDto.getIdStage());
+            commentToStageEntity.setComment(commentToStageDto.getComment());
+            return updateDataDao.saveCommentToStage(commentToStageEntity);
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  saveCommentToStage : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveTimeTemplate(TimeDto timeDto) {
+        try {
+            Optional<RawEntity> rawEntityOptional = searchDataForTablesDao.getRawEntityById(timeDto.getRawId());
+            if (rawEntityOptional.isPresent()) {
+                RawEntity rawEntity = rawEntityOptional.get();
+                rawEntity.setFacttimemix(timeDto.getTime());
+                updateDataDao.updateRawEntity(rawEntity);
+            }
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  saveTimeTemplate : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public boolean saveProtocol(SaveProtocolDto saveProtocolDto) {
+        try {
+            SecurityContextImpl ct = (SecurityContextImpl) request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(saveProtocolDto.getIdMain());
+            if (mainEntityOptional.isPresent()) {
+                MainEntity mainEntity = mainEntityOptional.get();
+                if (!saveProtocolDto.getDateCreateProduct().equals("")) {
+                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(saveProtocolDto.getDateCreateProduct());
+                    mainEntity.setDatemade(date);
+                }
+                String userFio = searchDataForTablesDao.getUserFio(ct.getAuthentication().getName());
+                mainEntity.setLabfio(userFio);
+                mainEntity.setNumbprot(saveProtocolDto.getNumberProtocol());
+                mainEntity.setNumbpart(saveProtocolDto.getPartNumber());
+                if (!saveProtocolDto.getBestBeforeDate().equals("")) {
+                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(saveProtocolDto.getBestBeforeDate());
+                    mainEntity.setExpdate(date);
+                }
+                if (!saveProtocolDto.getDateProtocol().equals("")) {
+                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(saveProtocolDto.getDateProtocol());
+                    mainEntity.setDateprot(date);
+                }
+                mainEntity.setFiltr(saveProtocolDto.getFilter());
+                updateDataDao.updateMainEntity(mainEntity);
+
+                if (saveProtocolDto.getTipProtocol() == 1) {
+                    List<LabprotEntity> labprotEntityList = createLabprotEntityType1(saveProtocolDto);
+                    labprotEntityList.stream()
+                            .peek(elem -> {
+                                elem.setIdpr(mainEntity.getIdpr());
+                            }).collect(Collectors.toList());
+                    updateDataDao.updateLabprotEntity(labprotEntityList, mainEntity.getIdpr());
+                }
+
+                if (saveProtocolDto.getTipProtocol() == 2) {
+                    List<LabprotEntity> labprotEntityList = createLabprotEntityType2(saveProtocolDto);
+                    labprotEntityList.stream()
+                            .peek(elem -> {
+                                elem.setIdpr(mainEntity.getIdpr());
+                            }).collect(Collectors.toList());
+                    updateDataDao.updateLabprotEntity(labprotEntityList, mainEntity.getIdpr());
+                }
+
+                if (saveProtocolDto.getTipProtocol() == 3) {
+                    List<LabprotEntity> labprotEntityList = createLabprotEntityType3(saveProtocolDto);
+                    labprotEntityList.stream()
+                            .peek(elem -> {
+                                elem.setIdpr(mainEntity.getIdpr());
+                            }).collect(Collectors.toList());
+                    updateDataDao.updateLabprotEntity(labprotEntityList, mainEntity.getIdpr());
+                }
+            }
+
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  saveProtocol : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+
+    private List<LabprotEntity> createLabprotEntityType1(SaveProtocolDto saveProtocolDto) {
+        List<LabprotEntity> labprotEntityList = new ArrayList<>();
+        LabprotEntity labprotEntity1 = new LabprotEntity();
+        labprotEntity1.setIndicator("Внешиний вид");
+        labprotEntity1.setNd(saveProtocolDto.getRow2col2());
+        labprotEntity1.setAllvalues(saveProtocolDto.getRow2col3());
+        labprotEntity1.setDev(saveProtocolDto.getRow2col4());
+        labprotEntity1.setResult(saveProtocolDto.getRow2col5());
+        labprotEntityList.add(labprotEntity1);
+
+        LabprotEntity labprotEntity5 = new LabprotEntity();
+        labprotEntity5.setIndicator("Вязкость");
+        labprotEntity5.setNd(saveProtocolDto.getRow5col2());
+        labprotEntity5.setAllvalues(saveProtocolDto.getRow5col3());
+        labprotEntity5.setDev(saveProtocolDto.getRow5col4());
+        labprotEntity5.setResult(saveProtocolDto.getRow5col5());
+        labprotEntityList.add(labprotEntity5);
+
+        LabprotEntity labprotEntity6 = new LabprotEntity();
+        labprotEntity6.setIndicator("Плотность");
+        labprotEntity6.setNd(saveProtocolDto.getRow6col2());
+        labprotEntity6.setAllvalues(saveProtocolDto.getRow6col3());
+        labprotEntity6.setDev(saveProtocolDto.getRow6col4());
+        labprotEntity6.setResult(saveProtocolDto.getRow6col5());
+        labprotEntityList.add(labprotEntity6);
+
+        LabprotEntity labprotEntity7 = new LabprotEntity();
+        labprotEntity7.setIndicator("Разведение");
+        labprotEntity7.setNd(saveProtocolDto.getRow7col2());
+        labprotEntity7.setAllvalues(saveProtocolDto.getRow7col3());
+        labprotEntity7.setDev(saveProtocolDto.getRow7col4());
+        labprotEntity7.setResult(saveProtocolDto.getRow7col5_1() + "-" + saveProtocolDto.getRow7col5_2());
+        labprotEntityList.add(labprotEntity7);
+
+
+        LabprotEntity labprotEntity8 = new LabprotEntity();
+        labprotEntity8.setIndicator("Кол-во газа");
+        labprotEntity8.setNd(saveProtocolDto.getRow8col2());
+        labprotEntity8.setAllvalues(saveProtocolDto.getRow8col3());
+        labprotEntity8.setDev(saveProtocolDto.getRow8col4());
+        labprotEntity8.setResult(saveProtocolDto.getRow8col5());
+        labprotEntityList.add(labprotEntity8);
+
+
+        LabprotEntity labprotEntity9 = new LabprotEntity();
+        labprotEntity9.setIndicator("Тип клапана");
+        labprotEntity9.setNd(saveProtocolDto.getRow9col2());
+        labprotEntity9.setAllvalues(saveProtocolDto.getRow9col3());
+        labprotEntity9.setDev(saveProtocolDto.getRow9col4());
+        labprotEntity9.setResult(saveProtocolDto.getRow9col5());
+        labprotEntityList.add(labprotEntity9);
+
+        LabprotEntity labprotEntity10 = new LabprotEntity();
+        labprotEntity10.setIndicator("Тип головки");
+        labprotEntity10.setNd(saveProtocolDto.getRow10col2());
+        labprotEntity10.setAllvalues(saveProtocolDto.getRow10col3());
+        labprotEntity10.setDev(saveProtocolDto.getRow10col4());
+        labprotEntity10.setResult(saveProtocolDto.getRow10col5());
+        labprotEntityList.add(labprotEntity10);
+
+        LabprotEntity labprotEntity11 = new LabprotEntity();
+        labprotEntity11.setIndicator("Степень глянца");
+        labprotEntity11.setNd(saveProtocolDto.getRow11col2());
+        labprotEntity11.setAllvalues(saveProtocolDto.getRow11col3());
+        labprotEntity11.setDev(saveProtocolDto.getRow11col4());
+        labprotEntity11.setResult(saveProtocolDto.getRow11col5());
+        labprotEntityList.add(labprotEntity11);
+
+        LabprotEntity labprotEntity13 = new LabprotEntity();
+        labprotEntity13.setIndicator("Цвет");
+        labprotEntity13.setNd(saveProtocolDto.getRow13col2());
+        labprotEntity13.setAllvalues(saveProtocolDto.getRow13col3());
+        labprotEntity13.setDev(saveProtocolDto.getRow13col4());
+        labprotEntity13.setResult(saveProtocolDto.getRow13col5());
+        labprotEntityList.add(labprotEntity13);
+        return labprotEntityList;
+    }
+
+    private List<LabprotEntity> createLabprotEntityType2(SaveProtocolDto saveProtocolDto) {
+        List<LabprotEntity> labprotEntityList = new ArrayList<>();
+
+        LabprotEntity labprotEntity2 = new LabprotEntity();
+        labprotEntity2.setIndicator("Внешиний вид");
+        labprotEntity2.setNd(saveProtocolDto.getRow2col2());
+        labprotEntity2.setAllvalues(saveProtocolDto.getRow2col3());
+        labprotEntity2.setDev(saveProtocolDto.getRow2col4());
+        labprotEntity2.setResult(saveProtocolDto.getRow2col5());
+        labprotEntityList.add(labprotEntity2);
+
+        LabprotEntity labprotEntity3 = new LabprotEntity();
+        labprotEntity3.setIndicator("Активация");
+        labprotEntity3.setNd(saveProtocolDto.getRow3col2());
+        labprotEntity3.setAllvalues(saveProtocolDto.getRow3col3());
+        labprotEntity3.setDev(saveProtocolDto.getRow3col4());
+        labprotEntity3.setResult(saveProtocolDto.getRow3col5());
+        labprotEntityList.add(labprotEntity3);
+
+        LabprotEntity labprotEntity4 = new LabprotEntity();
+        labprotEntity4.setIndicator("Степень перетирания");
+        labprotEntity4.setNd(saveProtocolDto.getRow4col2());
+        labprotEntity4.setAllvalues(saveProtocolDto.getRow4col3());
+        labprotEntity4.setDev(saveProtocolDto.getRow4col4());
+        labprotEntity4.setResult(saveProtocolDto.getRow4col5());
+        labprotEntityList.add(labprotEntity4);
+
+        LabprotEntity labprotEntity5 = new LabprotEntity();
+        labprotEntity5.setIndicator("Вязкость");
+        labprotEntity5.setNd(saveProtocolDto.getRow5col2());
+        labprotEntity5.setAllvalues(saveProtocolDto.getRow5col3());
+        labprotEntity5.setDev(saveProtocolDto.getRow5col4());
+        labprotEntity5.setResult(saveProtocolDto.getRow5col5());
+        labprotEntityList.add(labprotEntity5);
+
+        LabprotEntity labprotEntity13 = new LabprotEntity();
+        labprotEntity13.setIndicator("Цвет");
+        labprotEntity13.setNd(saveProtocolDto.getRow13col2());
+        labprotEntity13.setAllvalues(saveProtocolDto.getRow13col3());
+        labprotEntity13.setDev(saveProtocolDto.getRow13col4());
+        labprotEntity13.setResult(saveProtocolDto.getRow13col5());
+        labprotEntityList.add(labprotEntity13);
+        return labprotEntityList;
+
+    }
+
+    private List<LabprotEntity> createLabprotEntityType3(SaveProtocolDto saveProtocolDto) {
+        List<LabprotEntity> labprotEntityList = new ArrayList<>();
+
+        LabprotEntity labprotEntity2 = new LabprotEntity();
+        labprotEntity2.setIndicator("Внешиний вид");
+        labprotEntity2.setNd(saveProtocolDto.getRow2col2());
+        labprotEntity2.setAllvalues(saveProtocolDto.getRow2col3());
+        labprotEntity2.setDev(saveProtocolDto.getRow2col4());
+        labprotEntity2.setResult(saveProtocolDto.getRow2col5());
+        labprotEntityList.add(labprotEntity2);
+
+        LabprotEntity labprotEntity12 = new LabprotEntity();
+        labprotEntity12.setIndicator("Растворимость смолы");
+        labprotEntity12.setNd(saveProtocolDto.getRow12col2());
+        labprotEntity12.setAllvalues(saveProtocolDto.getRow12col3());
+        labprotEntity12.setDev(saveProtocolDto.getRow12col4());
+        labprotEntity12.setResult(saveProtocolDto.getRow12col5());
+        labprotEntityList.add(labprotEntity12);
+
+        LabprotEntity labprotEntity13 = new LabprotEntity();
+        labprotEntity13.setIndicator("Цвет");
+        labprotEntity13.setNd(saveProtocolDto.getRow13col2());
+        labprotEntity13.setAllvalues(saveProtocolDto.getRow13col3());
+        labprotEntity13.setDev(saveProtocolDto.getRow13col4());
+        labprotEntity13.setResult(saveProtocolDto.getRow13col5());
+        labprotEntityList.add(labprotEntity13);
+
+
+        return labprotEntityList;
     }
 }

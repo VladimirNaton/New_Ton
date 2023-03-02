@@ -11,6 +11,7 @@ $(document).ready(function () {
     let sequenceNumberFirstValue = '';
     let errorMessageShow = false;
     let outPast = false;
+    let idCommentToStage = '';
 
     idMain = $('#id-edite-recipe').text();
     nameComponent = $("#component-select option:selected").text();
@@ -38,7 +39,11 @@ $(document).ready(function () {
             {"data": "percent"},
             {"data": "mass"},
             {"data": "devper"},
-            {"data": "devmass"}
+            {"data": "devmass"},
+            {"data": "turnmix"},
+            {"data": "timemix"},
+            {"data": "pastpart"},
+            {"data": "strDate"}
         ],
         "columnDefs": [
             {
@@ -76,6 +81,26 @@ $(document).ready(function () {
             },
             {
                 "targets": 8,
+                "orderable": false
+            }
+            ,
+            {
+                "targets": 9,
+                "orderable": false
+            }
+            ,
+            {
+                "targets": 10,
+                "orderable": false
+            }
+            ,
+            {
+                "targets": 11,
+                "orderable": false
+            }
+            ,
+            {
+                "targets": 12,
                 "orderable": false
             }
         ]
@@ -978,6 +1003,69 @@ $(document).ready(function () {
         $('#sequence-number-input').attr('readonly', false);
         $('#stage-input').attr('readonly', false);
     }
+
+    $('#save-comment-to-stage').click(function () {
+        let stage = $('#stage').val();
+        let comment = $('#comment-to-stage').val();
+
+        let data = {
+            "idStage": stage,
+            "comment": comment,
+            "idMain": idMain,
+            "id": idCommentToStage
+        }
+
+        $.ajax({
+            url: '/update/save-comment-to-stage',
+            method: 'put',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data !== null) {
+                    idCommentToStage = data;
+                    alert("Комментарий успешно обновленны !!!");
+                } else {
+                    alert("Возникла ошибка при сохранении комментария !!!");
+                }
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    })
+
+    $('#stage').change(function () {
+        let stage = $('#stage').val();
+
+        let data = {
+            "idStage": stage,
+            "idMain": idMain,
+        }
+
+        $.ajax({
+            url: '/search/get-comment-to-stage',
+            method: 'post',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data) {
+                    idCommentToStage = data.id;
+                    $('#comment-to-stage').val(data.comment);
+                }
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+
+
+    })
 
 
 })

@@ -17,10 +17,12 @@ public class GetDataForProductInProductionTableDto {
     private Double tempprodmax;
     private String comment;
     private String datecrStr;
+    private Integer state;
     private String dateplStr;
+    private String stateStr;
 
 
-    public GetDataForProductInProductionTableDto(Integer idpr, Date datecr, Date datepl, String brend, String nameprod, Double percent, Double mass, Double tempprodmin, Double tempprodmax, String comment) {
+    public GetDataForProductInProductionTableDto(Integer idpr, Date datecr, Date datepl, String brend, String nameprod, Double percent, Double mass, Double tempprodmin, Double tempprodmax, String comment, Integer state) {
         this.idpr = idpr;
         this.datecr = datecr;
         this.datepl = datepl;
@@ -31,5 +33,6 @@ public class GetDataForProductInProductionTableDto {
         this.tempprodmin = tempprodmin;
         this.tempprodmax = tempprodmax;
         this.comment = comment;
+        this.state = state;
     }
 }
