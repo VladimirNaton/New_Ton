@@ -1,10 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product In Production</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{DataTables-1.11.3/css/jquery.dataTables.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/supervisorPage.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript" th:src="@{DataTables-1.11.3/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/supervisorPage.js}"></script>
 </head>
-<body>
-<h1>Supervisor page</h1>
+<body style="background-color: rgb(229, 230, 250)">
+<div id="main-container-product-in-production-page">
+    <div id="head-container-product-in-production-page">
+        <div id="start-string-product-in-production">
+            <div id="name-user-product-in-production" style="font-weight: bold">Начальник цеха</div>
+            <div id="title-page-product-in-production" style="font-weight: bold">Назначение сменного задания</div>
+
+            <div style="display: flex; flex-wrap: nowrap; margin-top: 15px">
+                <div id="left-container-head-product-in-production">
+                    <div id="first-row-information-head-product-in-production">
+                        <label style="width: 30%"><span style="visibility: hidden">Бренд</span><br>
+                            <input id="product-in-production-head-brend" type="text" readonly placeholder="Бренд"
+                                   class="input-border-style"
+                                   style="text-align: center; font-weight: bold; width: 100%">
+                        </label>
+                        <label style="width: 67.8%">
+                            <input id="product-in-production-head-date-create" type="text" readonly
+                                   placeholder="Дата производства"
+                                   class="input-border-style"
+                                   style="text-align: center; font-weight: bold; width: 100%">
+                        </label>
+                    </div>
+                    <div id="second-row-information-head-product-in-production">
+                        <label style="width: 100%"><span style="visibility: hidden">Название продукта</span>
+                            <input id="product-in-production-head-name-prod" type="text" readonly
+                                   class="input-border-style"
+                                   style="text-align: center; font-weight: bold" placeholder="Название продукта">
+                        </label>
+                    </div>
+                </div>
+                <div id="middle-container-head-product-in-production" style="display: flex; flex-wrap: wrap">
+                    <div id="first-row-right-information-head-product-in-production" style="width: 50%">
+                        <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                                style="font-size: small; font-weight: bold">min</span><br>
+                            <input readonly id="temp-min" value="20.0" type="number" min="20" max="45" step="0.1"
+                                   placeholder="Мин. темпр"
+                                   class="input-border-style"
+                                   style="width: 100%; text-align: center; font-weight: bold">
+                        </label>
+                        <label style="width: 49%; text-align: center"><span style="font-weight: bold">T</span><span
+                                style="font-size: small; font-weight: bold">max</span><br>
+                            <input readonly  id="temp-max" value="45.0" type="number" min="20" max="45" step="0.1"
+                                   style="width: 100%; text-align: center; font-weight: bold"
+                                   placeholder="Макс. темпр" class="input-border-style">
+                        </label>
+                    </div>
+                    <div id="second-row-right-information-head-product-in-production"
+                         style="width: 100%; display: flex; flex-wrap: nowrap">
+                        <div style="width: 50%">
+                            <label style="font-weight: bold; width: 49%; text-align: center">Общий вес, кг<br>
+                                <input readonly id="common-weight-product-in-production" type="number" step="0.001"
+                                       class="input-border-style"
+                                       style="text-align: center; width: 100%; font-weight: bold">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="right-container-product-in-production">
+                    <div style="width: 100%">
+                        <div style="display: flex; flex-wrap: nowrap">
+                            <div style="width: 50%; text-align: center">
+                                <div style="font-weight: bold">Обновление страницы</div>
+                                <div id="timer"></div>
+                            </div>
+                            <div style="width: 50%">
+                                <a th:href="@{/logout}" class="btn btn-outline-secondary btn-sm" style="width: 72%">Выход</a>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: end; margin-top: 10px">
+                            <a th:href="@{/product-in-production-supervisor-page}" id="product-in-production-button"
+                               class="btn btn-outline-secondary btn-sm button-width"
+                               style="margin-bottom: 10px; width: 36%">В производстве</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="body-container-product-in-production-page">
+        <div id="body-container-product-in-production-page-head">
+            <div style="width: 50%; text-align: right; margin-right: 10px">
+                <button id="sent-to-shift-task" class="btn btn-outline-secondary btn-sm"
+                        style="width: 25%">Выбрать >>>
+                </button>
+
+            </div>
+            <div style="width: 50%; text-align: left; margin-left: 10px">
+                <button id="send-to-product-in-production" class="btn btn-outline-secondary btn-sm"
+                        style="width: 25%"><<< Убрать
+                </button>
+            </div>
+        </div>
+        <div style="display: flex; flex-wrap: nowrap">
+            <div id="body-container-product-for-production" style="width: 50%">
+                <div id="product-for-production-table-container-main">
+                    <div id="product-for-production-start-string">Список продуктов для производства</div>
+                    <div></div>
+                    <table id="product-for-production-table" style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>idpr</th>
+                            <th>datecr</th>
+                            <th>datepl</th>
+                            <th>brend</th>
+                            <th>nameprod</th>
+                            <th>percent</th>
+                            <th>mass</th>
+                            <th>temprprodmin</th>
+                            <th>temprprodmax</th>
+                            <th>comment</th>
+                            <th>state</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div id="body-container-shift-task" style="width: 50%">
+                <div id="shift-task-table-container-main">
+                    <div id="shift-task-start-string">Сменное задание</div>
+                    <div></div>
+                    <table id="shift-task-table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>idpr</th>
+                            <th>datecr</th>
+                            <th>datepl</th>
+                            <th>brend</th>
+                            <th>nameprod</th>
+                            <th>percent</th>
+                            <th>mass</th>
+                            <th>temprprodmin</th>
+                            <th>temprprodmax</th>
+                            <th>comment</th>
+                            <th>state</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

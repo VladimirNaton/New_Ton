@@ -18,13 +18,13 @@ public class GetDataForSelectedRowEditeRecipeTableResponseDto {
     private Integer timemix;
     private Integer pastpart;
     private Date pastdate;
-    private Integer filter;
+    private String filter;
     private String dateString;
     private Double factMass;
     private Double factMassDev;
     private Integer componentLoaded;
 
-    public GetDataForSelectedRowEditeRecipeTableResponseDto(int id, Integer n, Integer stage, String nameraw, Double percent, Double mass, Double devper, Double devmass, Integer turnmix, Integer timemix, Integer pastpart, Date pastdate, Integer filter, Double factMass, Double factMassDev, Integer componentLoaded) {
+    public GetDataForSelectedRowEditeRecipeTableResponseDto(int id, Integer n, Integer stage, String nameraw, Double percent, Double mass, Double devper, Double devmass, Integer turnmix, Integer timemix, Integer pastpart, Date pastdate, String filter, Double factMass, Double factMassDev, Integer componentLoaded) {
         this.id = id;
         this.n = n;
         this.stage = stage;

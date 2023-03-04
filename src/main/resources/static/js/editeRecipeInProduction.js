@@ -12,6 +12,7 @@ $(document).ready(function () {
     let errorMessageShow = false;
     let outPast = false;
     let idCommentToStage = '';
+    let componentLoaded = false;
 
     idMain = $('#id-edite-recipe').text();
     nameComponent = $("#component-select option:selected").text();
@@ -23,6 +24,7 @@ $(document).ready(function () {
         "searching": false,
         "paging": false,
         "info": false,
+        scrollX: true,
         "ajax": {
             "url": "/search/data-for-edite-recipe-table",
             "type": "POST",
@@ -435,6 +437,12 @@ $(document).ready(function () {
             url: '/search/get-data-for-selected-row-edite-recipe-table/' + id,
             method: 'get',
             success: function (data) {
+                if (data.componentLoaded === 0) {
+                    componentLoaded = false;
+                } else {
+                    componentLoaded = true;
+                }
+
                 if (codeSelectedElemRecipeTable === '1') {
                     compliteComponentRowInformation(data);
                 }
@@ -531,7 +539,9 @@ $(document).ready(function () {
         $('#sequence-number-input').val(data.n);
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
-        $('#filter-input').val(data.filter);
+        if (data.filter !== '') {
+            $('#filter-select').val(data.filter).change();
+        }
         if (data.componentLoaded === 0) {
             removePropertyReadOnlyCode4();
         } else {
@@ -723,11 +733,16 @@ $(document).ready(function () {
     }
 
     $('#replace-component').click(function () {
-        if (idSelectedElemRecipeTable !== '' && idSelectedElemComponentTable !== '' || idSelectedElemRecipeTable !== '' && (selectedComponents > 2 && selectedComponents < 9)) {
-            replaceAjax();
+        if (!componentLoaded) {
+            if (idSelectedElemRecipeTable !== '' && idSelectedElemComponentTable !== '' || idSelectedElemRecipeTable !== '' && (selectedComponents > 2 && selectedComponents < 9)) {
+                replaceAjax();
+            } else {
+                alert("Вы не выбрали ни одной записи или не выбран элемент в одной из таблиц !!!");
+            }
         } else {
-            alert("Вы не выбрали ни одной записи или не выбран элемент в одной из таблиц !!!");
+            alert("Элемент уже загружен !!!");
         }
+
     })
 
     function replaceAjax() {
@@ -762,62 +777,67 @@ $(document).ready(function () {
     }
 
     $('#save-change').click(function () {
-        if (idSelectedElemRecipeTable !== '') {
-            let sequenceNumber = $('#sequence-number-input').val();
-            let stage = $('#stage-input').val();
-            let percent = $('#percent-input').val();
-            let mass = $('#mass-input').val();
-            let mixing = $('#mixing-input').val();
-            let mixingTime = $('#mixing-time-input').val();
-            let filter = $('#filter-input').val();
-            let infelicityPercent = $('#infelicity-percent-input').val();
-            let infelicityMass = $('#infelicity-mass-input').val();
-            let part = $('#part').val();
-            let pastDate = $('#past-date').val();
+        if (!componentLoaded) {
+            if (idSelectedElemRecipeTable !== '') {
+                let sequenceNumber = $('#sequence-number-input').val();
+                let stage = $('#stage-input').val();
+                let percent = $('#percent-input').val();
+                let mass = $('#mass-input').val();
+                let mixing = $('#mixing-input').val();
+                let mixingTime = $('#mixing-time-input').val();
+                let filter = $('#filter-select').find('option:selected').val();
+                let infelicityPercent = $('#infelicity-percent-input').val();
+                let infelicityMass = $('#infelicity-mass-input').val();
+                let part = $('#part').val();
+                let pastDate = $('#past-date').val();
 
-            if (stage === '0') {
-                errorStageMessage();
-            } else {
-                $('#error-message').hide();
-            }
-            if (stage !== '0' && !errorMessageShow) {
-                let data = {
-                    "sequenceNumber": sequenceNumber,
-                    "stage": stage,
-                    "percent": percent,
-                    "mass": mass,
-                    "mixing": mixing,
-                    "mixingTime": mixingTime,
-                    "filter": filter,
-                    "infelicityPercent": infelicityPercent,
-                    "infelicityMass": infelicityMass,
-                    "part": part,
-                    "pastDate": pastDate,
-                    "selectedComponentId": idSelectedElemRecipeTable
+                if (stage === '0') {
+                    errorStageMessage();
+                } else {
+                    $('#error-message').hide();
                 }
-                $.ajax({
-                    url: '/update/selected-row-of-recipe',
-                    method: 'put',
-                    contentType: 'application/json;charset=utf-8',
-                    data: JSON.stringify(data),
-                    success: function (data) {
-                        if (data) {
-                            editeRecipeTable.ajax.reload();
-                            alert("Данные успешно обновленны !!!");
-                            idSelectedElemRecipeTable = '';
-                            clearInputData();
-                            hideAllParameter();
-                        }
-                    },
-                    beforeSend: function () {
-                    },
-                    complete: function () {
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Возникла ошибка при обновлении данных !!!");
+                if (stage !== '0' && !errorMessageShow) {
+                    let data = {
+                        "sequenceNumber": sequenceNumber,
+                        "stage": stage,
+                        "percent": percent,
+                        "mass": mass,
+                        "mixing": mixing,
+                        "mixingTime": mixingTime,
+                        "filter": filter,
+                        "infelicityPercent": infelicityPercent,
+                        "infelicityMass": infelicityMass,
+                        "part": part,
+                        "pastDate": pastDate,
+                        "selectedComponentId": idSelectedElemRecipeTable
                     }
-                });
+                    $.ajax({
+                        url: '/update/selected-row-of-recipe',
+                        method: 'put',
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            if (data) {
+                                editeRecipeTable.ajax.reload();
+                                alert("Данные успешно обновленны !!!");
+                                idSelectedElemRecipeTable = '';
+                                clearInputData();
+                                hideAllParameter();
+                            }
+                        },
+                        beforeSend: function () {
+                        },
+                        complete: function () {
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Возникла ошибка при обновлении данных !!!");
+                        }
+                    });
+                }
             }
+
+        } else {
+            alert("Элемент уже загружен !!!")
         }
     })
 
@@ -828,7 +848,7 @@ $(document).ready(function () {
         $('#mass-input').val('');
         $('#mixing-input').val('');
         $('#mixing-time-input').val('');
-        $('#filter-input').val('');
+        // $('#filter-input').val('');
         $('#infelicity-percent-input').val('');
         $('#infelicity-mass-input').val('');
         $('#part').val('');
@@ -971,13 +991,13 @@ $(document).ready(function () {
     function addPropertyReadOnlyCode4() {
         $('#sequence-number-input').attr('readonly', true);
         $('#stage-input').attr('readonly', true);
-        $('#filter-input').attr('readonly', true);
+        $('#filter-select').attr('disabled', 'disabled');
     }
 
     function removePropertyReadOnlyCode4() {
         $('#sequence-number-input').attr('readonly', false);
         $('#stage-input').attr('readonly', false);
-        $('#filter-input').attr('readonly', false);
+        $('#filter-select').removeAttr('disabled');
     }
 
     function addPropertyReadOnlyCode8() {

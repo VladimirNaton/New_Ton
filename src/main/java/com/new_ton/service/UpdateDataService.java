@@ -72,4 +72,8 @@ public interface UpdateDataService {
     boolean saveTimeTemplate(TimeDto timeDto);
 
     boolean saveProtocol(SaveProtocolDto saveProtocolDto);
+
+    boolean sendToTaskShift(Integer id);
+
+    boolean sendToProductInProduction(Integer id);
 }

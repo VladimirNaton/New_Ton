@@ -7,8 +7,6 @@ import com.new_ton.domain.dto.accountmanager.DrawDto;
 import com.new_ton.domain.dto.testerdto.CheckTakeTemplateDto;
 import com.new_ton.domain.dto.testerdto.ProtocolDto;
 
-import java.util.Date;
-
 public interface SearchDataForTablesService {
 
     TechnologistPageLeftTableResponseDto getDataForTechnologistLeftTable(RequestTechnologistPageLeftTableDto requestTechnologistPageLeftTableDto);
@@ -48,4 +46,10 @@ public interface SearchDataForTablesService {
     CheckTakeTemplateDto checkTakeTemplate(Integer id);
 
     ProtocolDto getDataForProtocol(Integer id);
+
+    GetDataForProductInProductionTableRequestDto getDataForProductForProductionTable(DrawDto drawDto);
+
+    GetDataForProductInProductionTableRequestDto getDataForTaskShiftTable(DrawDto drawDto);
+
+    GetDataForProductInProductionTableRequestDto getDataForProductInProductionSupervisorTable(DrawDto drawDto);
 }

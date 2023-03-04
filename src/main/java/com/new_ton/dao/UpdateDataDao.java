@@ -60,7 +60,11 @@ public interface UpdateDataDao {
     boolean sendPutAside(Integer id);
 
     boolean sendComment(CommentDto commentDto);
+
     Integer saveCommentToStage(CommentToStageEntity commentToStageEntity);
 
     boolean updateLabprotEntity(List<LabprotEntity> labprotEntityList, Integer idMain);
+
+    boolean sendToTaskShift(MainEntity mainEntity);
+    boolean sendToProductInProduction(MainEntity mainEntity);
 }

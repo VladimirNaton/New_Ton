@@ -160,6 +160,20 @@ public class MainController {
         return "SupervisorPage";
     }
 
+
+    @Secured("ROLE_SUPERVISOR")
+    @GetMapping("/product-in-production-supervisor-page")
+    public String productInProductionSuperVisorPage() {
+        return "ProductInProductionSepervisorPage";
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @GetMapping("/recipe-in-production-supervisor")
+    public String recipeInProductionSupervisor(@RequestParam String idProd, Model model) {
+        model.addAttribute("idProd", idProd);
+        return "ViewRecipeSupervisor";
+    }
+
     private String redirectRole(String userRole) {
         if (userRole.equals("ROLE_TECHNOLOGIST")) {
             return "redirect:technologist-page";

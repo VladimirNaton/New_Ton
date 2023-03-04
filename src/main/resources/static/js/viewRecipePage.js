@@ -323,7 +323,10 @@ $(document).ready(function () {
         $('#sequence-number-input').val(data.n);
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
-        $('#filter-input').val(data.filter);
+        if (data.filter !== '') {
+            $('#filter-select').val(data.filter).change();
+        }
+        $('#filter-select').attr('disabled', 'disabled');
     }
 
     function compliteAnotherRowInformation(data) {
@@ -408,7 +411,7 @@ $(document).ready(function () {
         $('#mass-input').val('');
         $('#mixing-input').val('');
         $('#mixing-time-input').val('');
-        $('#filter-input').val('');
+        // $('#filter-input').val('');
         $('#infelicity-percent-input').val('');
         $('#infelicity-mass-input').val('');
         $('#part').val('');

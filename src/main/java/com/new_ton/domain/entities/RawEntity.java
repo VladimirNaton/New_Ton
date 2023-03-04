@@ -70,7 +70,7 @@ public class RawEntity {
     @Column(name = "pastdate")
     private Date pastdate;
     @Column(name = "filter")
-    private Integer filter;
+    private String filter;
     @Column(name = "component_loaded")
     private Integer componentLoaded;
 }

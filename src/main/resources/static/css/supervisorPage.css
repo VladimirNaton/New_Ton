@@ -1,0 +1,116 @@
+
+#head-container-product-in-production-page {
+    padding-bottom: 15px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 2px 0;
+}
+
+#start-string-product-in-production {
+    margin-top: 10px;
+}
+
+#name-user-product-in-production {
+    float: left;
+}
+
+#title-page-product-in-production {
+    text-align: center;
+}
+
+#main-container-product-in-production-page {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.input-border-style {
+    border-radius: 5px;
+    border-color: #808080bf;
+    border-style: solid;
+    border-width: thin;
+}
+
+#left-container-head-product-in-production {
+    width: 35%;
+}
+
+#product-in-production-head-brend {
+    width: 30%;
+}
+
+#product-in-production-head-date-create {
+    width: 65%;
+}
+
+#product-in-production-head-name-prod {
+    width: 98.5%;
+}
+
+#middle-container-head-product-in-production {
+    width: 35%;
+}
+
+#right-container-product-in-production {
+    text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    width: 30%;
+}
+
+#body-container-product-in-production-page-head {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#product-for-production-table-container-main {
+    margin-top: 15px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+}
+
+#product-for-production-start-string {
+    background-color: #10a9f2;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-right:5px;
+    margin-left: 5px;
+}
+
+#product-for-production-table {
+    border: 1px solid black;
+}
+#product-for-production-table_wrapper{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#shift-task-table-container-main{
+    margin-top: 15px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: gray;
+}
+
+#shift-task-start-string {
+    background-color: #10a9f2;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-right:5px;
+    margin-left: 5px;
+}
+
+#shift-task-table {
+    border: 1px solid black;
+}
+#shift-task-table_wrapper{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+

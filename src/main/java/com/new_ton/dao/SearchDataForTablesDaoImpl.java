@@ -412,9 +412,43 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
     @Override
     public String getUserFio(String userLogin) {
         try {
-           return userFioRepository.getUserFio(userLogin);
+            return userFioRepository.getUserFio(userLogin);
         } catch (Exception e) {
             log.error("Error searchDataForTablesDaoImpl getUserFio : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<GetDataForProductInProductionTableDto> getDataForProductForProductionTable() {
+        try {
+            return mainRepository.getDataForProductForProductionTable();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<GetDataForProductInProductionTableDto> getDataForTaskShiftTable() {
+        try {
+            return mainRepository.getDataForTaskShiftTable();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public List<GetDataForProductInProductionTableDto> getDataForProductInProductionSupervisorTable(Integer state) {
+        try {
+            if (state == 0) {
+                return mainRepository.getDataForProductInProductionSupervisorTable(5, 10);
+            } else {
+                return mainRepository.getDataForProductInProductionSupervisorTable(state, state);
+            }
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl getDataForProductInProductionSupervisorTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
         }
         return null;
     }

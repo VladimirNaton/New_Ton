@@ -42,7 +42,7 @@ public class CatrecEntity {
     @Column(name = "timemix")
     private Integer timemix;
     @Column(name = "filter")
-    private Integer filter;
+    private String filter;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "pastdate")
     private Date pastdate;

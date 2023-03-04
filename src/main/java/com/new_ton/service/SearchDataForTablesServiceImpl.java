@@ -512,4 +512,80 @@ public class SearchDataForTablesServiceImpl implements SearchDataForTablesServic
         }
         return null;
     }
+
+    @Override
+    public GetDataForProductInProductionTableRequestDto getDataForProductForProductionTable(DrawDto drawDto) {
+        try {
+            List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForProductForProductionTable();
+            getDataForProductInProductionTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String datecrStr = dateFormat.format(elem.getDatecr());
+                String dateplStr = dateFormat.format(elem.getDatepl());
+                elem.setDatecrStr(datecrStr);
+                elem.setDateplStr(dateplStr);
+                String state = searchDataForTablesDao.getState(elem.getState());
+                elem.setStateStr(state);
+            }).collect(Collectors.toList());
+
+            GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setDraw(drawDto.getDraw());
+            getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
+            return getDataForProductInProductionTable;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForProductForProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public GetDataForProductInProductionTableRequestDto getDataForTaskShiftTable(DrawDto drawDto) {
+        try {
+            List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForTaskShiftTable();
+            getDataForProductInProductionTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String datecrStr = dateFormat.format(elem.getDatecr());
+                String dateplStr = dateFormat.format(elem.getDatepl());
+                elem.setDatecrStr(datecrStr);
+                elem.setDateplStr(dateplStr);
+                String state = searchDataForTablesDao.getState(elem.getState());
+                elem.setStateStr(state);
+            }).collect(Collectors.toList());
+
+            GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setDraw(drawDto.getDraw());
+            getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
+            return getDataForProductInProductionTable;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForTaskShiftTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
+    @Override
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionSupervisorTable(DrawDto drawDto) {
+        try {
+            List<GetDataForProductInProductionTableDto> getDataForProductInProductionTableDtoList = searchDataForTablesDao.getDataForProductInProductionSupervisorTable(drawDto.getState());
+            getDataForProductInProductionTableDtoList.stream().peek(elem -> {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String datecrStr = dateFormat.format(elem.getDatecr());
+                String dateplStr = dateFormat.format(elem.getDatepl());
+                elem.setDatecrStr(datecrStr);
+                elem.setDateplStr(dateplStr);
+                String state = searchDataForTablesDao.getState(elem.getState());
+                elem.setStateStr(state);
+            }).collect(Collectors.toList());
+
+            GetDataForProductInProductionTableRequestDto getDataForProductInProductionTable = new GetDataForProductInProductionTableRequestDto();
+            getDataForProductInProductionTable.setDraw(drawDto.getDraw());
+            getDataForProductInProductionTable.setData(getDataForProductInProductionTableDtoList);
+            return getDataForProductInProductionTable;
+
+        } catch (Exception e) {
+            log.error("Error SearchDataForTablesServiceImpl getDataForProductInProductionTable : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return null;
+    }
+
 }

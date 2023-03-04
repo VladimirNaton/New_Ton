@@ -12,7 +12,7 @@ public class UpdateSelectedRowOfRecipeDto {
     private Double mass;
     private Integer mixing;
     private Integer mixingTime;
-    private Integer filter;
+    private String filter;
     private Double infelicityPercent;
     private Double infelicityMass;
     private Integer part;

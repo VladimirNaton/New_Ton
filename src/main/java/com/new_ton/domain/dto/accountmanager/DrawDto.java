@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class DrawDto {
     private Integer draw;
+    private Integer state;
 }

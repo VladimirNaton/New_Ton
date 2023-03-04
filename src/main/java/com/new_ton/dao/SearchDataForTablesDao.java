@@ -86,4 +86,9 @@ public interface SearchDataForTablesDao {
     Optional<RawEntity> checkTakeTemplate(Integer id);
 
     String getUserFio(String userLogin);
+
+    List<GetDataForProductInProductionTableDto> getDataForProductForProductionTable();
+    List<GetDataForProductInProductionTableDto> getDataForTaskShiftTable();
+
+    List<GetDataForProductInProductionTableDto> getDataForProductInProductionSupervisorTable(Integer state);
 }

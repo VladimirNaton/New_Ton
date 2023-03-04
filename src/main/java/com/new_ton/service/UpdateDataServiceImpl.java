@@ -184,7 +184,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             rawEntity.setFactturn(0);
             rawEntity.setFacttimemix(0);
             rawEntity.setEq(0);
-            rawEntity.setFilter(0);
+            rawEntity.setFilter("");
             rawEntity.setComponentLoaded(0);
             return updateDataDao.saveNewRowToRawTable(rawEntity);
         } catch (Exception e) {
@@ -224,7 +224,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
                 rawEntity.setFactturn(0);
                 rawEntity.setFacttimemix(0);
                 rawEntity.setEq(0);
-                rawEntity.setFilter(0);
+                rawEntity.setFilter("");
                 rawEntity.setComponentLoaded(0);
                 return updateDataDao.updateRawEntity(rawEntity);
             }
@@ -528,7 +528,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
             recEntity.setDevmass(0.0);
             recEntity.setTurnmix(0);
             recEntity.setTimemix(0);
-            recEntity.setFilter(0);
+            recEntity.setFilter("");
             return updateDataDao.saveNewRowToCatrecTable(recEntity);
         } catch (Exception e) {
             log.error("Error UpdateDataServiceImpl addComponentToCatalogRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
@@ -602,7 +602,7 @@ public class UpdateDataServiceImpl implements UpdateDataService {
                 catrecEntity.setDevmass(0.0);
                 catrecEntity.setTurnmix(0);
                 catrecEntity.setTimemix(0);
-                catrecEntity.setFilter(0);
+                catrecEntity.setFilter("");
                 return updateDataDao.updateCatrecEntity(catrecEntity);
             }
         } catch (Exception e) {
@@ -1086,8 +1086,42 @@ public class UpdateDataServiceImpl implements UpdateDataService {
         labprotEntity13.setDev(saveProtocolDto.getRow13col4());
         labprotEntity13.setResult(saveProtocolDto.getRow13col5());
         labprotEntityList.add(labprotEntity13);
-
-
         return labprotEntityList;
+    }
+
+    @Override
+    public boolean sendToTaskShift(Integer id) {
+        try {
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(id);
+            if (mainEntityOptional.isPresent()) {
+                MainEntity mainEntity = mainEntityOptional.get();
+                mainEntity.setState(4);
+                mainEntity.setDatepl(new Date());
+                return updateDataDao.sendToTaskShift(mainEntity);
+            }
+            return false;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  sendToTaskShift : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendToProductInProduction(Integer id) {
+        try {
+            Optional<MainEntity> mainEntityOptional = searchDataForTablesDao.getMainEntityById(id);
+            if (mainEntityOptional.isPresent()) {
+                MainEntity mainEntity = mainEntityOptional.get();
+                mainEntity.setState(3);
+                Calendar calendar = new GregorianCalendar(1111, 10, 11, 11, 11, 11);
+                Date date = calendar.getTime();
+                mainEntity.setDatepl(date);
+                return updateDataDao.sendToTaskShift(mainEntity);
+            }
+            return false;
+        } catch (Exception e) {
+            log.error("Error UpdateDataServiceImpl  sendToProductInProduction : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
     }
 }

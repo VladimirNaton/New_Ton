@@ -213,5 +213,17 @@ public class UpdateDataController {
         return updateDataService.saveProtocol(saveProtocolDto);
     }
 
+    @Secured("ROLE_SUPERVISOR")
+    @PutMapping("/send-to-task-shift/{id}")
+    public boolean sendToTaskShift(@PathVariable(name = "id") Integer id) {
+        return updateDataService.sendToTaskShift(id);
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @PutMapping("/send-to-product-in-production/{id}")
+    public boolean sendToProductInProduction(@PathVariable(name = "id") Integer id) {
+        return updateDataService.sendToProductInProduction(id);
+    }
+
 }
 

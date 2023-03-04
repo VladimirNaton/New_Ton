@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RequiredArgsConstructor
 @RequestMapping("/search")
 @RestController
@@ -45,7 +43,7 @@ public class SearchDataForTableController {
         return searchDataForTablesService.searchDataForEditeRecipeTable(editeRecipeTableRequestDto);
     }
 
-    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER"})
+    @Secured({"ROLE_TECHNOLOGIST", "ROLE_ACCOUNTMANAGER", "ROLE_SUPERVISOR"})
     @GetMapping("/get-data-for-head-string-edite-recipe/{idProd}")
     public GetDataForInformationStringEditeRecipeDto getDataForInformationStringEditeRecipe(@PathVariable(name = "idProd") Integer idProd) {
         return searchDataForTablesService.getDataForInformationStringEditeRecipe(idProd);
@@ -123,19 +121,19 @@ public class SearchDataForTableController {
         return searchDataForTablesService.getDataForInformationStringEditeRecipe(idProd);
     }
 
-    @Secured("ROLE_TESTER")
+    @Secured({"ROLE_TESTER", "ROLE_SUPERVISOR"})
     @PostMapping("/data-for-tester-recipe-table")
     public EditeRecipeResponseDto searchDataForViewRecipeTable(EditeRecipeTableRequestDto editeRecipeTableRequestDto) {
         return searchDataForTablesService.searchDataForEditeRecipeTable(editeRecipeTableRequestDto);
     }
 
-    @Secured("ROLE_TESTER")
+    @Secured({"ROLE_TESTER", "ROLE_SUPERVISOR"})
     @GetMapping("/get-data-for-head-string-tester-recipe/{idProd}")
     public GetDataForInformationStringEditeRecipeDto getDataForInformationStringTesterRecipe(@PathVariable(name = "idProd") Integer idProd) {
         return searchDataForTablesService.getDataForInformationStringEditeRecipe(idProd);
     }
 
-    @Secured("ROLE_TESTER")
+    @Secured({"ROLE_TESTER", "ROLE_SUPERVISOR"})
     @GetMapping("/get-data-for-selected-row-tester-recipe-table/{id}")
     public GetDataForSelectedRowEditeRecipeTableResponseDto getDataForSelectedRowTesterRecipeTable(@PathVariable(name = "id") Integer id) {
         return searchDataForTablesService.getDataForSelectedRowEditeRecipeTable(id);
@@ -154,5 +152,23 @@ public class SearchDataForTableController {
     @GetMapping("/get-data-for-protocol/{id}")
     public ProtocolDto getDataForProtocol(@PathVariable(name = "id") Integer id) {
         return searchDataForTablesService.getDataForProtocol(id);
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @PostMapping("/get-data-for-product-for-production-table")
+    public GetDataForProductInProductionTableRequestDto getDataForProductForProductionTable(DrawDto drawDto) {
+        return searchDataForTablesService.getDataForProductForProductionTable(drawDto);
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @PostMapping("/get-data-for-task-shift-table")
+    public GetDataForProductInProductionTableRequestDto getDataForTAskShiftTable(DrawDto drawDto) {
+        return searchDataForTablesService.getDataForTaskShiftTable(drawDto);
+    }
+
+    @Secured("ROLE_SUPERVISOR")
+    @PostMapping("/get-data-for-product-in-production-supervisor-table")
+    public GetDataForProductInProductionTableRequestDto getDataForProductInProductionSupervisorTable(DrawDto drawDto) {
+        return searchDataForTablesService.getDataForProductInProductionSupervisorTable(drawDto);
     }
 }

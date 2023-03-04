@@ -22,6 +22,7 @@ $(document).ready(function () {
         "searching": false,
         "paging": false,
         "info": false,
+        scrollX: true,
         "ajax": {
             "url": "/search/data-for-edite-recipe-catalog-table",
             "type": "POST",
@@ -455,7 +456,9 @@ $(document).ready(function () {
         $('#sequence-number-input').val(data.n);
         $('#stage-input').val(data.stage);
         $('#name-prod-input').val(data.nameraw);
-        $('#filter-input').val(data.filter);
+        if(data.filter !== ''){
+            $('#filter-select').val(data.filter).change();
+        }
     }
 
     function compliteAnotherRowInformation(data) {
@@ -718,7 +721,7 @@ $(document).ready(function () {
             let mass = $('#mass-input').val();
             let mixing = $('#mixing-input').val();
             let mixingTime = $('#mixing-time-input').val();
-            let filter = $('#filter-input').val();
+            let filter = $('#filter-select').find('option:selected').val();
             let infelicityPercent = $('#infelicity-percent-input').val();
             let infelicityMass = $('#infelicity-mass-input').val();
             let part = $('#part').val();
@@ -777,7 +780,7 @@ $(document).ready(function () {
         $('#mass-input').val('');
         $('#mixing-input').val('');
         $('#mixing-time-input').val('');
-        $('#filter-input').val('');
+        // $('#filter-input').val('');
         $('#infelicity-percent-input').val('');
         $('#infelicity-mass-input').val('');
         $('#part').val('');

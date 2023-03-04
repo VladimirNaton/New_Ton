@@ -44,5 +44,14 @@ public interface MainRepository extends JpaRepository<MainEntity, Integer> {
     @Modifying
     @Query("update MainEntity me set me.comment = ?1 where me.idpr = ?2")
     void sendComment(String comment, Integer id);
+
+    @Query("select  new com.new_ton.domain.dto.technologistdto.GetDataForProductInProductionTableDto(m.idpr, m.datecr, m.datepl, m.brend, m.nameprod, m.percent, m.mass, m.tempprodmin, m.tempprodmax, m.comment, m.state) from MainEntity m where m.state = 3")
+    List<GetDataForProductInProductionTableDto> getDataForProductForProductionTable();
+
+    @Query("select  new com.new_ton.domain.dto.technologistdto.GetDataForProductInProductionTableDto(m.idpr, m.datecr, m.datepl, m.brend, m.nameprod, m.percent, m.mass, m.tempprodmin, m.tempprodmax, m.comment, m.state) from MainEntity m where m.state = 4")
+    List<GetDataForProductInProductionTableDto> getDataForTaskShiftTable();
+
+    @Query("select  new com.new_ton.domain.dto.technologistdto.GetDataForProductInProductionTableDto(m.idpr, m.datecr, m.datepl, m.brend, m.nameprod, m.percent, m.mass, m.tempprodmin, m.tempprodmax, m.comment, m.state) from MainEntity m where m.state >= ?1 and m.state <= ?2")
+    List<GetDataForProductInProductionTableDto> getDataForProductInProductionSupervisorTable(Integer state1, Integer state2);
 }
 

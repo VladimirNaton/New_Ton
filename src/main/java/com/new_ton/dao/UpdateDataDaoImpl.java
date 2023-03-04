@@ -359,4 +359,27 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
         }
         return false;
     }
+
+    @Transactional
+    @Override
+    public boolean sendToTaskShift(MainEntity mainEntity) {
+        try {
+            mainRepository.saveAndFlush(mainEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl sendPutAside : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendToProductInProduction(MainEntity mainEntity) {
+        try {
+            mainRepository.saveAndFlush(mainEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl sendToProductInProduction : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
 }
