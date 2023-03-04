@@ -382,4 +382,15 @@ public class UpdateDataDaoImpl implements UpdateDataDao {
         }
         return false;
     }
+
+    @Override
+    public boolean updateStatusRecipe(MainEntity mainEntity) {
+        try {
+            mainRepository.saveAndFlush(mainEntity);
+            return true;
+        } catch (Exception e) {
+            log.error("Error UpdateDataDaoImpl updateStatusRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return false;
+    }
 }

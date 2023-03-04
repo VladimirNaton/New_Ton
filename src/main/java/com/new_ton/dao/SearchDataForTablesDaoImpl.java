@@ -452,4 +452,14 @@ public class SearchDataForTablesDaoImpl implements SearchDataForTablesDao {
         }
         return null;
     }
+
+    @Override
+    public List<MainEntity> returnRecipe() {
+        try {
+            return mainRepository.returnRecipe();
+        } catch (Exception e) {
+            log.error("Error searchDataForTablesDaoImpl returnRecipe : {}, {}", ExceptionUtils.getMessage(e), ExceptionUtils.getMessage(e.getCause()));
+        }
+        return Collections.emptyList();
+    }
 }

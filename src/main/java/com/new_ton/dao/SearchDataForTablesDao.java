@@ -88,7 +88,10 @@ public interface SearchDataForTablesDao {
     String getUserFio(String userLogin);
 
     List<GetDataForProductInProductionTableDto> getDataForProductForProductionTable();
+
     List<GetDataForProductInProductionTableDto> getDataForTaskShiftTable();
 
     List<GetDataForProductInProductionTableDto> getDataForProductInProductionSupervisorTable(Integer state);
+
+    List<MainEntity> returnRecipe();
 }

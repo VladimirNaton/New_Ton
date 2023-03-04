@@ -66,5 +66,8 @@ public interface UpdateDataDao {
     boolean updateLabprotEntity(List<LabprotEntity> labprotEntityList, Integer idMain);
 
     boolean sendToTaskShift(MainEntity mainEntity);
+
     boolean sendToProductInProduction(MainEntity mainEntity);
+
+    boolean updateStatusRecipe(MainEntity mainEntity);
 }

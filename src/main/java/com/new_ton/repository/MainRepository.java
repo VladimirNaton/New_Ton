@@ -53,5 +53,8 @@ public interface MainRepository extends JpaRepository<MainEntity, Integer> {
 
     @Query("select  new com.new_ton.domain.dto.technologistdto.GetDataForProductInProductionTableDto(m.idpr, m.datecr, m.datepl, m.brend, m.nameprod, m.percent, m.mass, m.tempprodmin, m.tempprodmax, m.comment, m.state) from MainEntity m where m.state >= ?1 and m.state <= ?2")
     List<GetDataForProductInProductionTableDto> getDataForProductInProductionSupervisorTable(Integer state1, Integer state2);
+
+    @Query("select m from MainEntity m where m.state = 2")
+    List<MainEntity> returnRecipe();
 }
 
